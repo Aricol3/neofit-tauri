@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./screens/Home.tsx";
 import Scanner from "./screens/Scanner.tsx";
 import Nutrition from "./screens/Nutrition.tsx";
-import AddFood from "./components/AddFood.tsx";
+import AddFood from "./screens/AddFood.tsx";
 
 export default function MainRoutes() {
   return (

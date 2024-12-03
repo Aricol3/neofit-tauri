@@ -8,15 +8,15 @@ const AddFood = () => {
       <div className="flex flex-col">
         <div className="flex flex-row justify-between">
           <p>Serving Size</p>
-          <Input />
+          <Input label="Serving Size"/>
         </div>
         <div className="flex flex-row justify-between">
           <p>Number of servings</p>
-          <Input />
+          <Input label="Number of servings" />
         </div>
         <div className="flex flex-row justify-between">
           <p>Meal</p>
-          <Input />
+          <Input label="Meal"/>
         </div>
       </div>
     </>
