@@ -1,4 +1,5 @@
-import { Progress } from "@nextui-org/react";
+import { Divider, Progress } from "@nextui-org/react";
+import FoodCard from "../components/FoodCard.tsx";
 
 const Nutrition = () => {
   const proteinValue = 104;
@@ -11,7 +12,10 @@ const Nutrition = () => {
   const targetFatValue = 110;
 
   return (
-    <>
+    <div className="p-3">
+      <h1 className="text-xl">Calories Remaining</h1>
+
+      <p>3.300 - 0 = 3.300 remaining</p>
       <Progress
         label="Protein"
         size="md"
@@ -30,7 +34,7 @@ const Nutrition = () => {
           base: "max-w-md p-4",
           track: "drop-shadow-md border border-default",
           indicator: "bg-gradient-to-r from-pink-400 to-yellow-500",
-          label: "tracking-wider font-medium text-default-600",
+          label: "tracking-wider font-medium text-default-600"
         }}
       />
       <Progress
@@ -51,7 +55,7 @@ const Nutrition = () => {
           base: "max-w-md p-4",
           track: "drop-shadow-md border border-default",
           indicator: "bg-gradient-to-r from-teal-200 to-cyan-500",
-          label: "tracking-wider font-medium text-default-600",
+          label: "tracking-wider font-medium text-default-600"
         }}
       />
       <Progress
@@ -72,11 +76,31 @@ const Nutrition = () => {
           base: "max-w-md p-4",
           track: "drop-shadow-md border border-default",
           indicator: "bg-gradient-to-r from-teal-300 via-purple-500 to-purple-700",
-          label: "tracking-wider font-medium text-default-600",
+          label: "tracking-wider font-medium text-default-600"
         }}
       />
-
-    </>
+      <Divider />
+      <h1 className="text-xl mt-2 mb-2">Breakfast</h1>
+      <div className="flex flex-col gap-4">
+        <FoodCard />
+        <FoodCard />
+        <FoodCard />
+      </div>
+      <Divider />
+      <h1 className="text-xl mt-2 mb-2">Lunch</h1>
+      <div className="flex flex-col gap-4">
+        <FoodCard />
+        <FoodCard />
+        <FoodCard />
+      </div>
+      <Divider />
+      <h1 className="text-xl mt-2 mb-2">Dinner</h1>
+      <div className="flex flex-col gap-4">
+        <FoodCard />
+        <FoodCard />
+        <FoodCard />
+      </div>
+    </div>
   );
 };
 
