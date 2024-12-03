@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.container {
+    background-color: transparent;
+    width: 100vw;
+    height: 100vh;
+}
+
+:root {
+    background-color: transparent;
+}

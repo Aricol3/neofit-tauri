@@ -1,0 +1,15 @@
+{
+  "identifier": "mobile-capability",
+  "platforms": [
+    "android",
+    "iOS"
+  ],
+  "windows":["main"],
+  "permissions": [
+    "barcode-scanner:allow-cancel",
+    "barcode-scanner:allow-check-permissions",
+    "barcode-scanner:allow-open-app-settings",
+    "barcode-scanner:allow-request-permissions",
+    "barcode-scanner:allow-scan"
+  ]
+}

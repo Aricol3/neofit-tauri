@@ -1,50 +1,52 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 import { Button } from "@nextui-org/react";
+import { scan, Format, checkPermissions, requestPermissions } from "@tauri-apps/plugin-barcode-scanner";
+import MainRoutes from "./routes.tsx";
+import Navbar from "./components/Navbar.tsx";
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
+  const [scanResult, setScanResult] = useState("");
 
   async function greet() {
     setGreetMsg(await invoke("greet", { name }));
   }
 
+  const scanBarcode = async () => {
+    setScanResult("inainte");
+    setScanResult("dupa");
+
+    let permission = await checkPermissions();
+
+
+    if (permission === "prompt") {
+      permission = await requestPermissions();
+    }
+    if (permission !== "granted") {
+      setScanResult("Camera permission denied");
+      return;
+    }
+
+    try {
+      const result = await scan({
+        windowed: false,
+        formats: [Format.EAN8, Format.EAN13]
+      });
+      setScanResult(`Scanned result: ${result.content}`);
+      console.log("Barcode scanned:", result.content);
+    } catch (error) {
+      console.error("Failed to scan barcode:", error);
+      setScanResult("Failed to scan barcode");
+    }
+  };
+
   return (
     <main className="container">
-      <h1>Welcome to Tauri + React</h1>
-      <Button variant="solid" color="secondary">asd</Button>
-
-      <div className="row">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
+      <MainRoutes/>
+      <Navbar/>
     </main>
   );
 }
