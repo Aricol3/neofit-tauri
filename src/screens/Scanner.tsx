@@ -16,7 +16,7 @@ const Scanner = () => {
       console.log("Barcode scanned:", result.content);
       const food = await getFoodByBarcode(result.content);
       console.log("Food:", food);
-      navigate("/nutrition");
+      navigate("/add-food");
     } catch (error) {
       console.error("Failed to scan barcode:", error);
     }
@@ -30,7 +30,7 @@ const Scanner = () => {
     <>
       <Button onClick={async () => {
         await cancel();
-        navigate(-1);
+        navigate("/nutrition");
       }}>back</Button>
     </>
   );

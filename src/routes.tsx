@@ -3,6 +3,7 @@ import Home from "./screens/Home.tsx";
 import Scanner from "./screens/Scanner.tsx";
 import Nutrition from "./screens/Nutrition.tsx";
 import AddFood from "./screens/AddFood.tsx";
+import EditFood from "./screens/EditFood.tsx";
 
 export default function MainRoutes() {
   return (
@@ -11,6 +12,7 @@ export default function MainRoutes() {
       <Route path="/scan" element={<Scanner />} />
       <Route path="/nutrition" element={<Nutrition />} />
       <Route path="/add-food" element={<AddFood />} />
+      <Route path="/edit-food" element={<EditFood />} />
     </Routes>
   );
 }

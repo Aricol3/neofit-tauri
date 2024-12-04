@@ -47,7 +47,7 @@ const Navbar = () => {
   console.log("merge?");
 
   return (
-    <div className="bottom-0 fixed bg-purple-500 z-10">
+    <div className="bottom-0 fixed bg-violet-700 z-10">
       <NextNavbar className="pb-4" position="sticky">
         <NavbarBrand>
           <p className="font-bold text-inherit">NeoFit</p>
@@ -75,7 +75,7 @@ const Navbar = () => {
           </NavbarItem>
           <NavbarItem>
             <Button color="primary" href="#" variant="flat" onClick={scanBarcode}>
-              Sign Up
+              Scan
             </Button>
           </NavbarItem>
         </NavbarContent>

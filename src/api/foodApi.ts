@@ -1,4 +1,4 @@
-const baseUrl = "http://192.168.100.75:8080";
+const baseUrl = "http://172.20.10.14:8080";
 
 export const getFoodByBarcode = async (barcode: string) => {
   try {

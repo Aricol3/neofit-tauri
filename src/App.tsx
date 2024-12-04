@@ -46,10 +46,9 @@ function App() {
   return (
     <main className="container">
       <div className="pb-28">
-
-      <MainRoutes/>
+        <MainRoutes />
       </div>
-      <Navbar/>
+      <Navbar />
     </main>
   );
 }

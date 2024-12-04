@@ -2,25 +2,17 @@ import { Divider, Input } from "@nextui-org/react";
 
 const AddFood = () => {
   return (
-    <>
-      <h1>Sprite</h1>
-      <Divider/>
-      <div className="flex flex-col">
-        <div className="flex flex-row justify-between">
-          <p>Serving Size</p>
-          <Input label="Serving Size"/>
-        </div>
-        <div className="flex flex-row justify-between">
-          <p>Number of servings</p>
-          <Input label="Number of servings" />
-        </div>
-        <div className="flex flex-row justify-between">
-          <p>Meal</p>
-          <Input label="Meal"/>
-        </div>
+    <div className="p-5">
+      <h1>Add Food</h1>
+      <h1 className="text-2xl">Sprite</h1>
+      <Divider />
+      <div className="flex flex-col gap-3 mt-5">
+        <Input label="Serving Size" />
+        <Input label="Number of servings" />
+        <Input label="Meal" />
       </div>
-    </>
-  )
-}
+    </div>
+  );
+};
 
 export default AddFood;
