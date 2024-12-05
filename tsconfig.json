@@ -23,5 +23,5 @@
     "allowSyntheticDefaultImports": true
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

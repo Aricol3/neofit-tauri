@@ -12,6 +12,11 @@
 
 :root {
   background-color: transparent;
+  user-select: none;
+}
+
+img {
+  pointer-events: none;
 }
 
 body {
@@ -20,5 +25,3 @@ body {
   font-style: normal;
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
-
-$active-color: #9e86ff;

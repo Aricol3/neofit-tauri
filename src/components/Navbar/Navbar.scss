@@ -1,5 +1,6 @@
 $background-color: #2c2f33;
 $navbar-bg: #1a1b1e;
+//$navbar-bg: white;
 $active-color: #9e86ff;
 $inactive-color: #6b7280;
 $text-size: 12px;
@@ -52,15 +53,10 @@ $shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
     border-radius: 50%;
     color: white;
     @include flex-center();
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 -8px 6px rgba(0, 0, 0, 0.2);
     outline: 5px solid $navbar-bg;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-    &:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
-    }
 
     .scan-icon {
       font-size: 24px;
