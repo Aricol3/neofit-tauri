@@ -1,18 +1,36 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./screens/Home.tsx";
 import Scanner from "./screens/Scanner.tsx";
 import Nutrition from "./screens/Nutrition.tsx";
 import AddFood from "./screens/AddFood.tsx";
 import EditFood from "./screens/EditFood.tsx";
+import CreateFood from "./screens/CreateFood.tsx";
+import { PropsWithChildren } from "react";
+
+function Layout({ children }: PropsWithChildren) {
+  const location = useLocation();
+
+  const routesWithHeader = ["/profile"];
+  const needsPadding = routesWithHeader.includes(location.pathname);
+
+  return (
+    <div style={{ paddingTop: needsPadding ? "3rem" : "0" }}>
+      {children}
+    </div>
+  );
+}
 
 export default function MainRoutes() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/scan" element={<Scanner />} />
-      <Route path="/nutrition" element={<Nutrition />} />
-      <Route path="/add-food" element={<AddFood />} />
-      <Route path="/edit-food" element={<EditFood />} />
-    </Routes>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/scan" element={<Scanner />} />
+        <Route path="/nutrition" element={<Nutrition />} />
+        <Route path="/add-food" element={<AddFood />} />
+        <Route path="/edit-food" element={<EditFood />} />
+        <Route path="/profile" element={<CreateFood />} />
+      </Routes>
+    </Layout>
   );
 }

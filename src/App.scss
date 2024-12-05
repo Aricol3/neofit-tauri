@@ -4,19 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
-.container {
-  background-color: transparent;
-  width: 100vw;
-  height: 100vh;
-}
-
 :root {
   background-color: transparent;
   user-select: none;
-}
-
-img {
-  pointer-events: none;
 }
 
 body {
@@ -24,4 +14,19 @@ body {
   font-weight: 500;
   font-style: normal;
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.container {
+  background-color: transparent;
+  width: 100vw;
+  height: 100vh;
+}
+
+img {
+  pointer-events: none;
+}
+
+.header{
+  background-color: #faf9f6;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
 }

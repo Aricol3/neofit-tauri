@@ -30,7 +30,7 @@ const Navbar = () => {
         onClick={() => handleNavigation("/nutrition")}
       >
         <NutritionIcon isActive={activeTab === "/nutrition"} />
-        <p>Nutrients</p>
+        <p>Nutrition</p>
       </div>
       <div className="nav-item scan-button" onClick={() => handleNavigation("/scan")}>
         <ScanIcon />

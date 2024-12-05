@@ -1,6 +1,6 @@
 $background-color: #2c2f33;
-$navbar-bg: #1a1b1e;
-//$navbar-bg: white;
+//$navbar-bg: #1a1b1e;
+$navbar-bg: #faf9f6;
 $active-color: #9e86ff;
 $inactive-color: #6b7280;
 $text-size: 12px;
@@ -48,7 +48,6 @@ $shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
     bottom: 20px;
     height: 4rem;
     width: 4rem;
-    padding: 15px;
     background-color: $active-color;
     border-radius: 50%;
     color: white;
@@ -57,9 +56,5 @@ $shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
     outline: 5px solid $navbar-bg;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-    .scan-icon {
-      font-size: 24px;
-    }
   }
 }
