@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
-import "./App.css";
+import "./App.scss";
 import { Button } from "@nextui-org/react";
 import { scan, Format, checkPermissions, requestPermissions } from "@tauri-apps/plugin-barcode-scanner";
 import MainRoutes from "./routes.tsx";
-import Navbar from "./components/Navbar.tsx";
+import Navbar from "./components/Navbar/Navbar.tsx";
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
