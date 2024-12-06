@@ -5,7 +5,7 @@ const CreateFood = () => {
   return (
     <>
       <Header title="Create Food" onAccept={() => console.log("Accept")} />
-      <div className="flex flex-col m-4 gap-5">
+      <div className="flex flex-col m-4 mt-5 gap-5">
         <Input size="lg" label="Brand Name" placeholder="ex. Alfredo" />
         <Input size="lg" label="Description" placeholder="ex. Chicken Breast" />
         <Input size="lg" label="Serving Size" placeholder="ex. 1 cup / 30g" />

@@ -16,7 +16,7 @@ const Scanner = () => {
       console.log("Barcode scanned:", result.content);
       const food = await getFoodByBarcode(result.content);
       console.log("Food:", food);
-      navigate("/add-food");
+      navigate("/search");
     } catch (error) {
       console.error("Failed to scan barcode:", error);
     }
