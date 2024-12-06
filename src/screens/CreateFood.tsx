@@ -21,7 +21,6 @@ const CreateFood = () => {
         <Input size="lg" label="Fiber (g)" />
       </div>
     </>
-
   );
 };
 

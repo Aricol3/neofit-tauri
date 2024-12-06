@@ -10,7 +10,7 @@ import { PropsWithChildren } from "react";
 function Layout({ children }: PropsWithChildren) {
   const location = useLocation();
 
-  const routesWithHeader = ["/profile"];
+  const routesWithHeader = ["/search", "/profile"];
   const needsPadding = routesWithHeader.includes(location.pathname);
 
   return (
@@ -27,7 +27,7 @@ export default function MainRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/scan" element={<Scanner />} />
         <Route path="/nutrition" element={<Nutrition />} />
-        <Route path="/add-food" element={<AddFood />} />
+        <Route path="/search" element={<AddFood />} />
         <Route path="/edit-food" element={<EditFood />} />
         <Route path="/profile" element={<CreateFood />} />
       </Routes>
