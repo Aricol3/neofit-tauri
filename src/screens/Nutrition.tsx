@@ -2,6 +2,7 @@ import { Divider, Progress } from "@nextui-org/react";
 import FoodCard from "../components/FoodCard.tsx";
 import MacroProgress from "../components/MacroProgress.tsx";
 import { MACRO } from "../types.ts";
+import MealSection from "../components/MealSection.tsx";
 
 const Nutrition = () => {
   const proteinValue = 104;
@@ -22,26 +23,7 @@ const Nutrition = () => {
       <MacroProgress label={MACRO.CARBS} value={carbohydratesValue} targetValue={targetCarbohydratesValue}/>
       <MacroProgress label={MACRO.FAT} value={fatValue} targetValue={targetFatValue}/>
       <Divider />
-      <h1 className="text-xl mt-2 mb-2">Breakfast</h1>
-      <div className="flex flex-col gap-4">
-        <FoodCard />
-        <FoodCard />
-        <FoodCard />
-      </div>
-      <Divider />
-      <h1 className="text-xl mt-2 mb-2">Lunch</h1>
-      <div className="flex flex-col gap-4">
-        <FoodCard />
-        <FoodCard />
-        <FoodCard />
-      </div>
-      <Divider />
-      <h1 className="text-xl mt-2 mb-2">Dinner</h1>
-      <div className="flex flex-col gap-4">
-        <FoodCard />
-        <FoodCard />
-        <FoodCard />
-      </div>
+      <MealSection />
     </div>
   );
 };
