@@ -7,3 +7,10 @@ export enum MACRO {
   FAT = "fat",
   PROTEIN = "protein"
 }
+
+export enum MEAL {
+  BREAKFAST = "Breakfast",
+  LUNCH = "Lunch",
+  DINNER = "Dinner",
+  SNACK = "Snack"
+}

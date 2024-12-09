@@ -39,6 +39,7 @@ const Home = () => {
         </svg>
       </div>
       <img className="mt-28 size-80" src={acaiBowl} alt="acai bowl" />
+      <img className="mt-28 size-80" src={acaiBowl2} alt="acai bowl" />
 
       <Card className="w-full h-[240px] border-none bg-gradient-to-br from-primary to-fuchsia-500">
         <CardBody className="justify-center items-center pb-0">
@@ -69,7 +70,7 @@ const Home = () => {
             }}
             variant="bordered"
           >
-            2800 Data points
+            ceva ceva
           </Chip>
         </CardFooter>
       </Card>
