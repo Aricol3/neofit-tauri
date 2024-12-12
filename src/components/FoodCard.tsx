@@ -1,24 +1,75 @@
-import { useState } from "react";
-import { Card, CardBody } from "@nextui-org/react";
-import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion-legacy";
+import { SwipeActions } from "./SwipeActions/SwipeActions.tsx";
 
-const FoodCard = ({ onDelete }) => {
-  const navigate = useNavigate();
+interface SwiperProps {
+  id?: number;
+  title: string;
+  subtitle: string;
+  calories: number;
+  onDelete?: () => void;
+}
 
+const FoodCard = ({ title, subtitle, calories, onDelete }: SwiperProps) => {
   return (
-    <div style={{ position: "relative" }} onClick={()=>navigate("/edit-food")}>
-        <Card style={{backgroundColor:"#faf9f6"}}>
-          <CardBody className="flex flex-row  text-sm justify-between">
+    <motion.div
+      layout
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{
+        opacity: 0,
+        height: 0,
+        transition: {
+          duration: 0.3,
+          ease: "easeInOut"
+        }
+      }}
+      transition={{
+        layout: { duration: 0.3 },
+        initial: { duration: 0.3 },
+        animate: { duration: 0.3 }
+      }}
+    >
+      <SwipeActions.Root className="w-auto text-base will-change-transform">
+        <SwipeActions.Trigger
+          className="
+                        p-3
+                        bg-white
+                        rounded-lg
+                        shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]"
+        >
+          <div className="flex flex-row w-full items-center justify-between gap-1 mb-1 h-12">
             <div className="text-sm">
-              <p className="font-normal">Chicken Strips American Style With Curry</p>
-              <p className="font-light">Culinea, 500 gram</p>
+              <p className="font-normal">{title}</p>
+              <p className="font-light">{subtitle}</p>
             </div>
             <div className="text-sm">
-              900
+              {calories}
             </div>
-          </CardBody>
-        </Card>
-    </div>
+          </div>
+        </SwipeActions.Trigger>
+        <SwipeActions.Actions
+          wrapperClassName="rounded-lg bg-[#ff3333]"
+        >
+          <SwipeActions.Action
+            className="
+                            h-full
+                            aspect-square
+                            flex
+                            flex-col
+                            justify-center
+                            items-center
+                            gap-2
+                            text-white
+                            text-xs
+                            cursor-pointer
+                            select-none"
+            onClick={onDelete}
+          >
+            <div>Delete</div>
+          </SwipeActions.Action>
+        </SwipeActions.Actions>
+      </SwipeActions.Root>
+    </motion.div>
   );
 };
 

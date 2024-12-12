@@ -1,22 +1,46 @@
 import FoodCard from "./FoodCard.tsx";
+import { AnimatePresence } from "framer-motion-legacy";
+import { useState } from "react";
+import { Card, CardBody, CardHeader } from "@nextui-org/react";
 
 interface MealSectionProps {
   meal: string;
 }
 
-const MealSection = ({meal}:MealSectionProps) => {
+const MealSection = ({ meal }: MealSectionProps) => {
+  const [swipers, setSwipers] = useState([
+    { id: 1, title: "Chicken Strips American Style With Curry", subtitle: "Culinea, 500 gram", calories: 900 },
+    { id: 2, title: "Apple Pie", subtitle: "Somebody somewhere", calories: 750 },
+    { id: 3, title: "Another apple pie", subtitle: "Another description", calories: 600 }
+  ]);
 
-  const onDelete=() =>console.log("delete");
+  const onDelete = (idToDelete: number) => {
+    setSwipers(currentSwipers =>
+      currentSwipers.filter(swiper => swiper.id !== idToDelete)
+    );
+  };
 
   return (
-    <>
-      <h1 className="text-xl mt-2 mb-2">{meal}</h1>
-      <div className="flex flex-col gap-2">
-        <FoodCard onDelete={onDelete}/>
-        <FoodCard onDelete={onDelete}/>
-        <FoodCard onDelete={onDelete}/>
-      </div>
-    </>
+    <Card className="mt-5 overflow-hidden meal-section">
+      <CardHeader className="flex justify-between">
+        <div className="text-xl">{meal}</div>
+        <div>1900</div>
+      </CardHeader>
+      <CardBody className="w-full p-0 overflow-hidden">
+        <AnimatePresence>
+          {swipers.map((swiper) => (
+            <FoodCard
+              key={swiper.id}
+              {...swiper}
+              onDelete={() => onDelete(swiper.id)}
+            />
+          ))}
+        </AnimatePresence>
+        {/*<Divider/>*/}
+        <h1 className="text-large font-bold text-primary p-3 w-min text-nowrap"
+            onClick={() => console.log("add food")}>ADD FOOD</h1>
+      </CardBody>
+    </Card>
   );
 };
 

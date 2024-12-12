@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
+import { Divider } from "@nextui-org/react";
 import MacroProgress from "../components/MacroProgress.tsx";
 import { MACRO, MEAL } from "../types.ts";
 import MealSection from "../components/MealSection.tsx";
@@ -22,44 +22,9 @@ const Nutrition = () => {
       <MacroProgress label={MACRO.CARBS} value={carbohydratesValue} targetValue={targetCarbohydratesValue} />
       <MacroProgress label={MACRO.FAT} value={fatValue} targetValue={targetFatValue} />
       <Divider />
-      <MealSection meal={MEAL.BREAKFAST}/>
-      {/*<MealSection meal={MEAL.LUNCH}/>*/}
-      {/*<MealSection meal={MEAL.DINNER}/>*/}
-      <Card className="mt-4" style={{ backgroundColor: "#faf9f6" }}>
-        <CardHeader className="flex flex-col items-start">
-          <div className="text-xl">Breakfast</div>
-          <Divider />
-        </CardHeader>
-        <CardBody>
-          <div className="flex flex-row items-center justify-between gap-1 mb-1 h-12">
-            <div className="text-sm">
-              <p className="font-normal">Chicken Strips American Style With Curry</p>
-              <p className="font-light">Culinea, 500 gram</p>
-            </div>
-            <div className="text-sm">
-              900
-            </div>
-          </div>
-          <div className="flex flex-row items-center justify-between gap-1 mb-2 h-12">
-            <div className="text-sm">
-              <p className="font-normal">Chicken Strips American Style With Curry</p>
-              <p className="font-light">Culinea, 500 gram</p>
-            </div>
-            <div className="text-sm">
-              900
-            </div>
-          </div>
-          <div className="flex flex-row items-center justify-between gap-1 mb-2 h-12">
-            <div className="text-sm">
-              <p className="font-normal">Chicken Strips American Style With Curry</p>
-              <p className="font-light">Culinea, 500 gram</p>
-            </div>
-            <div className="text-sm">
-              900
-            </div>
-          </div>
-        </CardBody>
-      </Card>
+      <MealSection meal={MEAL.BREAKFAST} />
+      <MealSection meal={MEAL.LUNCH} />
+      <MealSection meal={MEAL.DINNER} />
     </div>
   );
 };

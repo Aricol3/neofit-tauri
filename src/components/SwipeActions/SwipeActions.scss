@@ -1,0 +1,26 @@
+.SwipeActions {
+  position: relative;
+
+  .trigger {
+    position: relative;
+    z-index: 1;
+  }
+
+  .actions-wrapper {
+    position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+
+  .actions {
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .action:focus-visible {
+    outline-offset: -2px;
+    outline-width: 2px;
+  }
+}
