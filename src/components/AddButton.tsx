@@ -3,6 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  impactFeedback,
+} from '@tauri-apps/plugin-haptics'
 
 interface AddButtonProps {
   onAdd: () => void;
@@ -12,9 +15,9 @@ const AddButton = ({ onAdd }: AddButtonProps) => {
   const [isClicked, setIsClicked] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (isAnimating) return;
-
+    await impactFeedback('medium')
     setIsClicked(true);
     setIsAnimating(true);
     onAdd();
@@ -27,6 +30,7 @@ const AddButton = ({ onAdd }: AddButtonProps) => {
 
   return (
     <motion.div
+      initial={{ backgroundColor: "#f5f5f5"}}
       animate={{
         backgroundColor: isClicked ? "#9e86ff" : "#f5f5f5",
       }}
@@ -36,8 +40,8 @@ const AddButton = ({ onAdd }: AddButtonProps) => {
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={isClicked ? "check" : "plus"}
-          initial={{ scale: 0, opacity: 0, rotate: -90 }}
-          animate={{ scale: 1, opacity: 1, rotate: 0 }}
+          // initial={{ scale: 0, opacity: 0, rotate: -90 }}
+          // animate={{ scale: 1, opacity: 1, rotate: 0 }}
           exit={{ scale: 0, opacity: 0, rotate: 90 }}
           transition={{ duration: 0.1 }}
           style={{ display: "flex", justifyContent: "center", alignItems: "center" }}

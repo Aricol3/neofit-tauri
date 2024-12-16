@@ -3237,6 +3237,13 @@
   dependencies:
     "@tauri-apps/api" "^2.0.0"
 
+"@tauri-apps/plugin-haptics@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-haptics/-/plugin-haptics-2.2.0.tgz#0cea98c0581e495212611ffd1c05fb19fe3018a0"
+  integrity sha512-4x/QFowYsyWdZpg/1HRA3eMkX4Rol0su5XBneKeYat6EdXBTnMnuqYBaDKUcpH3vJF6UGWA3AzPeA4a+ewWS8Q==
+  dependencies:
+    "@tauri-apps/api" "^2.0.0"
+
 "@tauri-apps/plugin-log@~2":
   version "2.0.0"
   resolved "https://registry.npmjs.org/@tauri-apps/plugin-log/-/plugin-log-2.0.0.tgz"
