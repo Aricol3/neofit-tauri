@@ -6,6 +6,7 @@ import AddFood from "./screens/AddFood.tsx";
 import EditFood from "./screens/EditFood.tsx";
 import CreateFood from "./screens/CreateFood.tsx";
 import { PropsWithChildren } from "react";
+import Search from "./screens/Search.tsx";
 
 function Layout({ children }: PropsWithChildren) {
   const location = useLocation();
@@ -29,7 +30,7 @@ export default function MainRoutes() {
         <Route path="/nutrition" element={<Nutrition />} />
         <Route path="/search" element={<AddFood />} />
         <Route path="/edit-food" element={<EditFood />} />
-        <Route path="/profile" element={<CreateFood />} />
+        <Route path="/profile" element={<Search />} />
       </Routes>
     </Layout>
   );

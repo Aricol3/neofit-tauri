@@ -1,17 +1,24 @@
 import { motion } from "framer-motion-legacy";
 import { SwipeActions } from "./SwipeActions/SwipeActions.tsx";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
+import { Button, Chip } from "@nextui-org/react";
+import AddButton from "./AddButton.tsx";
 
 interface SwiperProps {
   id?: number;
   title: string;
   subtitle: string;
-  calories: number;
   onDelete?: () => void;
 }
 
-const FoodCard = ({ title, subtitle, calories, onDelete }: SwiperProps) => {
+const HistoryCard = ({ title, subtitle, onDelete }: SwiperProps) => {
   const navigate = useNavigate();
+
+  const onAdd = () => {
+    console.log("onAdd");
+  };
 
   return (
     <motion.div
@@ -37,18 +44,16 @@ const FoodCard = ({ title, subtitle, calories, onDelete }: SwiperProps) => {
         <SwipeActions.Trigger
           className="
                         p-3
-                        bg-white
+                        bg-gray-50
                         rounded-lg
                         shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]"
         >
-          <div className="flex flex-row w-full items-center justify-between gap-1 mb-1 h-12" onClick={()=>navigate("/edit-food")}>
-            <div className="text-sm">
+          <div className="flex flex-row w-full items-center justify-between gap-1 mb-1 h-12">
+            <div className="text-sm w-full" onClick={() => navigate("/edit-food")}>
               <p className="font-normal">{title}</p>
               <p className="font-light">{subtitle}</p>
             </div>
-            <div className="text-sm">
-              {calories}
-            </div>
+            <AddButton onAdd={onAdd} />
           </div>
         </SwipeActions.Trigger>
         <SwipeActions.Actions
@@ -77,4 +82,4 @@ const FoodCard = ({ title, subtitle, calories, onDelete }: SwiperProps) => {
   );
 };
 
-export default FoodCard;
+export default HistoryCard;
