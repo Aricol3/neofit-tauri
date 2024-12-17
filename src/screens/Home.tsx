@@ -1,30 +1,14 @@
 import acaiBowl from "../assets/acai-bowl1.webp";
 import acaiBowl2 from "../assets/acai-bowl2.webp";
 import { Card, CardBody, CardFooter, Chip, CircularProgress } from "@nextui-org/react";
+import CaloriesProgress from "../components/CaloriesProgress.tsx";
 
 const Home = () => {
 
   return (
     <div className="bg-transparent flex flex-col items-center">
       <div className="bg-filler"></div>
-      <CircularProgress
-        classNames={{
-          svg: "w-48 h-48 drop-shadow-md",
-          indicator: "stroke-white",
-          track: "stroke-white/10",
-          value: "text-3xl font-semibold text-white"
-        }}
-        showValueLabel={true}
-        valueLabel={
-          <div
-            style={{ display: "flex", flexDirection: "column", lineHeight: "1"}}>
-            <span style={{ textAlign: "center", fontSize: "36px" }}>1863</span>
-            <span style={{ textAlign: "center", fontSize: "14px" }}>remaining</span>
-          </div>
-        }
-        strokeWidth={3}
-        value={70}
-      />
+      <CaloriesProgress/>
       <div className="custom-shape-divider-top-1733522718">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
           <path
