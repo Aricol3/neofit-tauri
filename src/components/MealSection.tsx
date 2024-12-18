@@ -1,6 +1,8 @@
+import { useDispatch, useSelector } from "react-redux";
+import { IRootState } from "../store.ts";
+import { addMealEntry, removeMealEntry } from "../slices/nutritionSlice";
 import FoodCard from "./FoodCard.tsx";
 import { AnimatePresence } from "framer-motion-legacy";
-import { useState } from "react";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
 
 interface MealSectionProps {
@@ -8,37 +10,55 @@ interface MealSectionProps {
 }
 
 const MealSection = ({ meal }: MealSectionProps) => {
-  const [swipers, setSwipers] = useState([
-    { id: 1, title: "Chicken Strips American Style With Curry", subtitle: "Culinea, 500 gram", calories: 900 },
-    { id: 2, title: "Apple Pie", subtitle: "Somebody somewhere", calories: 750 },
-    { id: 3, title: "Another apple pie", subtitle: "Another description", calories: 600 }
-  ]);
+  const dispatch = useDispatch();
+  const entries = useSelector(
+    (state: IRootState) => state.nutrition?.mealEntries[meal]
+  );
+
+  const nutrition = useSelector(
+    (state: IRootState) => state.nutrition
+  );
+
+  console.log("???",nutrition);
 
   const onDelete = (idToDelete: number) => {
-    setSwipers(currentSwipers =>
-      currentSwipers.filter(swiper => swiper.id !== idToDelete)
-    );
+    dispatch(removeMealEntry({ meal, entryId: idToDelete }));
+  };
+
+  const handleAddFood = () => {
+    const newEntry = {
+      id: Math.random(),
+      name: "New Food Item",
+      description: "Description of the item",
+      calories: 400,
+    };
+    dispatch(addMealEntry({ meal, entry: newEntry }));
   };
 
   return (
     <Card className="mt-5 overflow-hidden meal-section">
       <CardHeader className="flex justify-between">
         <div className="text-xl">{meal}</div>
-        <div>1900</div>
+        <div>{entries?.reduce((sum, entry) => sum + entry.calories, 0)} kcal</div>
       </CardHeader>
       <CardBody className="w-full p-0 overflow-hidden">
         <AnimatePresence>
-          {swipers.map((swiper) => (
+          {entries?.map((entry) => (
             <FoodCard
-              key={swiper.id}
-              {...swiper}
-              onDelete={() => onDelete(swiper.id)}
+              key={Math.random()}
+              title={entry.description}
+              subtitle={entry.name}
+              calories={entry.calories}
+              onDelete={() => onDelete(entry.id)}
             />
           ))}
         </AnimatePresence>
-        {/*<Divider/>*/}
-        <h1 className="text-large font-bold text-primary p-3 w-min text-nowrap"
-            onClick={() => console.log("add food")}>ADD FOOD</h1>
+        <h1
+          className="text-large font-bold text-primary p-3 w-min text-nowrap"
+          onClick={handleAddFood}
+        >
+          ADD FOOD
+        </h1>
       </CardBody>
     </Card>
   );

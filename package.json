@@ -18,6 +18,7 @@
     "@mui/material": "^6.1.10",
     "@mui/x-charts": "^7.23.1",
     "@nextui-org/react": "^2.4.8",
+    "@reduxjs/toolkit": "^2.5.0",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-barcode-scanner": "~2",
     "@tauri-apps/plugin-haptics": "^2.2.0",
@@ -28,7 +29,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-merge-refs": "^2.1.1",
-    "react-use-motion-measure": "^3.0.0"
+    "react-redux": "^9.2.0",
+    "react-use-motion-measure": "^3.0.0",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2",
