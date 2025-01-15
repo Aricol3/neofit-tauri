@@ -15,11 +15,7 @@ const MealSection = ({ meal }: MealSectionProps) => {
     (state: IRootState) => state.nutrition?.mealEntries[meal]
   );
 
-  const nutrition = useSelector(
-    (state: IRootState) => state.nutrition
-  );
-
-  console.log("???",nutrition);
+  console.log("ENTRIES", entries);
 
   const onDelete = (idToDelete: number) => {
     dispatch(removeMealEntry({ meal, entryId: idToDelete }));

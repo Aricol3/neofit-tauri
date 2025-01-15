@@ -30,6 +30,7 @@ const AddFood = () => {
 
   const handleAccept = () => {
     const foodData = {
+      id: Math.random(),
       description: scannedFood?.description || "",
       name: scannedFood?.name || "",
       servingSize,
@@ -38,10 +39,10 @@ const AddFood = () => {
       calories: scannedFood?.calories,
       totalCarbohydrates: scannedFood?.totalCarbohydrates || 0,
       totalFat: scannedFood?.totalFat || 0,
-      protein: scannedFood?.protein || 0,
+      protein: scannedFood?.protein || 0
     };
     console.log(foodData);
-    dispatch(addMealEntry({ meal:selectedMeal, entry: foodData }))
+    dispatch(addMealEntry({ meal: selectedMeal, entry: foodData }));
   };
 
   return (
@@ -108,7 +109,8 @@ const AddFood = () => {
         </Dropdown>
         <div className="flex flex-row items-center">
           <div style={{ width: "130px", height: "130px" }}>
-            <DonutChart carbs={scannedFood.totalCarbohydrates} fat={scannedFood.totalFat} protein={scannedFood.protein} />
+            <DonutChart calories={scannedFood.calories} carbs={scannedFood.totalCarbohydrates}
+                        fat={scannedFood.totalFat} protein={scannedFood.protein} />
           </div>
           <div className="w-full flex flex-row justify-between items-center pl-3 pr-3">
             <div className="flex flex-col items-center">

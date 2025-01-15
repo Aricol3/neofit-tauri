@@ -3,12 +3,13 @@ import { useDrawingArea } from "@mui/x-charts";
 import { styled } from "@mui/material";
 
 interface DonutChartProps {
+  calories: number,
   carbs: number,
   fat: number,
   protein: number
 }
 
-const DonutChart = ({ carbs, fat, protein }: DonutChartProps) => {
+const DonutChart = ({ calories, carbs, fat, protein }: DonutChartProps) => {
   const data = [
     { value: carbs },
     { value: fat },
@@ -31,7 +32,7 @@ const DonutChart = ({ carbs, fat, protein }: DonutChartProps) => {
     return (
       <>
         <StyledText x={left + width / 2 + 37} y={top + height / 2 - 8} fontSize={20} fontWeight="bold">
-          1300
+          {calories}
         </StyledText>
         <StyledText x={left + width / 2 + 37} y={top + height / 2 + 12} fontSize={16}>
           cal
@@ -43,7 +44,7 @@ const DonutChart = ({ carbs, fat, protein }: DonutChartProps) => {
   return (
     <>
       <PieChart
-        colors={["#40E0D0","#A569BD","#FFC66E" ]}
+        colors={["#40E0D0", "#A569BD", "#FFC66E"]}
         series={[
           {
             data,

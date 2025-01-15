@@ -2,7 +2,7 @@ import { cancel, Format, scan } from "@tauri-apps/plugin-barcode-scanner";
 import { useEffect } from "react";
 import { Button } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
-import { getFoodByBarcode } from "../api/foodApi.ts";
+import { fetchFoodByBarcode } from "../api/foodApi.ts";
 import { useDispatch } from "react-redux";
 import { setScannedFood } from "../slices/nutritionSlice.ts";
 
@@ -17,7 +17,7 @@ const Scanner = () => {
         formats: [Format.EAN8, Format.EAN13]
       });
       console.log("Barcode scanned:", result.content);
-      const food = await getFoodByBarcode(result.content);
+      const food = await fetchFoodByBarcode(result.content);
       console.log("Food:", food);
       dispatch(setScannedFood(food));
       navigate("/add-food");

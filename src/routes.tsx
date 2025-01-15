@@ -31,7 +31,7 @@ export default function MainRoutes() {
         <Route path="/add-food" element={<AddFood />} />
         <Route path="/search" element={<AddFood />} />
         <Route path="/edit-food" element={<EditFood />} />
-        <Route path="/profile" element={<Search />} />
+        <Route path="/profile" element={<CreateFood />} />
       </Routes>
     </Layout>
   );
