@@ -23,10 +23,10 @@ const DayHeader = () => {
 
   return (
     <motion.div
-      animate={{ backgroundColor: isTop ? "#f9fbfc" : "#ffffff" }}
+      animate={{ backgroundColor: isTop ? "#f5f9fa" : "#ffffff" }}
       transition={{ duration: 0.3 }}
       className={`day-header flex flex-row justify-between items-center pl-5 pr-5 pt-16 pb-5 z-50 fixed w-full top-0 transition-shadow ${
-        isTop ? "" : "shadow-[0_20px_30px_rgba(0,0,0,0.03)]"
+        isTop ? "" : "shadow-[0_40px_60px_rgba(0,0,0,0.03)]"
       }`}>
       <AnimatePresence mode="wait">
         <motion.h1

@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 :root {
-  background-color: #f9fbfc;
+  background-color: #f5f9fa;
   user-select: none;
 }
 
@@ -20,6 +20,10 @@ body {
   background-color: transparent;
   width: 100vw;
   height: 100vh;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 img {

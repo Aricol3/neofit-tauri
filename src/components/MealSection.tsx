@@ -12,6 +12,7 @@ import { faBowlFood } from "@fortawesome/free-solid-svg-icons/faBowlFood";
 import { faBurger } from "@fortawesome/free-solid-svg-icons/faBurger";
 import { faWineGlass } from "@fortawesome/free-solid-svg-icons/faWineGlass";
 import { faCookieBite } from "@fortawesome/free-solid-svg-icons/faCookieBite";
+import { impactFeedback } from "@tauri-apps/plugin-haptics";
 
 interface MealSectionProps {
   meal: string;
@@ -25,7 +26,8 @@ const MealSection = ({ meal }: MealSectionProps) => {
 
   console.log("ENTRIES", entries);
 
-  const onDelete = useCallback((idToDelete: number) => {
+  const onDelete = useCallback(async (idToDelete: number) => {
+    await impactFeedback('medium');
     dispatch(removeMealEntry({ meal, entryId: idToDelete }));
   }, [dispatch, meal]);
 
