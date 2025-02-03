@@ -26,9 +26,22 @@ img {
   pointer-events: none;
 }
 
-.header{
+.header {
   background-color: #faf9f6;
+  color: #474767;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.day-header {
+  background-color: #fcfcfc;
+  color: #474767;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  //box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.day-picker {
+  color: #aab8ca;
 }
 
 .bg-filler {
@@ -38,7 +51,7 @@ img {
   width: 100%;
   overflow: hidden;
   line-height: 0;
-  height:300px;
+  height: 300px;
   z-index: -1;
   background-color: #9E86FF;
 }

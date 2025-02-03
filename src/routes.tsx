@@ -12,10 +12,12 @@ function Layout({ children }: PropsWithChildren) {
   const location = useLocation();
 
   const routesWithHeader = ["/search", "/profile", "/add-food"];
+  const routesWithDayHeader = ["/nutrition"];
   const needsPadding = routesWithHeader.includes(location.pathname);
+  const needsDayHeaderPadding = routesWithDayHeader.includes(location.pathname);
 
   return (
-    <div style={{ paddingTop: needsPadding ? "3rem" : "0" }}>
+    <div style={{ paddingTop: needsPadding ? "3rem" : needsDayHeaderPadding ? "4rem" : "0" }}>
       {children}
     </div>
   );
