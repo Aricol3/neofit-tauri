@@ -4,6 +4,14 @@ import { addMealEntry, removeMealEntry } from "../slices/nutritionSlice";
 import FoodCard from "./FoodCard.tsx";
 import { AnimatePresence } from "framer-motion-legacy";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { ReactNode, useCallback, useMemo } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMugHot } from "@fortawesome/free-solid-svg-icons/faMugHot";
+import { faAppleAlt, faUtensils } from "@fortawesome/free-solid-svg-icons";
+import { faBowlFood } from "@fortawesome/free-solid-svg-icons/faBowlFood";
+import { faBurger } from "@fortawesome/free-solid-svg-icons/faBurger";
+import { faWineGlass } from "@fortawesome/free-solid-svg-icons/faWineGlass";
+import { faCookieBite } from "@fortawesome/free-solid-svg-icons/faCookieBite";
 
 interface MealSectionProps {
   meal: string;
@@ -17,40 +25,65 @@ const MealSection = ({ meal }: MealSectionProps) => {
 
   console.log("ENTRIES", entries);
 
-  const onDelete = (idToDelete: number) => {
+  const onDelete = useCallback((idToDelete: number) => {
     dispatch(removeMealEntry({ meal, entryId: idToDelete }));
-  };
+  }, [dispatch, meal]);
+
 
   const handleAddFood = () => {
     const newEntry = {
-      id: Math.random(),
-      name: "New Food Item",
-      description: "Description of the item",
-      calories: 400,
+      id: Date.now(),
+      name: "6 serving • 240 g",
+      description: "Old Fashioned Oats - Quaker",
+      calories: 400
     };
     dispatch(addMealEntry({ meal, entry: newEntry }));
   };
 
+  const totalCalories = useMemo(() => {
+    return entries?.reduce((sum, entry) => sum + entry.calories, 0) || 0;
+  }, [entries]);
+
+  const getMealIcon = (meal: string) => {
+    const icons: Record<string, ReactNode> = {
+      Breakfast: <FontAwesomeIcon className="mb-1" color="#50545A" icon={faMugHot} size="lg" />,
+      Lunch: <FontAwesomeIcon color="#50545A" icon={faBurger} size="lg" />,
+      Dinner: <FontAwesomeIcon color="#50545A" icon={faWineGlass} size="lg" />,
+      Snack: <FontAwesomeIcon color="#50545A" icon={faCookieBite} size="lg" />
+    };
+    return icons[meal] || "🍽️";
+  };
+
+
   return (
-    <Card className="mt-5 overflow-hidden meal-section">
-      <CardHeader className="flex justify-between">
-        <div className="text-xl">{meal}</div>
-        <div>{entries?.reduce((sum, entry) => sum + entry.calories, 0)} kcal</div>
+    <Card className="mt-3 overflow-hidden meal-section" shadow="none">
+      <CardHeader className="flex justify-between text-textPrimaryColor">
+        <div className="text-lg font-[600] flex items-center gap-3">
+          {getMealIcon(meal)}
+          {meal}
+        </div>
+        <div>{totalCalories} kcal</div>
       </CardHeader>
       <CardBody className="w-full p-0 overflow-hidden">
         <AnimatePresence>
-          {entries?.map((entry) => (
-            <FoodCard
-              key={Math.random()}
-              title={entry.description}
-              subtitle={entry.name}
-              calories={entry.calories}
-              onDelete={() => onDelete(entry.id)}
-            />
-          ))}
+          {entries?.length ? (
+            entries.map((entry) => (
+              <FoodCard
+                key={entry.id}
+                title={entry.description}
+                subtitle={entry.name}
+                calories={entry.calories}
+                onDelete={() => onDelete(entry.id)}
+              />
+            ))
+          ) : (
+            <div className="p-3 text-textSecondaryColor text-sm">
+              You haven't logged anything yet.
+            </div>
+          )}
         </AnimatePresence>
         <h1
-          className="text-large font-bold text-primary p-3 w-min text-nowrap"
+          className="text-lg font-bold text-primary p-3 w-full text-nowrap text-right"
           onClick={handleAddFood}
         >
           ADD FOOD

@@ -22,7 +22,9 @@ module.exports = {
           primary: "#9e86ff",
           carbsColor: "#40E0D0",
           fatColor: "#A569BD",
-          proteinColor: "#FFC66E"
+          proteinColor: "#FFC66E",
+          textPrimaryColor: "#474768",
+          textSecondaryColor: "#8fa1b1",
         }
       }
     }

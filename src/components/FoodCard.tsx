@@ -38,16 +38,16 @@ const FoodCard = ({ title, subtitle, calories, onDelete }: SwiperProps) => {
           className="
                         p-3
                         bg-white
-                        rounded-lg
-                        shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]"
+                        rounded-lg"
+                        // shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]
         >
           <div className="flex flex-row w-full items-center justify-between gap-3 mb-1 h-12" onClick={()=>navigate("/edit-food")}>
-            <div className="text-sm">
-              <p className="font-normal">{title}</p>
-              <p className="font-light">{subtitle}</p>
+            <div className="text-sm space-y-1">
+              <p className="font-[500] text-textPrimaryColor">{title}</p>
+              <p className="font-[500] text-textSecondaryColor">{subtitle}</p>
             </div>
-            <div className="text-sm">
-              {calories}
+            <div className="text-sm text-textSecondaryColor">
+              {calories} kcal
             </div>
           </div>
         </SwipeActions.Trigger>

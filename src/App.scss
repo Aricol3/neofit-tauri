@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 :root {
-  background-color: transparent;
+  background-color: #f9fbfc;
   user-select: none;
 }
 
@@ -33,15 +33,9 @@ img {
 }
 
 .day-header {
-  background-color: #fcfcfc;
-  color: #474767;
   border-bottom-left-radius: 2rem;
   border-bottom-right-radius: 2rem;
   //box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
-}
-
-.day-picker {
-  color: #aab8ca;
 }
 
 .bg-filler {
