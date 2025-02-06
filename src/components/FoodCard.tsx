@@ -39,14 +39,15 @@ const FoodCard = ({ title, subtitle, calories, onDelete }: SwiperProps) => {
                         p-3
                         bg-white
                         rounded-lg"
-                        // shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]
+          // shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]
         >
-          <div className="flex flex-row w-full items-center justify-between gap-3 mb-1 h-12" onClick={()=>navigate("/edit-food")}>
+          <div className="flex flex-row w-full items-center justify-between gap-3 mb-1 h-12"
+               onClick={() => navigate("/edit-food")}>
             <div className="text-sm space-y-1">
               <p className="font-[500] text-textPrimaryColor">{title}</p>
               <p className="font-[500] text-textSecondaryColor">{subtitle}</p>
             </div>
-            <div className="text-sm text-textSecondaryColor">
+            <div className="text-sm text-textSecondaryColor" style={{ fontFamily: "Lexend Deca" }}>
               {calories} kcal
             </div>
           </div>

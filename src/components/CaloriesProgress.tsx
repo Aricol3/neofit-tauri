@@ -17,7 +17,7 @@ const CaloriesProgress = () => {
         valueLabel={
           <div
             style={{ display: "flex", flexDirection: "column", lineHeight: "1" }}>
-            <span style={{ textAlign: "center", fontSize: "36px" }}>1863</span>
+            <span style={{ textAlign: "center", fontSize: "36px", fontFamily: "Lexend Deca" }}>1863</span>
             <span style={{ textAlign: "center", fontSize: "14px" }}>remaining</span>
           </div>
         }
@@ -29,14 +29,14 @@ const CaloriesProgress = () => {
           <FontAwesomeIcon icon={faFlag} size="2x" color="white" />
           <div className="text-white leading-3 pt-2">
             <p>Goal</p>
-            <p className="text-lg font-bold">3300</p>
+            <p className="text-lg font-bold" style={{ fontFamily: "Lexend Deca" }}>3300</p>
           </div>
         </div>
         <div className="flex flex-row items-center gap-4">
           <FontAwesomeIcon icon={faBowlFood} size="2x" color="white" />
           <div className="text-white leading-3 pt-2">
             <p>Food</p>
-            <p className="text-lg font-bold">1700</p>
+            <p className="text-lg font-bold" style={{ fontFamily: "Lexend Deca" }}>1700</p>
           </div>
         </div>
       </div>

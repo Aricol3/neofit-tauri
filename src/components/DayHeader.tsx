@@ -38,7 +38,9 @@ const DayHeader = () => {
           exit="exit"
           className="font-bold text-2xl text-textPrimaryColor"
         >
-          {isTop ? "Today" : "Tomorrow"}
+          {isTop ? "Today" :
+            <p>2723 <span className="text-textSecondaryColor text-sm font-[600]">/ 3623</span></p>
+          }
         </motion.h1>
       </AnimatePresence>
       <DayPicker />

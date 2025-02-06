@@ -7,8 +7,6 @@ import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { ReactNode, useCallback, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMugHot } from "@fortawesome/free-solid-svg-icons/faMugHot";
-import { faAppleAlt, faUtensils } from "@fortawesome/free-solid-svg-icons";
-import { faBowlFood } from "@fortawesome/free-solid-svg-icons/faBowlFood";
 import { faBurger } from "@fortawesome/free-solid-svg-icons/faBurger";
 import { faWineGlass } from "@fortawesome/free-solid-svg-icons/faWineGlass";
 import { faCookieBite } from "@fortawesome/free-solid-svg-icons/faCookieBite";
@@ -58,13 +56,13 @@ const MealSection = ({ meal }: MealSectionProps) => {
 
 
   return (
-    <Card className="mt-3 overflow-hidden meal-section" shadow="none">
+    <Card className="mt-3 min-h-[150px] overflow-hidden meal-section" shadow="none">
       <CardHeader className="flex justify-between text-textPrimaryColor">
         <div className="text-lg font-[600] flex items-center gap-3">
           {getMealIcon(meal)}
           {meal}
         </div>
-        <div>{totalCalories} kcal</div>
+        <div style={{ fontFamily: "Lexend Deca" }}>{totalCalories} kcal</div>
       </CardHeader>
       <CardBody className="w-full p-0 overflow-hidden">
         <AnimatePresence>

@@ -13,7 +13,7 @@ const MacroProgress = ({ label, value, targetValue }: MacroProgressProps) => {
       label={capitalizeFirstLetter(label)}
       size="md"
       valueLabel={
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", fontFamily: "IBM Plex Mono" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "1rem", fontFamily: "Lexend Deca" }}>
           <span style={{ textAlign: "right" }}>{value}</span>
           <span style={{ textAlign: "right" }}>{targetValue}</span>
           <span style={{ textAlign: "right" }}>{targetValue - value}</span>

@@ -26,10 +26,10 @@ const Home = () => {
       <img className="mt-28 size-80" src={acaiBowl2} alt="acai bowl" />
 
       <Card className="w-full h-[240px] border-none bg-gradient-to-br from-primary to-fuchsia-500">
-        <CardBody className="justify-center items-center pb-0">
+        <CardBody className="justify-center items-center pb-0 flex flex-row gap-5">
           <CircularProgress
             classNames={{
-              svg: "w-48 h-48 drop-shadow-md",
+              svg: "w-28 h-28 drop-shadow-md",
               indicator: "stroke-white",
               track: "stroke-white/10",
               value: "text-3xl font-semibold text-white"
@@ -37,12 +37,48 @@ const Home = () => {
             showValueLabel={true}
             valueLabel={
               <div
-                style={{ display: "flex", flexDirection: "column", lineHeight: "1"}}>
-                <span style={{ textAlign: "center", fontSize: "36px" }}>1863</span>
-                <span style={{ textAlign: "center", fontSize: "14px" }}>remaining</span>
+                style={{ display: "flex", flexDirection: "column", lineHeight: "1.3"}}>
+                <span style={{ textAlign: "center", fontSize: "28px",fontFamily:"Lexend Deca" }}>148</span>
+                <span style={{ textAlign: "center", fontSize: "14px" }}>/ 571</span>
               </div>
             }
-            strokeWidth={3}
+            strokeWidth={2.5}
+            value={70}
+          />
+          <CircularProgress
+            classNames={{
+              svg: "w-28 h-28 drop-shadow-md",
+              indicator: "stroke-white",
+              track: "stroke-white/10",
+              value: "text-3xl font-semibold text-white"
+            }}
+            showValueLabel={true}
+            valueLabel={
+              <div
+                style={{ display: "flex", flexDirection: "column", lineHeight: "1.3"}}>
+                <span style={{ textAlign: "center", fontSize: "28px",fontFamily:"Lexend Deca" }}>148</span>
+                <span style={{ textAlign: "center", fontSize: "14px" }}>/ 571</span>
+              </div>
+            }
+            strokeWidth={2.5}
+            value={70}
+          />
+          <CircularProgress
+            classNames={{
+              svg: "w-28 h-28 drop-shadow-md",
+              indicator: "stroke-white",
+              track: "stroke-white/10",
+              value: "text-3xl font-semibold text-white"
+            }}
+            showValueLabel={true}
+            valueLabel={
+              <div
+                style={{ display: "flex", flexDirection: "column", lineHeight: "1.3"}}>
+                <span style={{ textAlign: "center", fontSize: "28px",fontFamily:"Lexend Deca" }}>148</span>
+                <span style={{ textAlign: "center", fontSize: "14px" }}>/ 571</span>
+              </div>
+            }
+            strokeWidth={2.5}
             value={70}
           />
         </CardBody>
