@@ -4,6 +4,7 @@ import { MACRO, MEAL } from "../types.ts";
 import MealSection from "../components/MealSection.tsx";
 import DayHeader from "../components/DayHeader.tsx";
 import Macronutrients from "../components/Macronutrients.tsx";
+import Water from "../components/Water.tsx";
 
 const Nutrition = () => {
   const proteinValue = 104;
@@ -24,8 +25,9 @@ const Nutrition = () => {
       {/*<MacroProgress label={MACRO.CARBS} value={carbohydratesValue} targetValue={targetCarbohydratesValue} />*/}
       {/*<MacroProgress label={MACRO.FAT} value={fatValue} targetValue={targetFatValue} />*/}
       {/*<Divider />*/}
-      <div className="p-3 pt-1.5">
+      <div className="flex flex-col p-3 pt-1.5 gap-3">
         <Macronutrients/>
+        <Water/>
         <MealSection meal={MEAL.BREAKFAST} />
         <MealSection meal={MEAL.LUNCH} />
         <MealSection meal={MEAL.SNACK} />

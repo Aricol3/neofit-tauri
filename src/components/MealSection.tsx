@@ -56,7 +56,7 @@ const MealSection = ({ meal }: MealSectionProps) => {
 
 
   return (
-    <Card className="mt-3 min-h-[150px] overflow-hidden meal-section" shadow="none">
+    <Card className="min-h-[150px] overflow-hidden meal-section" shadow="none">
       <CardHeader className="flex justify-between text-textPrimaryColor">
         <div className="text-lg font-[600] flex items-center gap-3">
           {getMealIcon(meal)}

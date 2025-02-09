@@ -25,6 +25,7 @@ module.exports = {
           proteinColor: "#FFC66E",
           textPrimaryColor: "#474768",
           textSecondaryColor: "#8fa1b1",
+          waterBackground: "#6882fe",
         }
       }
     }
