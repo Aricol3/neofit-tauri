@@ -38,16 +38,16 @@
   &::after {
     content: "";
     position: absolute;
-    background-color: #1976d2;
+    background-color: #6882fe;
   }
 
   &::before {
     width: 0.5rem;
-    height: 2px;
+    height: 0.15rem;
   }
 
   &::after {
-    width: 2px;
+    width: 0.15rem;
     height: 0.5rem;
   }
 }
@@ -84,4 +84,17 @@
   &.filled {
     height: 80%;
   }
+}
+
+
+.swiper-pagination-bullet {
+  background-color: white !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: white !important;
+}
+
+.swiper-pagination {
+  margin-top: -10px;
 }

@@ -1,9 +1,13 @@
+import "swiper/scss";
+import "swiper/scss/pagination";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
 import { Card, CardBody, CardHeader } from "@nextui-org/react";
-import NewMacroProgress from "./NewMacroProgress.tsx";
-import { MACRO } from "../types.ts";
 import WaterCup from "./WaterCup.tsx";
 
 const Water = () => {
+  const totalCups = 12;
+  const filledCups = 3;
 
   return (
     <Card className="w-full h-[150px] border-none bg-waterBackground" shadow="none">
@@ -11,15 +15,25 @@ const Water = () => {
         <p className="text-white text-lg font-[600]">Water</p>
         <p className="text-white text-sm font-[600]">0,75 / 3,5 l</p>
       </CardHeader>
-      <CardBody className="justify-center items-center p-0 flex flex-row gap-2">
-        <WaterCup isFilled={true}/>
-        <WaterCup isFilled={true}/>
-        <WaterCup isFilled={true}/>
-        <WaterCup isFilled={false}/>
-        <WaterCup isFilled={false}/>
-        <WaterCup isFilled={false}/>
-        <WaterCup isFilled={false}/>
-        <WaterCup isFilled={false}/>
+      <CardBody className="flex flex-row pt-5 pb-1">
+        <Swiper
+          spaceBetween={0}
+          slidesPerView={8}
+          slidesPerGroup={8}
+          pagination={true}
+          modules={[Pagination]}
+          onSlideChange={() => console.log("slide change")}
+          onSwiper={(swiper) => console.log(swiper)}
+        >
+          {Array.from({ length: totalCups }).map((_, index) => (
+            <SwiperSlide key={index}>
+              <WaterCup
+                isFilled={index < filledCups}
+                isNextToFill={index === filledCups}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </CardBody>
     </Card>
   );
