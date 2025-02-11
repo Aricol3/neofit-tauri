@@ -3,6 +3,7 @@ import acaiBowl2 from "../assets/acai-bowl2.webp";
 import { Card, CardBody, CardFooter, Chip, CircularProgress } from "@nextui-org/react";
 import CaloriesProgress from "../components/CaloriesProgress.tsx";
 import WaterCup from "../components/WaterCup.tsx";
+import WorkoutSection from "../components/WorkoutSection.tsx";
 
 const Home = () => {
 
@@ -27,6 +28,9 @@ const Home = () => {
       {/*<img className="mt-28 size-80" src={acaiBowl} alt="acai bowl" />*/}
 
       {/*<img className="mt-28 size-80" src={acaiBowl2} alt="acai bowl" />*/}
+      <div className="mt-44 w-full p-3">
+        <WorkoutSection />
+      </div>
 
       <div className="flex flex-row gap-3 mt-44 ml-3 mr-3">
         <div className="flex flex-1">
