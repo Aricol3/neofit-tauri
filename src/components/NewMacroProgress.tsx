@@ -1,4 +1,4 @@
-import { CircularProgress, Progress } from "@nextui-org/react";
+import { CircularProgress } from "@nextui-org/react";
 import { capitalizeFirstLetter } from "../utils.ts";
 
 interface MacroProgressProps {
@@ -12,7 +12,8 @@ const NewMacroProgress = ({ label, value, targetValue }: MacroProgressProps) => 
     <div className="justify-center items-center p-0 flex flex-col">
       <CircularProgress
         classNames={{
-          svg: "w-24 h-24 drop-shadow-md",
+          // svg: "w-24 h-24 drop-shadow-md",
+          svg: "w-24 h-24",
           indicator: "stroke-white",
           track: "stroke-white/10",
           value: "text-lg text-white"
@@ -26,7 +27,8 @@ const NewMacroProgress = ({ label, value, targetValue }: MacroProgressProps) => 
           </div>
         }
         strokeWidth={2.5}
-        value={70}
+        value={value}
+        maxValue={targetValue}
       />
       <p className="font-[600] text-white">{capitalizeFirstLetter(label)}</p>
     </div>

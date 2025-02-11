@@ -9,7 +9,7 @@ const Home = () => {
   return (
     <div className="bg-transparent flex flex-col items-center">
       <div className="bg-filler"></div>
-      <CaloriesProgress/>
+      <CaloriesProgress />
       <div className="custom-shape-divider-top-1733522718">
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
           <path
@@ -23,78 +23,42 @@ const Home = () => {
             className="shape-fill"></path>
         </svg>
       </div>
-      <img className="mt-28 size-80" src={acaiBowl} alt="acai bowl" />
-      <img className="mt-28 size-80" src={acaiBowl2} alt="acai bowl" />
 
-      <Card className="w-full h-[240px] border-none bg-gradient-to-br from-primary to-fuchsia-500">
-        <CardBody className="justify-center items-center pb-0 flex flex-row gap-5">
-          <CircularProgress
-            classNames={{
-              svg: "w-28 h-28 drop-shadow-md",
-              indicator: "stroke-white",
-              track: "stroke-white/10",
-              value: "text-3xl font-semibold text-white"
-            }}
-            showValueLabel={true}
-            valueLabel={
-              <div
-                style={{ display: "flex", flexDirection: "column", lineHeight: "1.3"}}>
-                <span style={{ textAlign: "center", fontSize: "28px",fontFamily:"Lexend Deca" }}>148</span>
-                <span style={{ textAlign: "center", fontSize: "14px" }}>/ 571</span>
-              </div>
-            }
-            strokeWidth={2.5}
-            value={70}
-          />
-          <CircularProgress
-            classNames={{
-              svg: "w-28 h-28 drop-shadow-md",
-              indicator: "stroke-white",
-              track: "stroke-white/10",
-              value: "text-3xl font-semibold text-white"
-            }}
-            showValueLabel={true}
-            valueLabel={
-              <div
-                style={{ display: "flex", flexDirection: "column", lineHeight: "1.3"}}>
-                <span style={{ textAlign: "center", fontSize: "28px",fontFamily:"Lexend Deca" }}>148</span>
-                <span style={{ textAlign: "center", fontSize: "14px" }}>/ 571</span>
-              </div>
-            }
-            strokeWidth={2.5}
-            value={70}
-          />
-          <CircularProgress
-            classNames={{
-              svg: "w-28 h-28 drop-shadow-md",
-              indicator: "stroke-white",
-              track: "stroke-white/10",
-              value: "text-3xl font-semibold text-white"
-            }}
-            showValueLabel={true}
-            valueLabel={
-              <div
-                style={{ display: "flex", flexDirection: "column", lineHeight: "1.3"}}>
-                <span style={{ textAlign: "center", fontSize: "28px",fontFamily:"Lexend Deca" }}>148</span>
-                <span style={{ textAlign: "center", fontSize: "14px" }}>/ 571</span>
-              </div>
-            }
-            strokeWidth={2.5}
-            value={70}
-          />
-        </CardBody>
-        <CardFooter className="justify-center items-center pt-0">
-          <Chip
-            classNames={{
-              base: "border-1 border-white/30",
-              content: "text-white/90 text-small font-semibold"
-            }}
-            variant="bordered"
-          >
-            ceva ceva
-          </Chip>
-        </CardFooter>
-      </Card>
+      {/*<img className="mt-28 size-80" src={acaiBowl} alt="acai bowl" />*/}
+
+      {/*<img className="mt-28 size-80" src={acaiBowl2} alt="acai bowl" />*/}
+
+      <div className="flex flex-row gap-3 mt-44 ml-3 mr-3">
+        <div className="flex flex-1">
+          <Card className="w-44" isPressable shadow="none" onPress={() => console.log("item pressed")}>
+            <CardBody className="overflow-visible p-0">
+            </CardBody>
+            <CardFooter className="text-small justify-between">
+              <b>da</b>
+              <p className="text-default-500">10</p>
+            </CardFooter>
+          </Card>
+        </div>
+        <div className="flex flex-col gap-3">
+          <Card className="h-24 w-44" isPressable shadow="none" onPress={() => console.log("item pressed")}>
+            <CardBody className="overflow-visible p-0">
+            </CardBody>
+            <CardFooter className="text-small justify-between">
+              <b>da</b>
+              <p className="text-default-500">10</p>
+            </CardFooter>
+          </Card>
+          <Card className="h-24 w-44" isPressable shadow="none" onPress={() => console.log("item pressed")}>
+            <CardBody className="overflow-visible p-0">
+            </CardBody>
+            <CardFooter className="text-small justify-between">
+              <b>da</b>
+              <p className="text-default-500">10</p>
+            </CardFooter>
+          </Card>
+        </div>
+      </div>
+
     </div>
   );
 };

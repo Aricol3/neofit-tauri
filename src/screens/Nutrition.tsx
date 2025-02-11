@@ -7,15 +7,6 @@ import Macronutrients from "../components/Macronutrients.tsx";
 import Water from "../components/Water.tsx";
 
 const Nutrition = () => {
-  const proteinValue = 104;
-  const targetProteinValue = 165;
-
-  const carbohydratesValue = 204;
-  const targetCarbohydratesValue = 412;
-
-  const fatValue = 79;
-  const targetFatValue = 110;
-
   return (
     <>
       <DayHeader />
@@ -32,11 +23,6 @@ const Nutrition = () => {
         <MealSection meal={MEAL.LUNCH} />
         <MealSection meal={MEAL.SNACK} />
         <MealSection meal={MEAL.DINNER} />
-      </div>
-
-      <div className="p-3">
-
-
       </div>
     </>
   );

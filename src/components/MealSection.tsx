@@ -34,7 +34,7 @@ const MealSection = ({ meal }: MealSectionProps) => {
     const newEntry = {
       id: Date.now(),
       name: "6 serving • 240 g",
-      description: "Old Fashioned Oats - Quaker",
+      description: "Chicken Strips With Curry",
       calories: 400
     };
     dispatch(addMealEntry({ meal, entry: newEntry }));

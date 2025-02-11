@@ -20,6 +20,7 @@ module.exports = {
       light: {
         colors: {
           primary: "#9e86ff",
+          secondary: "#dbf881",
           carbsColor: "#40E0D0",
           fatColor: "#A569BD",
           proteinColor: "#FFC66E",
