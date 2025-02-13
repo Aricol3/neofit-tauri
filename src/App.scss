@@ -17,10 +17,11 @@ body {
   padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
+// fix this
 .container {
   background-color: transparent;
   width: 100vw;
-  height: 100vh;
+  height: 92vh;
 }
 
 ::-webkit-scrollbar {

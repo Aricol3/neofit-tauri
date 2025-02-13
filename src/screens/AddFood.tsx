@@ -1,4 +1,14 @@
-import { Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Input } from "@nextui-org/react";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Divider,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Input
+} from "@nextui-org/react";
 import Header from "../components/Header.tsx";
 import { useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,6 +22,8 @@ import { IRootState } from "../store.ts";
 import { scan } from "@tauri-apps/plugin-barcode-scanner";
 import { useNavigate } from "react-router-dom";
 import { addMealEntry } from "../slices/nutritionSlice.ts";
+import FoodMacronutrients from "../components/FoodMacronutrients.tsx";
+import DayHeader from "../components/DayHeader.tsx";
 
 const AddFood = () => {
   const navigate = useNavigate();
@@ -47,89 +59,90 @@ const AddFood = () => {
 
   return (
     <>
-      <Header title="Add Food" onAccept={handleAccept} />
-      <div className="flex flex-col m-4 gap-5">
-        <div>
-          <h1 className="text-xl font-bold">{scannedFood?.description}</h1>
-          <p>{scannedFood?.name}</p>
-        </div>
-        <Divider />
-        <Input
-          size="lg"
-          label="Serving Size"
-          placeholder="100g"
-          value={servingSize}
-          onChange={(e) => setServingSize(e.target.value)}
-        />
-        <Input
-          size="lg"
-          label="Number of servings"
-          placeholder="1"
-          value={numberOfServings}
-          onChange={(e) => setNumberOfServings(e.target.value)}
-        />
-        <Dropdown placement="bottom-start">
-          <DropdownTrigger>
+      {/*<Header title="Add Food" onAccept={handleAccept} />*/}
+      <DayHeader/>
+      <div className="flex flex-col p-3 pt-1.5 gap-3">
+        <Card className="min-h-[150px] overflow-hidden meal-section" shadow="none">
+          <CardHeader className="flex justify-between">
             <div>
-              <Input className="select-none pointer-events-none" size="lg" label="Meal" value={selectedMeal} />
-            </div>
-          </DropdownTrigger>
-          <DropdownMenu
-            aria-label="Single selection example"
-            variant="flat"
-            disallowEmptySelection
-            selectionMode="single"
-            selectedKeys={selectedKeys}
-            onSelectionChange={setSelectedKeys}
-          >
-            <DropdownItem key="Breakfast" color="primary">
-              <div className="flex flex-row text-center items-center gap-2">
-                <FontAwesomeIcon color="#50545A" icon={faMugHot} />
-                <p className="text-lg">Breakfast</p>
+              <div className="text-textPrimaryColor text-lg font-[600]">
+                Chicken Strips American Style
               </div>
-            </DropdownItem>
-            <DropdownItem key="Lunch" color="primary">
-              <div className="flex flex-row text-center items-center gap-2">
-                <FontAwesomeIcon color="#50545A" icon={faBurger} />
-                <p className="text-lg">Lunch</p></div>
-            </DropdownItem>
-            <DropdownItem key="Dinner" color="primary">
-              <div className="flex flex-row text-center items-center gap-2">
-                <FontAwesomeIcon color="#50545A" icon={faWineGlass} />
-                <p className="text-lg">Dinner</p>
+              <div className="text-textSecondaryColor font-[500]">
+                Culinea
               </div>
-            </DropdownItem>
-            <DropdownItem key="Snack" color="primary">
-              <div className="flex flex-row text-center items-center gap-2">
-                <FontAwesomeIcon color="#50545A" icon={faCookieBite} />
-                <p className="text-lg">Snack</p>
-              </div>
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-        <div className="flex flex-row items-center">
-          <div style={{ width: "130px", height: "130px" }}>
-            <DonutChart calories={scannedFood.calories} carbs={scannedFood.totalCarbohydrates}
-                        fat={scannedFood.totalFat} protein={scannedFood.protein} />
-          </div>
-          <div className="w-full flex flex-row justify-between items-center pl-3 pr-3">
-            <div className="flex flex-col items-center">
-              <div className="text-sm" style={{ color: "#37bfb1" }}>41%</div>
-              <div className="text-md">{scannedFood.totalCarbohydrates} g</div>
-              <div className="text-sm font-normal">Carbs</div>
             </div>
-            <div className="flex flex-col items-center">
-              <div className="text-sm" style={{ color: "#5d24b7" }}>28%</div>
-              <div className="text-md">{scannedFood.totalFat} g</div>
-              <div className="text-sm font-normal">Fat</div>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="text-sm" style={{ color: "#d39459" }}>32%</div>
-              <div className="text-md">{scannedFood.protein} g</div>
-              <div className="text-sm font-normal">Protein</div>
-            </div>
-          </div>
-        </div>
+          </CardHeader>
+          <CardBody className="w-full py-0 px-3 overflow-hidden text-textPrimaryColor"
+                    style={{ fontFamily: "Lexend Deca" }}>
+            <Input
+              classNames={{
+                inputWrapper: "bg-white shadow-none",
+              }}
+              size="lg"
+              label="Serving Size"
+              placeholder="100g"
+              value={servingSize}
+              onChange={(e) => setServingSize(e.target.value)}
+            />
+            <Input
+              classNames={{
+                inputWrapper: "bg-white shadow-none",
+              }}
+              type="number"
+              inputMode="numeric"
+              size="lg"
+              label="Number of servings"
+              placeholder="1"
+              value={numberOfServings}
+              onChange={(e) => setNumberOfServings(e.target.value)}
+            />
+            <Dropdown placement="bottom-start">
+              <DropdownTrigger>
+                <div>
+                  <Input classNames={{
+                    inputWrapper: "bg-white shadow-none",
+                  }} className="select-none pointer-events-none" size="lg" label="Meal" value={selectedMeal} />
+                </div>
+              </DropdownTrigger>
+              <DropdownMenu
+                aria-label="Single selection example"
+                variant="flat"
+                disallowEmptySelection
+                selectionMode="single"
+                selectedKeys={selectedKeys}
+                onSelectionChange={setSelectedKeys}
+              >
+                <DropdownItem key="Breakfast" color="primary">
+                  <div className="flex flex-row text-center items-center gap-2">
+                    <FontAwesomeIcon color="#50545A" icon={faMugHot} />
+                    <p className="text-lg">Breakfast</p>
+                  </div>
+                </DropdownItem>
+                <DropdownItem key="Lunch" color="primary">
+                  <div className="flex flex-row text-center items-center gap-2">
+                    <FontAwesomeIcon color="#50545A" icon={faBurger} />
+                    <p className="text-lg">Lunch</p></div>
+                </DropdownItem>
+                <DropdownItem key="Dinner" color="primary">
+                  <div className="flex flex-row text-center items-center gap-2">
+                    <FontAwesomeIcon color="#50545A" icon={faWineGlass} />
+                    <p className="text-lg">Dinner</p>
+                  </div>
+                </DropdownItem>
+                <DropdownItem key="Snack" color="primary">
+                  <div className="flex flex-row text-center items-center gap-2">
+                    <FontAwesomeIcon color="#50545A" icon={faCookieBite} />
+                    <p className="text-lg">Snack</p>
+                  </div>
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </CardBody>
+        </Card>
+
+        <FoodMacronutrients calories={scannedFood?.calories} carbs={scannedFood?.totalCarbohydrates}
+                            fat={scannedFood?.totalFat} protein={scannedFood?.protein} />
       </div>
     </>
   );

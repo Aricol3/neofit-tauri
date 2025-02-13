@@ -18,12 +18,13 @@ const DonutChart = ({ calories, carbs, fat, protein }: DonutChartProps) => {
 
   const size = {
     height: 130,
-    width: 130
+    width: 130,
   };
 
   const StyledText = styled("text")(({ fontSize }) => ({
     textAnchor: "middle",
     dominantBaseline: "central",
+    fill:"primary",
     fontSize
   }));
 
@@ -31,12 +32,26 @@ const DonutChart = ({ calories, carbs, fat, protein }: DonutChartProps) => {
     const { width, height, left, top } = useDrawingArea();
     return (
       <>
-        <StyledText x={left + width / 2 + 37} y={top + height / 2 - 8} fontSize={20} fontWeight="bold">
+        <text
+          className="fill-textPrimaryColor font-bold"
+          x={left + width / 2 + 37}
+          y={top + height / 2 - 8}
+          fontSize={20}
+          textAnchor="middle"
+          dominantBaseline="central"
+        >
           {calories}
-        </StyledText>
-        <StyledText x={left + width / 2 + 37} y={top + height / 2 + 12} fontSize={16}>
+        </text>
+        <text
+          className="fill-textPrimaryColor"
+          x={left + width / 2 + 37}
+          y={top + height / 2 + 12}
+          fontSize={16}
+          textAnchor="middle"
+          dominantBaseline="central"
+        >
           cal
-        </StyledText>
+        </text>
       </>
     );
   }

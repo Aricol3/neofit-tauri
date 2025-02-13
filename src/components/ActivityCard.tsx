@@ -31,13 +31,13 @@ const ActivityCard = ({ exercise, sets }) => {
               <div className="w-12 flex justify-center">
                 <Chip
                   className={isWarmup ? "bg-proteinColor text-textPrimaryColor p-0 min-w-8 text-center" : "bg-primary text-white p-0 min-w-8 text-center"}>
-                  <p className="font-bold" style={{ fontFamily: "Lexend Deca" }}>{label}</p>
+                  <p className="font-bold">{label}</p>
                 </Chip>
               </div>
               <p className="w-12 text-center font-bold text-textPrimaryColor"
-                 style={{ fontFamily: "Lexend Deca" }}>{set.reps}</p>
+              >{set.reps}</p>
               <p className="w-12 text-center font-bold text-textPrimaryColor"
-                 style={{ fontFamily: "Lexend Deca" }}>{set.weight}</p>
+              >{set.weight}</p>
             </div>
           );
         })}
@@ -54,7 +54,7 @@ const ActivityExample = () => {
       { reps: 12, weight: 35, warmup: true },
       { reps: 10, weight: 40, warmup: false },
       { reps: 8, weight: 45, warmup: false },
-      { reps: 8, weight: 50, warmup: false },
+      { reps: 6, weight: 50, warmup: false },
     ]
   };
 
