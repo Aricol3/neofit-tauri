@@ -60,7 +60,7 @@ const AddFood = () => {
   return (
     <>
       {/*<Header title="Add Food" onAccept={handleAccept} />*/}
-      <DayHeader/>
+      <DayHeader />
       <div className="flex flex-col p-3 pt-1.5 gap-3">
         <Card className="min-h-[150px] overflow-hidden meal-section" shadow="none">
           <CardHeader className="flex justify-between">
@@ -68,32 +68,36 @@ const AddFood = () => {
               <div className="text-textPrimaryColor text-lg font-[600]">
                 Chicken Strips American Style
               </div>
-              <div className="text-textSecondaryColor font-[500]">
+              <div className="text-textPrimaryColor font-[500]">
                 Culinea
               </div>
             </div>
           </CardHeader>
-          <CardBody className="w-full py-0 px-3 overflow-hidden text-textPrimaryColor"
+          <CardBody className="w-full py-0 px-3 pb-3.5 overflow-hidden text-textPrimaryColor flex gap-3"
                     style={{ fontFamily: "Lexend Deca" }}>
             <Input
               classNames={{
                 inputWrapper: "bg-white shadow-none",
+                input:"placeholder:text-textSecondaryColor"
               }}
               size="lg"
               label="Serving Size"
               placeholder="100g"
+              variant="bordered"
               value={servingSize}
               onChange={(e) => setServingSize(e.target.value)}
             />
             <Input
               classNames={{
                 inputWrapper: "bg-white shadow-none",
+                input:"placeholder:text-textSecondaryColor"
               }}
               type="number"
               inputMode="numeric"
               size="lg"
               label="Number of servings"
               placeholder="1"
+              variant="bordered"
               value={numberOfServings}
               onChange={(e) => setNumberOfServings(e.target.value)}
             />
@@ -102,7 +106,9 @@ const AddFood = () => {
                 <div>
                   <Input classNames={{
                     inputWrapper: "bg-white shadow-none",
-                  }} className="select-none pointer-events-none" size="lg" label="Meal" value={selectedMeal} />
+                    input:"placeholder:text-textSecondaryColor"
+                  }} className="select-none pointer-events-none" variant="bordered"
+                         size="lg" label="Meal" value={selectedMeal} />
                 </div>
               </DropdownTrigger>
               <DropdownMenu
