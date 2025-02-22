@@ -10,6 +10,14 @@ const Scanner = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    document.documentElement.style.backgroundColor = "transparent";
+
+    return ()=>{
+      document.documentElement.style.backgroundColor = "#f5f9fa";
+    }
+  },[]);
+
   const scanBarcode = async () => {
     try {
       const result = await scan({

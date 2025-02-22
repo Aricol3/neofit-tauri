@@ -11,8 +11,8 @@ import Search from "./screens/Search.tsx";
 function Layout({ children }: PropsWithChildren) {
   const location = useLocation();
 
-  const routesWithHeader = ["/profile", "/add-food"];
-  const routesWithDayHeader = ["/nutrition", "/search"];
+  const routesWithHeader = ["/add-food"];
+  const routesWithDayHeader = ["/nutrition", "/search","/profile"];
   const needsPadding = routesWithHeader.includes(location.pathname);
   const needsDayHeaderPadding = routesWithDayHeader.includes(location.pathname);
 
