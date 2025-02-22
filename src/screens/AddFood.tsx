@@ -60,7 +60,6 @@ const AddFood = () => {
   return (
     <>
       <Header title="Add Food" onAccept={handleAccept} />
-      {/*<DayHeader />*/}
       <div className="flex flex-col p-3 pt-1.5 gap-3">
         <Card className="min-h-[150px] overflow-hidden meal-section" shadow="none">
           <CardHeader className="flex justify-between">
@@ -93,7 +92,7 @@ const AddFood = () => {
                 input:"placeholder:text-textSecondaryColor"
               }}
               type="number"
-              inputMode="numeric"
+              inputMode="decimal"
               size="lg"
               label="Number of servings"
               placeholder="1"
