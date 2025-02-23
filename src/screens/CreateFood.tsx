@@ -2,7 +2,6 @@ import { Divider, Input, Button, CardHeader, Card, CardBody } from "@nextui-org/
 import { ChangeEvent, useState } from "react";
 import Header from "../components/Header.tsx";
 import { createFood } from "../api/foodApi.ts";
-import FoodMacronutrients from "../components/FoodMacronutrients.tsx";
 
 const CreateFood = () => {
   const [formData, setFormData] = useState({

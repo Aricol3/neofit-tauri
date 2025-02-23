@@ -4,7 +4,7 @@ import { Button } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 import { fetchFoodByBarcode } from "../api/foodApi.ts";
 import { useDispatch } from "react-redux";
-import { setScannedFood } from "../slices/nutritionSlice.ts";
+import { setScannedBarcode, setScannedFood } from "../slices/nutritionSlice.ts";
 
 const Scanner = () => {
   const navigate = useNavigate();
@@ -13,10 +13,10 @@ const Scanner = () => {
   useEffect(() => {
     document.documentElement.style.backgroundColor = "transparent";
 
-    return ()=>{
+    return () => {
       document.documentElement.style.backgroundColor = "#f5f9fa";
-    }
-  },[]);
+    };
+  }, []);
 
   const scanBarcode = async () => {
     try {
@@ -26,6 +26,12 @@ const Scanner = () => {
       });
       console.log("Barcode scanned:", result.content);
       const food = await fetchFoodByBarcode(result.content);
+      if (!food) {
+        console.warn("Food item not found");
+        dispatch(setScannedBarcode(result.content));
+        navigate("/create-food");
+        return;
+      }
       console.log("Food:", food);
       dispatch(setScannedFood(food));
       navigate("/add-food");

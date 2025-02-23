@@ -16,7 +16,7 @@ const FoodMacronutrients = ({ calories, carbs, fat, protein }: FoodMacronutrient
     <Card className="min-h-[150px] overflow-hidden meal-section" shadow="none">
       <CardHeader className="flex justify-between text-textPrimaryColor">
         <div className="text-lg font-[600] flex items-center gap-3">
-          Nutritional info
+          Nutritional Information
         </div>
       </CardHeader>
       <CardBody className="w-full py-0 px-3 overflow-hidden text-textPrimaryColor" style={{fontFamily:"Lexend Deca"}}>

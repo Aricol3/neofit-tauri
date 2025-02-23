@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IMealEntry, IScannedFood } from "../types.ts";
 
 interface INutritionState {
+  scannedBarcode: string;
   scannedFood: IScannedFood | null;
   mealEntries: {
     [meal: string]: IMealEntry[];
@@ -9,19 +10,23 @@ interface INutritionState {
 }
 
 const initialState: INutritionState = {
+  scannedBarcode: "",
   scannedFood: null,
   mealEntries: {
     Breakfast: [],
     Snacks: [],
     Lunch: [],
-    Dinner: [],
-  },
+    Dinner: []
+  }
 };
 
 export const nutritionSlice = createSlice({
   name: "nutrition",
   initialState,
   reducers: {
+    setScannedBarcode: (state, action: PayloadAction<string>) => {
+      state.scannedBarcode = action.payload;
+    },
     setScannedFood: (state, action: PayloadAction<IScannedFood>) => {
       state.scannedFood = action.payload;
     },
@@ -40,11 +45,11 @@ export const nutritionSlice = createSlice({
       state.mealEntries[meal] = state.mealEntries[meal].filter(
         (entry) => entry.id !== entryId
       );
-    },
-  },
+    }
+  }
 });
 
-export const { setScannedFood, addMealEntry, removeMealEntry } =
+export const { setScannedBarcode, setScannedFood, addMealEntry, removeMealEntry } =
   nutritionSlice.actions;
 
 export default nutritionSlice.reducer;
