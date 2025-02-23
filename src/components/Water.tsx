@@ -2,7 +2,7 @@ import "swiper/scss";
 import "swiper/scss/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader } from "@heroui/react";
 import WaterCup from "./WaterCup.tsx";
 
 const Water = () => {

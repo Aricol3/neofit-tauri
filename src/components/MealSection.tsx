@@ -3,7 +3,7 @@ import { IRootState } from "../store.ts";
 import { addMealEntry, removeMealEntry } from "../slices/nutritionSlice";
 import FoodCard from "./FoodCard.tsx";
 import { AnimatePresence } from "framer-motion-legacy";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader } from "@heroui/react";
 import { ReactNode, useCallback, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMugHot } from "@fortawesome/free-solid-svg-icons/faMugHot";

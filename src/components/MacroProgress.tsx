@@ -1,4 +1,4 @@
-import { Progress } from "@nextui-org/react";
+import { Progress } from "@heroui/react";
 import { capitalizeFirstLetter } from "../utils.ts";
 
 interface MacroProgressProps {

@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody } from "@nextui-org/react";
+import { Card, CardHeader, CardBody } from "@heroui/react";
 import Header from "../components/Header.tsx";
 import useFoodForm from "../hooks/useFoodForm.tsx";
 import FoodForm from "../components/FoodForm.tsx";

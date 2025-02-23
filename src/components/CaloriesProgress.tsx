@@ -1,4 +1,4 @@
-import { CircularProgress } from "@nextui-org/react";
+import { CircularProgress } from "@heroui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFlag } from "@fortawesome/free-solid-svg-icons/faFlag";
 import { faBowlFood } from "@fortawesome/free-solid-svg-icons/faBowlFood";

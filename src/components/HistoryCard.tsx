@@ -3,7 +3,7 @@ import { SwipeActions } from "./SwipeActions/SwipeActions.tsx";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
-import { Button, Chip } from "@nextui-org/react";
+import { Button, Chip } from "@heroui/react";
 import AddButton from "./AddButton.tsx";
 
 interface SwiperProps {

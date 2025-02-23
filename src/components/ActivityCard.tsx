@@ -1,4 +1,4 @@
-import { Card, CardBody, CardFooter, Chip } from "@nextui-org/react";
+import { Card, CardBody, CardFooter, Chip } from "@heroui/react";
 
 const ActivityCard = ({ exercise, sets }) => {
   let workingSetNumber = 1;

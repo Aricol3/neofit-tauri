@@ -1,7 +1,7 @@
 import { SVGProps, useState } from "react";
 import { JSX } from "react/jsx-runtime";
 import Header from "../components/Header.tsx";
-import { Input } from "@nextui-org/react";
+import { Input } from "@heroui/react";
 import { AnimatePresence } from "framer-motion-legacy";
 import HistoryCard from "../components/HistoryCard.tsx";
 

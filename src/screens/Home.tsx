@@ -1,6 +1,6 @@
 import acaiBowl from "../assets/acai-bowl1.webp";
 import acaiBowl2 from "../assets/acai-bowl2.webp";
-import { Card, CardBody, CardFooter, Chip, CircularProgress } from "@nextui-org/react";
+import { Card, CardBody, CardFooter, Chip, CircularProgress } from "@heroui/react";
 import CaloriesProgress from "../components/CaloriesProgress.tsx";
 import WaterCup from "../components/WaterCup.tsx";
 import WorkoutSection from "../components/WorkoutSection.tsx";

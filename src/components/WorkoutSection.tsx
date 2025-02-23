@@ -1,5 +1,5 @@
 import { AnimatePresence } from "framer-motion-legacy";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader } from "@heroui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDumbbell } from "@fortawesome/free-solid-svg-icons/faDumbbell";
 import ActivityExample from "./ActivityCard.tsx";

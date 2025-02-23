@@ -1,5 +1,5 @@
 import DonutChart from "./DonutChart.tsx";
-import { Card, CardBody, CardHeader } from "@nextui-org/react";
+import { Card, CardBody, CardHeader } from "@heroui/react";
 import { AnimatePresence } from "framer-motion";
 import FoodCard from "./FoodCard.tsx";
 

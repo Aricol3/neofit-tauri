@@ -1,10 +1,10 @@
-const { nextui } = require("@nextui-org/react");
+const { heroui } = require("@heroui/react");
 
 /** @type {import("tailwindcss").Config} */
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
-    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
+    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}"
   ],
   safelist: [
     "bg-carbsColor",
@@ -15,7 +15,7 @@ module.exports = {
     extend: {}
   },
   darkMode: "class",
-  plugins: [nextui({
+  plugins: [heroui({
     themes: {
       light: {
         colors: {

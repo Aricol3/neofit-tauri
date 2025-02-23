@@ -1,4 +1,4 @@
-import { Divider, Input } from "@nextui-org/react";
+import { Divider, Input } from "@heroui/react";
 
 const EditFood = () => {
   return (

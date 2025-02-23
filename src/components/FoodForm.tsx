@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader, Input } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, Input, NumberInput } from "@heroui/react";
 
 const FoodForm = ({ formData, handleInputChange }) => (
   <>
@@ -31,7 +31,6 @@ const FoodForm = ({ formData, handleInputChange }) => (
           onChange={handleInputChange}
         />
         <Input
-          type="number"
           inputMode="decimal"
           size="lg"
           label="Servings per container"
@@ -49,8 +48,7 @@ const FoodForm = ({ formData, handleInputChange }) => (
       </CardHeader>
       <CardBody className="w-full py-0 px-3 pb-3.5 overflow-hidden text-textPrimaryColor flex gap-3"
                 style={{ fontFamily: "Lexend Deca" }}>
-        <Input
-          type="number"
+        <NumberInput
           inputMode="decimal"
           size="lg"
           label="Calories"
@@ -58,7 +56,6 @@ const FoodForm = ({ formData, handleInputChange }) => (
           onChange={handleInputChange}
         />
         <Input
-          type="number"
           inputMode="decimal"
           size="lg"
           label="Total fat (g)"
@@ -66,7 +63,6 @@ const FoodForm = ({ formData, handleInputChange }) => (
           onChange={handleInputChange}
         />
         <Input
-          type="number"
           inputMode="decimal"
           size="lg"
           label="Saturated fat (g)"
@@ -74,7 +70,6 @@ const FoodForm = ({ formData, handleInputChange }) => (
           onChange={handleInputChange}
         />
         <Input
-          type="number"
           inputMode="decimal"
           size="lg"
           label="Total carbohydrates (g)"
@@ -82,7 +77,6 @@ const FoodForm = ({ formData, handleInputChange }) => (
           onChange={handleInputChange}
         />
         <Input
-          type="number"
           inputMode="decimal"
           size="lg"
           label="Sugars (g)"
@@ -90,7 +84,6 @@ const FoodForm = ({ formData, handleInputChange }) => (
           onChange={handleInputChange}
         />
         <Input
-          type="number"
           inputMode="decimal"
           size="lg"
           label="Protein (g)"
@@ -98,7 +91,6 @@ const FoodForm = ({ formData, handleInputChange }) => (
           onChange={handleInputChange}
         />
         <Input
-          type="number"
           inputMode="decimal"
           size="lg"
           label="Sodium (g)"
@@ -106,7 +98,6 @@ const FoodForm = ({ formData, handleInputChange }) => (
           onChange={handleInputChange}
         />
         <Input
-          type="number"
           inputMode="decimal"
           size="lg"
           label="Fiber (g)"

@@ -1,4 +1,4 @@
-import { Divider } from "@nextui-org/react";
+import { Divider } from "@heroui/react";
 import MacroProgress from "../components/MacroProgress.tsx";
 import { MACRO, MEAL } from "../types.ts";
 import MealSection from "../components/MealSection.tsx";

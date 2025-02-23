@@ -8,7 +8,7 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Input
-} from "@nextui-org/react";
+} from "@heroui/react";
 import Header from "../components/Header.tsx";
 import { useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -91,7 +91,6 @@ const AddFood = () => {
                 inputWrapper: "bg-white shadow-none",
                 input:"placeholder:text-textSecondaryColor"
               }}
-              type="number"
               inputMode="decimal"
               size="lg"
               label="Number of servings"
