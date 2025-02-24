@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import "./App.scss";
-import { Button } from "@heroui/react";
+import { Button, ToastProvider } from "@heroui/react";
 import { scan, Format, checkPermissions, requestPermissions } from "@tauri-apps/plugin-barcode-scanner";
 import MainRoutes from "./routes.tsx";
 import Navbar from "./components/Navbar/Navbar.tsx";
@@ -46,6 +46,17 @@ function App() {
   return (
     <main className="container">
       <div className="pb-28">
+          <ToastProvider
+            toastProps={{
+              variant: "flat",
+              hideIcon: true,
+              classNames: {
+                base: "z-50",
+              },
+            }}
+            toastOffset={20}
+            placement="bottom-center"
+          />
         <MainRoutes />
       </div>
       <Navbar />

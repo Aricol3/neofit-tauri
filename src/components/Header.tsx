@@ -29,7 +29,7 @@ const Header = ({ title, backRoute, onAccept }: HeaderProps) => {
       initial={{ backgroundColor: "#f5f9fa" }}
       animate={{ backgroundColor: isTop ? "#f5f9fa" : "#ffffff" }}
       transition={{ duration: 0.3 }}
-      className={`rounded-b-3xl rounded flex items-center justify-between pl-5 pr-5 pt-14 pb-5 z-50 fixed w-full top-0 transition-shadow ${
+      className={`rounded-b-3xl rounded flex items-center justify-between pl-5 pr-5 pt-14 pb-5 z-40 fixed w-full top-0 transition-shadow ${
         isTop ? "" : "shadow-[0_40px_60px_rgba(0,0,0,0.03)]"
       }`}>
       <Button className="bg-transparent" isIconOnly>

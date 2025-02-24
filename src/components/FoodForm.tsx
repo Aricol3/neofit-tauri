@@ -1,6 +1,6 @@
 import { Card, CardBody, CardHeader, Input, NumberInput } from "@heroui/react";
 
-const FoodForm = ({ formData, handleInputChange }) => (
+const FoodForm = ({handleInputChange }) => (
   <>
     <Card className="min-h-[150px] overflow-hidden meal-section" shadow="none">
       <CardHeader>

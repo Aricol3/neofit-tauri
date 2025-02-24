@@ -1,7 +1,17 @@
 import { useState, ChangeEvent } from "react";
 import { createFood } from "../api/foodApi.ts";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { IRootState } from "../store.ts";
+import { addToast } from "@heroui/react";
 
 const useFoodForm = () => {
+  const navigate = useNavigate();
+
+  const scannedBarcode = useSelector(
+    (state: IRootState) => state.nutrition?.scannedBarcode
+  );
+
   const [formData, setFormData] = useState({
     brand_name: "",
     description: "",
@@ -29,7 +39,7 @@ const useFoodForm = () => {
       const foodData = {
         brand_name: formData.brand_name,
         description: formData.description,
-        barcode: formData.barcode,
+        barcode: scannedBarcode,
         serving_sizes: [
           {
             nutrition_multiplier: 1,
@@ -57,6 +67,12 @@ const useFoodForm = () => {
 
       await createFood(foodData);
       console.log("Food item created successfully");
+      addToast({
+        title: "Toast title",
+        description: "Toast displayed successfully",
+        color: "success",
+      })
+      navigate("/nutrition");
     } catch (error) {
       console.error("Error creating food item:", error);
     }

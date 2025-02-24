@@ -4,13 +4,13 @@ import useFoodForm from "../hooks/useFoodForm.tsx";
 import FoodForm from "../components/FoodForm.tsx";
 
 const CreateFood = () => {
-  const { formData, handleInputChange, handleSubmit } = useFoodForm();
+  const { handleInputChange, handleSubmit } = useFoodForm();
 
   return (
     <>
       <Header title="Create Food" onAccept={handleSubmit} />
       <div className="flex flex-col p-3 pt-1.5 gap-3">
-        <FoodForm formData={formData} handleInputChange={handleInputChange} />
+        <FoodForm handleInputChange={handleInputChange} />
       </div>
     </>
   );
