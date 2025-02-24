@@ -5,8 +5,9 @@ import Nutrition from "./screens/Nutrition.tsx";
 import AddFood from "./screens/AddFood.tsx";
 import EditFood from "./screens/EditFood.tsx";
 import CreateFood from "./screens/CreateFood.tsx";
-import { PropsWithChildren } from "react";
+import React, { PropsWithChildren } from "react";
 import Search from "./screens/Search.tsx";
+import Navbar from "./components/Navbar/Navbar.tsx";
 
 function Layout({ children }: PropsWithChildren) {
   const location = useLocation();
@@ -16,9 +17,12 @@ function Layout({ children }: PropsWithChildren) {
   const needsPadding = routesWithHeader.includes(location.pathname);
   const needsDayHeaderPadding = routesWithDayHeader.includes(location.pathname);
 
+  const hideNavbarRoutes = ["/scan"];
+
   return (
-    <div style={{ paddingTop: needsPadding ? "3rem" : needsDayHeaderPadding ? "4rem" : "0" }}>
+    <div className="pb-28" style={{ paddingTop: needsPadding ? "3rem" : needsDayHeaderPadding ? "4rem" : "0" }}>
       {children}
+      {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
     </div>
   );
 }

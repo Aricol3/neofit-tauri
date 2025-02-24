@@ -45,7 +45,6 @@ function App() {
 
   return (
     <main className="container">
-      <div className="pb-28">
           <ToastProvider
             toastProps={{
               variant: "flat",
@@ -58,8 +57,6 @@ function App() {
             placement="bottom-center"
           />
         <MainRoutes />
-      </div>
-      <Navbar />
     </main>
   );
 }
