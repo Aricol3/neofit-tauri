@@ -44,7 +44,7 @@ const HistoryCard = ({ title, subtitle, onDelete }: SwiperProps) => {
         <SwipeActions.Trigger
           className="
                         p-3
-                        bg-gray-50
+                        bg-white
                         rounded-lg
                         shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]"
         >

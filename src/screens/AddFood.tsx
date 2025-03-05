@@ -24,6 +24,7 @@ import { useNavigate } from "react-router-dom";
 import { addMealEntry } from "../slices/nutritionSlice.ts";
 import FoodMacronutrients from "../components/FoodMacronutrients.tsx";
 import DayHeader from "../components/DayHeader.tsx";
+import { ROUTES } from "../types.ts";
 
 const AddFood = () => {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ const AddFood = () => {
 
   return (
     <>
-      <Header title="Add Food" onAccept={handleAccept} />
+      <Header title="Add Food" backRoute={ROUTES.NUTRITION} onAccept={handleAccept} />
       <div className="flex flex-col p-3 pt-1.5 gap-3">
         <Card className="min-h-[150px] overflow-hidden meal-section" shadow="none">
           <CardHeader className="flex justify-between">

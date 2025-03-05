@@ -4,6 +4,7 @@ import Header from "../components/Header.tsx";
 import { Input } from "@heroui/react";
 import { AnimatePresence } from "framer-motion-legacy";
 import HistoryCard from "../components/HistoryCard.tsx";
+import HistorySection from "../components/HistorySection.tsx";
 
 export const SearchBarIcon = (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => {
   return (
@@ -36,12 +37,6 @@ export const SearchBarIcon = (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGEl
 };
 
 const Search = () => {
-  const [swipers, setSwipers] = useState([
-    { id: 1, title: "Chicken Strips American Style With Curry", subtitle: "900 cal, 500 gram, Culinea" },
-    { id: 2, title: "Apple Pie", subtitle: "Somebody somewhere" },
-    { id: 3, title: "Another apple pie", subtitle: "Another description" }
-  ]);
-
   const onDelete = (idToDelete: number) => {
     setSwipers(currentSwipers =>
       currentSwipers.filter(swiper => swiper.id !== idToDelete)
@@ -50,36 +45,23 @@ const Search = () => {
 
   return (
     <>
-      {/*<Header title={"Search"} />*/}
-      <div className="p-5 flex flex-col gap-5">
-        <Input isClearable size="lg" placeholder="Search for a food"
-               classNames={{
-                 inputWrapper: [
-                   "hover:bg-default-200/70"
-                 ]
-               }}
-               startContent={
-                 <SearchBarIcon className="text-primary mb-0.5 pointer-events-none flex-shrink-0" />
-               }
-               radius="full"
-        />
-      </div>
+      <Header title={"Search"} />
+      <div className="flex flex-col p-3 pt-1.5 gap-3">
+        <div className="p-5 flex flex-col gap-5">
+          <Input isClearable size="lg" placeholder="Search for a food"
+                 classNames={{
+                   inputWrapper: [
+                     "hover:bg-default-200/70"
+                   ]
+                 }}
+                 startContent={
+                   <SearchBarIcon className="text-primary mb-0.5 pointer-events-none flex-shrink-0" />
+                 }
+                 radius="full"
+          />
+        </div>
 
-      <div className="p-5 mt-5 overflow-hidden meal-section">
-        <div className="flex justify-between">
-          <div className="text-xl">History</div>
-        </div>
-        <div className="flex flex-col gap-3 mt-3 w-full p-0 overflow-hidden">
-          <AnimatePresence>
-            {swipers.map((swiper) => (
-              <HistoryCard
-                key={swiper.id}
-                {...swiper}
-                onDelete={() => onDelete(swiper.id)}
-              />
-            ))}
-          </AnimatePresence>
-        </div>
+        <HistorySection/>
       </div>
     </>
   );

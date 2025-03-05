@@ -15,6 +15,10 @@ export enum MEAL {
   SNACK = "Snack"
 }
 
+export enum ROUTES {
+  NUTRITION = "/nutrition",
+}
+
 export interface IScannedFood {
   _id: string;
   barcode: string;
