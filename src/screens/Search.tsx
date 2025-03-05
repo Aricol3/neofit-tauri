@@ -46,12 +46,13 @@ const Search = () => {
   return (
     <>
       <Header title={"Search"} />
+
       <div className="flex flex-col p-3 pt-1.5 gap-3">
         <div className="p-5 flex flex-col gap-5">
           <Input isClearable size="lg" placeholder="Search for a food"
                  classNames={{
                    inputWrapper: [
-                     "hover:bg-default-200/70"
+                     "hover:bg-default-200/70 bg-white"
                    ]
                  }}
                  startContent={

@@ -48,10 +48,10 @@ const HistoryCard = ({ title, subtitle, onDelete }: SwiperProps) => {
                         rounded-lg
                         shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]"
         >
-          <div className="flex flex-row w-full items-center justify-between gap-1 mb-1 h-12">
-            <div className="text-sm w-full" onClick={() => navigate("/edit-food")}>
-              <p className="font-normal">{title}</p>
-              <p className="font-light">{subtitle}</p>
+          <div className="flex flex-row w-full items-center justify-between gap-3 mb-1 h-12">
+            <div className="text-sm space-y-1">
+              <p className="font-[500] text-textPrimaryColor">{title}</p>
+              <p className="font-[500] text-textSecondaryColor">{subtitle}</p>
             </div>
             <AddButton onAdd={onAdd} />
           </div>
