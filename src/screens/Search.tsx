@@ -1,10 +1,8 @@
-import { SVGProps, useState } from "react";
+import { SVGProps } from "react";
 import { JSX } from "react/jsx-runtime";
-import Header from "../components/Header.tsx";
 import { Input } from "@heroui/react";
-import { AnimatePresence } from "framer-motion-legacy";
-import HistoryCard from "../components/HistoryCard.tsx";
 import HistorySection from "../components/HistorySection.tsx";
+import SearchHeader from "../components/SearchHeader.tsx";
 
 export const SearchBarIcon = (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => {
   return (
@@ -45,23 +43,9 @@ const Search = () => {
 
   return (
     <>
-      <Header title={"Search"} />
+      <SearchHeader/>
 
       <div className="flex flex-col p-3 pt-1.5 gap-3">
-        <div className="p-5 flex flex-col gap-5">
-          <Input isClearable size="lg" placeholder="Search for a food"
-                 classNames={{
-                   inputWrapper: [
-                     "hover:bg-default-200/70 bg-white"
-                   ]
-                 }}
-                 startContent={
-                   <SearchBarIcon className="text-primary mb-0.5 pointer-events-none flex-shrink-0" />
-                 }
-                 radius="full"
-          />
-        </div>
-
         <HistorySection/>
       </div>
     </>

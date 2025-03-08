@@ -12,15 +12,15 @@ import Navbar from "./components/Navbar/Navbar.tsx";
 function Layout({ children }: PropsWithChildren) {
   const location = useLocation();
 
-  const routesWithHeader = [""];
-  const routesWithDayHeader = ["/nutrition", "/search", "/profile", "/create-food","/add-food"];
+  const routesWithHeader = ["/nutrition", "/profile", "/create-food","/add-food"];
+  const routesWithSearchHeader = ["/search"];
   const needsPadding = routesWithHeader.includes(location.pathname);
-  const needsDayHeaderPadding = routesWithDayHeader.includes(location.pathname);
+  const needsSearchHeaderPadding = routesWithSearchHeader.includes(location.pathname);
 
   const hideNavbarRoutes = ["/scan"];
 
   return (
-    <div className="pb-28" style={{ paddingTop: needsPadding ? "3rem" : needsDayHeaderPadding ? "4rem" : "0" }}>
+    <div className="pb-28" style={{ paddingTop: needsPadding ? "4rem" : needsSearchHeaderPadding ? "10rem" : "0" }}>
       {children}
       {!hideNavbarRoutes.includes(location.pathname) && <Navbar />}
     </div>
