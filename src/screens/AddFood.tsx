@@ -32,13 +32,18 @@ const AddFood = () => {
 
   const scannedFood = useSelector((state: IRootState) => state.nutrition.scannedFood);
 
-  const [selectedKeys, setSelectedKeys] = useState(new Set([""]));
-  const [servingSize, setServingSize] = useState(scannedFood?.servingSize || "");
+  const [mealSelectedKeys, setMealSelectedKeys] = useState(new Set([""]));
+  const [servingSizeSelectedKeys, setServingSizeSelectedKeys] = useState(new Set([""]));
   const [numberOfServings, setNumberOfServings] = useState("");
 
   const selectedMeal = useMemo(
-    () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-    [selectedKeys]
+    () => Array.from(mealSelectedKeys).join(", ").replaceAll("_", " "),
+    [mealSelectedKeys]
+  );
+
+  const selectedServingSize = useMemo(
+    () => Array.from(servingSizeSelectedKeys).join(", ").replaceAll("_", " "),
+    [servingSizeSelectedKeys]
   );
 
   const handleAccept = () => {
@@ -46,7 +51,7 @@ const AddFood = () => {
       id: Math.random(),
       description: scannedFood?.description || "",
       name: scannedFood?.name || "",
-      servingSize,
+      servingSize:selectedServingSize,
       numberOfServings,
       meal: selectedMeal,
       calories: scannedFood?.calories,
@@ -75,38 +80,45 @@ const AddFood = () => {
           </CardHeader>
           <CardBody className="w-full py-0 px-3 pb-3.5 overflow-hidden text-textPrimaryColor flex gap-3"
                     style={{ fontFamily: "Lexend Deca" }}>
+
+            <Dropdown placement="bottom-start">
+              <DropdownTrigger>
+                <div>
+                  <Input  className="select-none pointer-events-none"
+                          size="lg" label="Serving size" value={selectedServingSize} />
+                </div>
+              </DropdownTrigger>
+              <DropdownMenu
+                aria-label="Single selection example"
+                variant="flat"
+                disallowEmptySelection
+                selectionMode="single"
+                selectedKeys={servingSizeSelectedKeys}
+                onSelectionChange={setServingSizeSelectedKeys}
+              >
+                <DropdownItem key="100g" color="primary">
+                    <p className="text-lg">100g</p>
+                </DropdownItem>
+                <DropdownItem key="30g" color="primary">
+                  <p className="text-lg">30g</p>
+                </DropdownItem>
+                <DropdownItem key="50g" color="primary">
+                  <p className="text-lg">50g</p>
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+
             <Input
-              classNames={{
-                inputWrapper: "bg-white shadow-none",
-                input:"placeholder:text-textSecondaryColor"
-              }}
-              size="lg"
-              label="Serving Size"
-              placeholder="100g"
-              variant="bordered"
-              value={servingSize}
-              onChange={(e) => setServingSize(e.target.value)}
-            />
-            <Input
-              classNames={{
-                inputWrapper: "bg-white shadow-none",
-                input:"placeholder:text-textSecondaryColor"
-              }}
               inputMode="decimal"
               size="lg"
               label="Number of servings"
-              placeholder="1"
-              variant="bordered"
               value={numberOfServings}
               onChange={(e) => setNumberOfServings(e.target.value)}
             />
             <Dropdown placement="bottom-start">
               <DropdownTrigger>
                 <div>
-                  <Input classNames={{
-                    inputWrapper: "bg-white shadow-none",
-                    input:"placeholder:text-textSecondaryColor"
-                  }} className="select-none pointer-events-none" variant="bordered"
+                  <Input  className="select-none pointer-events-none"
                          size="lg" label="Meal" value={selectedMeal} />
                 </div>
               </DropdownTrigger>
@@ -115,8 +127,8 @@ const AddFood = () => {
                 variant="flat"
                 disallowEmptySelection
                 selectionMode="single"
-                selectedKeys={selectedKeys}
-                onSelectionChange={setSelectedKeys}
+                selectedKeys={mealSelectedKeys}
+                onSelectionChange={setMealSelectedKeys}
               >
                 <DropdownItem key="Breakfast" color="primary">
                   <div className="flex flex-row text-center items-center gap-2">
