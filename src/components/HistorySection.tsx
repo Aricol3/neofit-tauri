@@ -1,6 +1,7 @@
 import { Card, CardBody, CardHeader } from "@heroui/react";
 import { useState } from "react";
 import HistoryCard from "./HistoryCard.tsx";
+import { impactFeedback } from "@tauri-apps/plugin-haptics";
 
 
 const HistorySection = () => {
@@ -10,12 +11,12 @@ const HistorySection = () => {
     { id: 3, title: "Another apple pie", subtitle: "Another description" }
   ]);
 
-  const onDelete = (idToDelete: number) => {
+  const onDelete = async (idToDelete: number) => {
+    await impactFeedback('medium');
     setEntries(currentSwipers =>
       currentSwipers.filter(swiper => swiper.id !== idToDelete)
     );
   };
-
 
   return (
     <Card className="min-h-[150px] overflow-hidden meal-section" shadow="none">
