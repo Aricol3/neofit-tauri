@@ -2,7 +2,6 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Divider,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -16,15 +15,109 @@ import { faBurger } from "@fortawesome/free-solid-svg-icons/faBurger";
 import { faMugHot } from "@fortawesome/free-solid-svg-icons/faMugHot";
 import { faWineGlass } from "@fortawesome/free-solid-svg-icons/faWineGlass";
 import { faCookieBite } from "@fortawesome/free-solid-svg-icons/faCookieBite";
-import DonutChart from "../components/DonutChart.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../store.ts";
-import { scan } from "@tauri-apps/plugin-barcode-scanner";
 import { useNavigate } from "react-router-dom";
 import { addMealEntry } from "../slices/nutritionSlice.ts";
 import FoodMacronutrients from "../components/FoodMacronutrients.tsx";
-import DayHeader from "../components/DayHeader.tsx";
 import { ROUTES } from "../types.ts";
+
+const ServingSizeSelector = ({ servingSizes, onSelect }: any) => {
+  const [servingSizeSelectedKeys, setServingSizeSelectedKeys] = useState(new Set([""]));
+
+  const selectedServingSize = useMemo(
+    () => Array.from(servingSizeSelectedKeys).join(", ").replace(/_/g, ""),
+    [servingSizeSelectedKeys]
+  );
+
+  return (
+    <Dropdown placement="bottom-start">
+      <DropdownTrigger>
+        <div>
+          <Input className="select-none pointer-events-none"
+                 size="lg" label="Serving size" value={selectedServingSize} />
+        </div>
+      </DropdownTrigger>
+      <DropdownMenu
+        aria-label="Single selection example"
+        variant="flat"
+        disallowEmptySelection
+        selectionMode="single"
+        selectedKeys={servingSizeSelectedKeys}
+        onSelectionChange={(key) => {
+          const selectedItem = servingSizes.find((item) => `${item.value} ${item.unit}` === key.currentKey);
+          if (selectedItem) {
+            onSelect(selectedItem);
+            setServingSizeSelectedKeys(key);
+          }
+        }}>
+        {servingSizes.map((servingSize) => {
+          const key = `${servingSize.value} ${servingSize.unit}`;
+          return (
+            <DropdownItem key={key} color="primary">
+              <p className="text-lg">{key}</p>
+            </DropdownItem>
+          );
+        })}
+      </DropdownMenu>
+    </Dropdown>
+  );
+};
+
+const MealSelector = ({ onSelect }: any) => {
+  const [mealSelectedKeys, setMealSelectedKeys] = useState(new Set([""]));
+
+  const selectedMeal = useMemo(
+    () => Array.from(mealSelectedKeys).join(", ").replace(/_/g, ""),
+    [mealSelectedKeys]
+  );
+
+  return (
+    <Dropdown placement="bottom-start">
+      <DropdownTrigger>
+        <div>
+          <Input className="select-none pointer-events-none"
+                 size="lg" label="Meal" value={selectedMeal} />
+        </div>
+      </DropdownTrigger>
+      <DropdownMenu
+        aria-label="Single selection example"
+        variant="flat"
+        disallowEmptySelection
+        selectionMode="single"
+        selectedKeys={mealSelectedKeys}
+        onSelectionChange={(key) => {
+          onSelect(key.currentKey);
+          setMealSelectedKeys(key);
+        }}
+      >
+        <DropdownItem key="Breakfast" color="primary">
+          <div className="flex flex-row text-center items-center gap-2">
+            <FontAwesomeIcon color="#50545A" icon={faMugHot} />
+            <p className="text-lg">Breakfast</p>
+          </div>
+        </DropdownItem>
+        <DropdownItem key="Lunch" color="primary">
+          <div className="flex flex-row text-center items-center gap-2">
+            <FontAwesomeIcon color="#50545A" icon={faBurger} />
+            <p className="text-lg">Lunch</p></div>
+        </DropdownItem>
+        <DropdownItem key="Dinner" color="primary">
+          <div className="flex flex-row text-center items-center gap-2">
+            <FontAwesomeIcon color="#50545A" icon={faWineGlass} />
+            <p className="text-lg">Dinner</p>
+          </div>
+        </DropdownItem>
+        <DropdownItem key="Snack" color="primary">
+          <div className="flex flex-row text-center items-center gap-2">
+            <FontAwesomeIcon color="#50545A" icon={faCookieBite} />
+            <p className="text-lg">Snack</p>
+          </div>
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+  );
+};
 
 const AddFood = () => {
   const navigate = useNavigate();
@@ -32,26 +125,17 @@ const AddFood = () => {
 
   const scannedFood = useSelector((state: IRootState) => state.nutrition.scannedFood);
 
-  const [mealSelectedKeys, setMealSelectedKeys] = useState(new Set([""]));
-  const [servingSizeSelectedKeys, setServingSizeSelectedKeys] = useState(new Set([""]));
+  const [selectedServingSize, setSelectedServingSize] = useState();
   const [numberOfServings, setNumberOfServings] = useState("");
 
-  const selectedMeal = useMemo(
-    () => Array.from(mealSelectedKeys).join(", ").replaceAll("_", " "),
-    [mealSelectedKeys]
-  );
-
-  const selectedServingSize = useMemo(
-    () => Array.from(servingSizeSelectedKeys).join(", ").replaceAll("_", " "),
-    [servingSizeSelectedKeys]
-  );
+  const [selectedMeal, setSelectedMeal] = useState();
 
   const handleAccept = () => {
     const foodData = {
       id: Math.random(),
       description: scannedFood?.description || "",
       name: scannedFood?.name || "",
-      servingSize:selectedServingSize,
+      servingSize: selectedServingSize,
       numberOfServings,
       meal: selectedMeal,
       calories: scannedFood?.calories,
@@ -62,6 +146,18 @@ const AddFood = () => {
     console.log(foodData);
     dispatch(addMealEntry({ meal: selectedMeal, entry: foodData }));
   };
+
+  const calculatedMacros = useMemo(() => {
+    const multiplier = selectedServingSize?.nutrition_multiplier || 1;
+    const servings = parseFloat(numberOfServings) || 1;
+
+    return {
+      calories: (scannedFood?.calories || 0) * multiplier * servings,
+      carbs: (scannedFood?.totalCarbohydrates || 0) * multiplier * servings,
+      fat: (scannedFood?.totalFat || 0) * multiplier * servings,
+      protein: (scannedFood?.protein || 0) * multiplier * servings,
+    };
+  }, [scannedFood, selectedServingSize, numberOfServings]);
 
   return (
     <>
@@ -81,32 +177,7 @@ const AddFood = () => {
           <CardBody className="w-full py-0 px-3 pb-3.5 overflow-hidden text-textPrimaryColor flex gap-3"
                     style={{ fontFamily: "Lexend Deca" }}>
 
-            <Dropdown placement="bottom-start">
-              <DropdownTrigger>
-                <div>
-                  <Input  className="select-none pointer-events-none"
-                          size="lg" label="Serving size" value={selectedServingSize} />
-                </div>
-              </DropdownTrigger>
-              <DropdownMenu
-                aria-label="Single selection example"
-                variant="flat"
-                disallowEmptySelection
-                selectionMode="single"
-                selectedKeys={servingSizeSelectedKeys}
-                onSelectionChange={setServingSizeSelectedKeys}
-              >
-                <DropdownItem key="100g" color="primary">
-                    <p className="text-lg">100g</p>
-                </DropdownItem>
-                <DropdownItem key="30g" color="primary">
-                  <p className="text-lg">30g</p>
-                </DropdownItem>
-                <DropdownItem key="50g" color="primary">
-                  <p className="text-lg">50g</p>
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+            <ServingSizeSelector servingSizes={scannedFood?.servingSizes} onSelect={setSelectedServingSize} />
 
             <Input
               inputMode="decimal"
@@ -115,51 +186,17 @@ const AddFood = () => {
               value={numberOfServings}
               onChange={(e) => setNumberOfServings(e.target.value)}
             />
-            <Dropdown placement="bottom-start">
-              <DropdownTrigger>
-                <div>
-                  <Input  className="select-none pointer-events-none"
-                         size="lg" label="Meal" value={selectedMeal} />
-                </div>
-              </DropdownTrigger>
-              <DropdownMenu
-                aria-label="Single selection example"
-                variant="flat"
-                disallowEmptySelection
-                selectionMode="single"
-                selectedKeys={mealSelectedKeys}
-                onSelectionChange={setMealSelectedKeys}
-              >
-                <DropdownItem key="Breakfast" color="primary">
-                  <div className="flex flex-row text-center items-center gap-2">
-                    <FontAwesomeIcon color="#50545A" icon={faMugHot} />
-                    <p className="text-lg">Breakfast</p>
-                  </div>
-                </DropdownItem>
-                <DropdownItem key="Lunch" color="primary">
-                  <div className="flex flex-row text-center items-center gap-2">
-                    <FontAwesomeIcon color="#50545A" icon={faBurger} />
-                    <p className="text-lg">Lunch</p></div>
-                </DropdownItem>
-                <DropdownItem key="Dinner" color="primary">
-                  <div className="flex flex-row text-center items-center gap-2">
-                    <FontAwesomeIcon color="#50545A" icon={faWineGlass} />
-                    <p className="text-lg">Dinner</p>
-                  </div>
-                </DropdownItem>
-                <DropdownItem key="Snack" color="primary">
-                  <div className="flex flex-row text-center items-center gap-2">
-                    <FontAwesomeIcon color="#50545A" icon={faCookieBite} />
-                    <p className="text-lg">Snack</p>
-                  </div>
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+
+            <MealSelector onSelect={setSelectedMeal} />
           </CardBody>
         </Card>
 
-        <FoodMacronutrients calories={scannedFood?.calories} carbs={scannedFood?.totalCarbohydrates}
-                            fat={scannedFood?.totalFat} protein={scannedFood?.protein} />
+        <FoodMacronutrients
+          calories={calculatedMacros.calories}
+          carbs={calculatedMacros.carbs}
+          fat={calculatedMacros.fat}
+          protein={calculatedMacros.protein}
+        />
       </div>
     </>
   );
