@@ -15,9 +15,9 @@
     "@fortawesome/fontawesome-svg-core": "^6.7.1",
     "@fortawesome/free-solid-svg-icons": "^6.7.1",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@heroui/react": "2.7.2",
     "@mui/material": "^6.1.10",
     "@mui/x-charts": "^7.23.1",
-    "@heroui/react": "2.7.2",
     "@reduxjs/toolkit": "^2.5.0",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-barcode-scanner": "~2",
@@ -32,7 +32,8 @@
     "react-redux": "^9.2.0",
     "react-use-motion-measure": "^3.0.0",
     "redux-persist": "^6.0.0",
-    "swiper": "^11.2.2"
+    "swiper": "^11.2.2",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2",

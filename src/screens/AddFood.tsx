@@ -20,7 +20,8 @@ import { IRootState } from "../store.ts";
 import { useNavigate } from "react-router-dom";
 import { addMealEntry } from "../slices/nutritionSlice.ts";
 import FoodMacronutrients from "../components/FoodMacronutrients.tsx";
-import { ROUTES } from "../types.ts";
+import { v4 as uuidv4 } from 'uuid';
+import { MEAL, ROUTES } from "../types.ts";
 
 const ServingSizeSelector = ({ servingSizes, onSelect }: any) => {
   const [servingSizeSelectedKeys, setServingSizeSelectedKeys] = useState(new Set([""]));
@@ -128,23 +129,24 @@ const AddFood = () => {
   const [selectedServingSize, setSelectedServingSize] = useState();
   const [numberOfServings, setNumberOfServings] = useState("");
 
-  const [selectedMeal, setSelectedMeal] = useState();
+  const [selectedMeal, setSelectedMeal] = useState<MEAL>();
 
   const handleAccept = () => {
-    const foodData = {
-      id: Math.random(),
+    const mealEntry = {
+      id: uuidv4(),
       description: scannedFood?.description || "",
       name: scannedFood?.name || "",
-      servingSize: selectedServingSize,
+      servingSize: selectedServingSize!,
       numberOfServings,
-      meal: selectedMeal,
-      calories: scannedFood?.calories,
-      totalCarbohydrates: scannedFood?.totalCarbohydrates || 0,
-      totalFat: scannedFood?.totalFat || 0,
-      protein: scannedFood?.protein || 0
+      meal: selectedMeal!,
+      calories: calculatedMacros.calories,
+      totalCarbohydrates: calculatedMacros.carbs,
+      totalFat: calculatedMacros.fat,
+      protein: calculatedMacros.protein
     };
-    console.log(foodData);
-    dispatch(addMealEntry({ meal: selectedMeal, entry: foodData }));
+    console.log(mealEntry);
+    dispatch(addMealEntry({ meal: selectedMeal, entry: mealEntry }));
+    navigate(ROUTES.NUTRITION);
   };
 
   const calculatedMacros = useMemo(() => {
