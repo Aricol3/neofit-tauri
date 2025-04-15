@@ -71,7 +71,7 @@ const MealSection = ({ meal }: MealSectionProps) => {
               <FoodCard
                 key={entry.id}
                 title={entry.description}
-                subtitle={entry.name}
+                subtitle={`${entry.numberOfServings} servings • ${entry.servingSize?.value} g`}
                 calories={entry.calories}
                 onDelete={() => onDelete(entry.id)}
               />
