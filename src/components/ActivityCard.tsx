@@ -1,48 +1,69 @@
-import { Card, CardBody, CardFooter, Chip } from "@heroui/react";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  Chip,
+} from "@heroui/react";
+import { useState } from "react";
+import BottomSheet from "./BottomSheet.tsx";
 
 const ActivityCard = ({ exercise, sets }) => {
   let workingSetNumber = 1;
+  const [isOpen, setIsOpen] = useState(false);
+
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const handleOpen = () => {
+    if (isAnimating || isOpen) return;
+    setIsAnimating(true);
+    setIsOpen(true);
+    setTimeout(() => setIsAnimating(false), 500);
+  };
 
   return (
-    <Card isPressable shadow="none" className="p-3 w-full">
-      <CardBody className="p-0">
-        <div className="flex flex-row items-center gap-3">
-          <div className="w-2 h-5 rounded-2xl bg-primary"></div>
-          <p className="text-lg font-semibold text-textPrimaryColor">{exercise}</p>
-        </div>
-      </CardBody>
+    <>
+      <Card isPressable shadow="none" className="p-3 w-full" onPress={handleOpen}>
+        <CardBody className="p-0">
+          <div className="flex flex-row items-center gap-3">
+            <div className="w-2 h-5 rounded-2xl bg-primary"></div>
+            <p className="text-lg font-semibold text-textPrimaryColor">{exercise}</p>
+          </div>
+        </CardBody>
+        <CardFooter className="flex flex-col gap-2 pt-0">
+          <div
+            className="flex justify-between items-center w-full mt-2 text-textPrimaryColor font-semibold text-sm pb-1">
+            <p className="w-12 text-center">Set</p>
+            <p className="w-12 text-center">Reps</p>
+            <p className="w-12 text-center">kg</p>
+          </div>
+          {sets.map((set, index) => {
+            const isWarmup = set.warmup;
+            const label = isWarmup ? "W" : `${workingSetNumber++}`;
 
-      <CardFooter className="flex flex-col gap-2 pt-0">
-        <div
-          className="flex justify-between items-center w-full mt-2 text-textPrimaryColor font-semibold text-sm pb-1">
-          <p className="w-12 text-center">Set</p>
-          <p className="w-12 text-center">Reps</p>
-          <p className="w-12 text-center">kg</p>
-        </div>
-        {sets.map((set, index) => {
-          const isWarmup = set.warmup;
-          const label = isWarmup ? "W" : `${workingSetNumber++}`;
-
-          return (
-            <div
-              key={index}
-              className="flex justify-between items-center w-full font-medium pt-1 pb-1 rounded-md"
-            >
-              <div className="w-12 flex justify-center">
-                <Chip
-                  className={isWarmup ? "bg-proteinColor text-textPrimaryColor p-0 min-w-8 text-center" : "bg-primary text-white p-0 min-w-8 text-center"}>
-                  <p className="font-bold">{label}</p>
-                </Chip>
+            return (
+              <div
+                key={index}
+                className="flex justify-between items-center w-full font-medium pt-1 pb-1 rounded-md"
+              >
+                <div className="w-12 flex justify-center">
+                  <Chip
+                    className={isWarmup ? "bg-proteinColor text-textPrimaryColor p-0 min-w-8 text-center" : "bg-primary text-white p-0 min-w-8 text-center"}>
+                    <p className="font-bold">{label}</p>
+                  </Chip>
+                </div>
+                <p className="w-12 text-center font-bold text-textPrimaryColor"
+                >{set.reps}</p>
+                <p className="w-12 text-center font-bold text-textPrimaryColor"
+                >{set.weight}</p>
               </div>
-              <p className="w-12 text-center font-bold text-textPrimaryColor"
-              >{set.reps}</p>
-              <p className="w-12 text-center font-bold text-textPrimaryColor"
-              >{set.weight}</p>
-            </div>
-          );
-        })}
-      </CardFooter>
-    </Card>
+            );
+          })}
+        </CardFooter>
+      </Card>
+
+      <BottomSheet isOpen={isOpen} setIsOpen={setIsOpen} />
+    </>
+
   );
 };
 
@@ -54,7 +75,7 @@ const ActivityExample = () => {
       { reps: 12, weight: 35, warmup: true },
       { reps: 10, weight: 40, warmup: false },
       { reps: 8, weight: 45, warmup: false },
-      { reps: 6, weight: 50, warmup: false },
+      { reps: 6, weight: 50, warmup: false }
     ]
   };
 
