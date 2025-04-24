@@ -15,6 +15,13 @@ export enum MEAL {
   SNACK = "Snack"
 }
 
+export enum SET_TYPE {
+  WARMUP = "Warmup",
+  NORMAL = "Normal",
+  DROP = "Drop",
+  SUPER = "Super"
+}
+
 export enum ROUTES {
   NUTRITION = "/nutrition",
 }

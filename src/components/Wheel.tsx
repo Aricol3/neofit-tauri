@@ -99,7 +99,8 @@ export default function Wheel(props: {
 
   return (
     <div
-      className={"wheel keen-slider wheel--perspective-" + perspective}
+      className={"text-textPrimaryColor wheel keen-slider wheel--perspective-" + perspective}
+      style={{fontFamily: "Lexend Deca" }}
       ref={sliderRef}
     >
       <div

@@ -10,7 +10,6 @@ const BottomSheet = ({ isOpen, setIsOpen }) => {
     } else {
       document.body.classList.remove("overflow-hidden");
     }
-
     return () => {
       document.body.classList.remove("overflow-hidden");
     };
@@ -32,23 +31,19 @@ const BottomSheet = ({ isOpen, setIsOpen }) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              background: "#000"
             }}
           >
-            <div style={{ width: 70, height: 180 }}>
-              <Wheel initIdx={1} length={24} width={23} loop={false} />
-            </div>
-            <div style={{ width: 70, height: 180 }}>
+              <Wheel label="Set" initIdx={1}  length={2} width={80} loop={false} setValue={(rel) => (rel === 0 ? "Warmup" : "Normal")} />
+              <Wheel label="Reps" initIdx={1} length={51} width={62} loop={false} />
               <Wheel
-                initIdx={35}
-                length={60}
-                width={23}
+                label="Kg"
+                initIdx={1}
+                length={401}
+                width={50}
                 loop={false}
-                perspective="left"
               />
-            </div>
           </div>
-          <div className="mt-6 flex justify-end gap-2">
+          <div className="mt-2 flex justify-between">
             <Button color="danger" variant="light" onPress={() => setIsOpen(false)}>
               Cancel
             </Button>

@@ -82,7 +82,6 @@ img {
 
 .wheel.keen-slider {
   display: block;
-  color: #fff;
   height: 100%;
   overflow: visible;
   width: 100%;
@@ -114,12 +113,41 @@ img {
   width: 100%;
 }
 
+// black shadow
+
+//.wheel__shadow-top,
+//.wheel__shadow-bottom {
+//  background: linear-gradient(
+//                  to bottom,
+//                  rgba(0, 0, 0, 0.9) 0%,
+//                  rgba(0, 0, 0, 0.5) 100%
+//  );
+//  left: 0;
+//  height: calc(42% + 2px);
+//  width: 100%;
+//  border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
+//  position: relative;
+//  margin-top: -2px;
+//  z-index: 5;
+//}
+//
+//.wheel__shadow-bottom {
+//  background: linear-gradient(
+//                  to bottom,
+//                  rgba(0, 0, 0, 0.5) 0%,
+//                  rgba(0, 0, 0, 0.9) 100%
+//  );
+//  margin-top: 2px;
+//  border-bottom: none;
+//  border-top: 0.5px solid rgba(255, 255, 255, 0.3);
+//}
+
 .wheel__shadow-top,
 .wheel__shadow-bottom {
   background: linear-gradient(
                   to bottom,
-                  rgba(0, 0, 0, 0.9) 0%,
-                  rgba(0, 0, 0, 0.5) 100%
+                  rgba(255, 255, 255, 0.9) 0%,
+                  rgba(255, 255, 255, 0.5) 100%
   );
   left: 0;
   height: calc(42% + 2px);
@@ -133,13 +161,14 @@ img {
 .wheel__shadow-bottom {
   background: linear-gradient(
                   to bottom,
-                  rgba(0, 0, 0, 0.5) 0%,
-                  rgba(0, 0, 0, 0.9) 100%
+                  rgba(255, 255, 255, 0.5) 0%,
+                  rgba(255, 255, 255, 0.9) 100%
   );
   margin-top: 2px;
   border-bottom: none;
   border-top: 0.5px solid rgba(255, 255, 255, 0.3);
 }
+
 
 .wheel__label {
   font-weight: 500;
