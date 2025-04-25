@@ -12,7 +12,8 @@ export default function Wheel(props: {
   length: number
   loop?: boolean
   perspective?: "left" | "right" | "center"
-  setValue?: (relative: number, absolute: number) => string
+  setValue?: (relative: number, absolute: number) => void
+  formatValue?: (index: number) => React.ReactNode
   width: number
 }) {
   const lastIdxRef = useRef<number | null>(null)
@@ -53,12 +54,17 @@ export default function Wheel(props: {
     },
     detailsChanged: (s) => {
       const currentIdx = s.track.details.rel
-      setSliderState(s.track.details)
+      const absoluteIdx = s.track.details.abs
 
       if (lastIdxRef.current !== currentIdx) {
         lastIdxRef.current = currentIdx
         impactFeedback('light')
+        if (props.setValue) {
+          props.setValue(currentIdx, absoluteIdx)
+        }
       }
+
+      setSliderState(s.track.details)
     },
     rubberband: !props.loop,
     mode: "free-snap",
@@ -89,9 +95,9 @@ export default function Wheel(props: {
         transform: `rotateX(${rotate}deg) translateZ(${radius}px)`,
         WebkitTransform: `rotateX(${rotate}deg) translateZ(${radius}px)`,
       }
-      const value = props.setValue
-        ? props.setValue(i, sliderState.abs + Math.round(distance))
-        : i
+      const value = props.formatValue ? props.formatValue(i) : i
+
+
       values.push({ style, value })
     }
     return values

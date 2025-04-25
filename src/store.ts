@@ -3,9 +3,11 @@ import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import nutritionReducer from "./slices/nutritionSlice.ts";
+import activityReducer from "./slices/activitySlice.ts";
 
 const rootReducer = combineReducers({
-  nutrition: nutritionReducer
+  nutrition: nutritionReducer,
+  activity: activityReducer,
 });
 
 const persistConfig = {

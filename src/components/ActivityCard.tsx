@@ -2,12 +2,16 @@ import {
   Card,
   CardBody,
   CardFooter,
-  Chip,
+  Chip
 } from "@heroui/react";
 import { useState } from "react";
 import BottomSheet from "./BottomSheet.tsx";
+import { SET_TYPE } from "../types.ts";
+import { addSetToActivity, ISet } from "../slices/activitySlice.ts";
+import { useDispatch } from "react-redux";
 
-const ActivityCard = ({ exercise, sets }) => {
+const ActivityCard = ({ activityId, exercise, sets, isEditable, onExerciseNameChange, onFinishEditing }) => {
+  const dispatch = useDispatch();
   let workingSetNumber = 1;
   const [isOpen, setIsOpen] = useState(false);
 
@@ -20,13 +24,39 @@ const ActivityCard = ({ exercise, sets }) => {
     setTimeout(() => setIsAnimating(false), 500);
   };
 
+  const handleConfirm = (setData: ISet) => {
+    dispatch(addSetToActivity({ activityId, newSet: setData }));
+  };
+
   return (
     <>
-      <Card isPressable shadow="none" className="p-3 w-full" onPress={handleOpen}>
+      <Card isPressable={!isEditable}
+            onPress={!isEditable ? handleOpen : undefined} shadow="none" className="p-3 w-full">
         <CardBody className="p-0">
           <div className="flex flex-row items-center gap-3">
             <div className="w-2 h-5 rounded-2xl bg-primary"></div>
-            <p className="text-lg font-semibold text-textPrimaryColor">{exercise}</p>
+            {isEditable ? (
+              <input
+                value={exercise}
+                onChange={(e) => onExerciseNameChange?.(e.target.value)}
+                onBlur={(e) => onFinishEditing?.(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    onFinishEditing?.(e.currentTarget.value);
+                  } else if (e.key === " ") {
+                    e.stopPropagation();
+                  }
+                }}
+                autoFocus
+                className="text-lg font-semibold text-textPrimaryColor bg-transparent outline-none border-b border-primary"
+              />
+            ) : (
+              <p className="text-lg font-semibold text-textPrimaryColor">
+                {exercise}
+              </p>
+            )}
+
           </div>
         </CardBody>
         <CardFooter className="flex flex-col gap-2 pt-0">
@@ -37,8 +67,12 @@ const ActivityCard = ({ exercise, sets }) => {
             <p className="w-12 text-center">kg</p>
           </div>
           {sets.map((set, index) => {
-            const isWarmup = set.warmup;
-            const label = isWarmup ? "W" : `${workingSetNumber++}`;
+            let label = "";
+            if (set.type === SET_TYPE.WARMUP) {
+              label = "W";
+            } else {
+              label = `${workingSetNumber++}`;
+            }
 
             return (
               <div
@@ -47,7 +81,7 @@ const ActivityCard = ({ exercise, sets }) => {
               >
                 <div className="w-12 flex justify-center">
                   <Chip
-                    className={isWarmup ? "bg-proteinColor text-textPrimaryColor p-0 min-w-8 text-center" : "bg-primary text-white p-0 min-w-8 text-center"}>
+                    className={label == "W" ? "bg-proteinColor text-textPrimaryColor p-0 min-w-8 text-center" : "bg-primary text-white p-0 min-w-8 text-center"}>
                     <p className="font-bold">{label}</p>
                   </Chip>
                 </div>
@@ -61,25 +95,10 @@ const ActivityCard = ({ exercise, sets }) => {
         </CardFooter>
       </Card>
 
-      <BottomSheet isOpen={isOpen} setIsOpen={setIsOpen} />
+      <BottomSheet isOpen={isOpen} setIsOpen={setIsOpen} exercise={exercise} onConfirm={handleConfirm} />
     </>
 
   );
 };
 
-const ActivityExample = () => {
-  const activity = {
-    exercise: "Machine Row",
-    sets: [
-      { reps: 15, weight: 30, warmup: true },
-      { reps: 12, weight: 35, warmup: true },
-      { reps: 10, weight: 40, warmup: false },
-      { reps: 8, weight: 45, warmup: false },
-      { reps: 6, weight: 50, warmup: false }
-    ]
-  };
-
-  return <ActivityCard exercise={activity.exercise} sets={activity.sets} />;
-};
-
-export default ActivityExample;
+export default ActivityCard;
