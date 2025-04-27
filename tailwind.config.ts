@@ -27,6 +27,7 @@ module.exports = {
           textPrimaryColor: "#474768",
           textSecondaryColor: "#8fa1b1",
           waterBackground: "#6882fe",
+          backgroundColor: "#f5f9fa",
         }
       }
     }
