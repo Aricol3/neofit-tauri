@@ -13,9 +13,9 @@ const WorkoutSection = () => {
   const dispatch = useDispatch();
   // dispatch(resetActivitiesState())
   const activities = useSelector((state: IRootState) => state.activity.activities);
-  console.log("CE ",activities);
+
   const entireStore = useSelector(state => state);
-  console.log('Store:', entireStore);
+  console.log("Store:", entireStore);
 
   const addNewActivity = () => {
     dispatch(
@@ -35,7 +35,6 @@ const WorkoutSection = () => {
   const finishEditingTitle = (id: string, name: string) => {
     dispatch(updateActivity({ id, updated: { exercise: name, isEditing: false } }));
   };
-
 
   return (
     <Card className="min-h-[150px] overflow-hidden meal-section" shadow="none">
@@ -65,12 +64,14 @@ const WorkoutSection = () => {
             </div>
           )}
         </AnimatePresence>
-        <h1
-          className="text-lg font-bold text-primary p-3 w-full text-nowrap text-right"
-          onClick={addNewActivity}
-        >
-          ADD ACTIVITY
-        </h1>
+        <div className="p-3 text-right">
+          <span
+            className="text-lg font-bold text-primary cursor-pointer"
+            onClick={addNewActivity}
+          >
+             ADD ACTIVITY
+          </span>
+        </div>
       </CardBody>
     </Card>
   );

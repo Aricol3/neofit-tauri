@@ -50,9 +50,12 @@ export const activitySlice = createSlice({
         activity.sets.push(action.payload.newSet);
       }
     },
+    deleteActivity: (state, action: PayloadAction<string>) => {
+      state.activities = state.activities.filter(activity => activity.id !== action.payload);
+    },
     resetActivitiesState: () => initialState
   }
 });
 
-export const { addActivity, updateActivity, addSetToActivity, resetActivitiesState } = activitySlice.actions;
+export const { addActivity, updateActivity, addSetToActivity, deleteActivity, resetActivitiesState } = activitySlice.actions;
 export default activitySlice.reducer;

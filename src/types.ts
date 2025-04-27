@@ -17,9 +17,8 @@ export enum MEAL {
 
 export enum SET_TYPE {
   WARMUP = "Warmup",
-  NORMAL = "Normal",
+  NORMAL = "Working",
   DROP = "Drop",
-  SUPER = "Super"
 }
 
 export enum ROUTES {
