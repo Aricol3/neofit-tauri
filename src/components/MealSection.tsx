@@ -25,7 +25,7 @@ const MealSection = ({ meal }: MealSectionProps) => {
   console.log("ENTRIES", entries);
 
   const onDelete = useCallback(async (idToDelete: number) => {
-    await impactFeedback('medium');
+    await impactFeedback("medium");
     dispatch(removeMealEntry({ meal, entryId: idToDelete }));
   }, [dispatch, meal]);
 

@@ -11,6 +11,7 @@ import { addSetToActivity, deleteActivity, ISet } from "../slices/activitySlice.
 import { useDispatch } from "react-redux";
 import { SwipeActions } from "./SwipeActions/SwipeActions.tsx";
 import { motion } from "framer-motion-legacy";
+import { impactFeedback } from "@tauri-apps/plugin-haptics";
 
 const ActivityCard = ({ activityId, exercise, sets, isEditable, onExerciseNameChange, onFinishEditing }) => {
   const dispatch = useDispatch();
@@ -30,7 +31,9 @@ const ActivityCard = ({ activityId, exercise, sets, isEditable, onExerciseNameCh
     dispatch(addSetToActivity({ activityId, newSet: setData }));
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
+    await impactFeedback("medium");
+
     dispatch(deleteActivity(activityId));
   };
 

@@ -57,5 +57,11 @@ export const activitySlice = createSlice({
   }
 });
 
-export const { addActivity, updateActivity, addSetToActivity, deleteActivity, resetActivitiesState } = activitySlice.actions;
+export const {
+  addActivity,
+  updateActivity,
+  addSetToActivity,
+  deleteActivity,
+  resetActivitiesState
+} = activitySlice.actions;
 export default activitySlice.reducer;
