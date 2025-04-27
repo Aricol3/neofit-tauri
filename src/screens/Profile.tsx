@@ -6,14 +6,18 @@ import { faAdd } from "@fortawesome/free-solid-svg-icons/faAdd";
 import { faPen } from "@fortawesome/free-solid-svg-icons/faPen";
 import { faScaleBalanced } from "@fortawesome/free-solid-svg-icons/faScaleBalanced";
 import { faDumbbell } from "@fortawesome/free-solid-svg-icons/faDumbbell";
-import { faLemon } from "@fortawesome/free-solid-svg-icons/faLemon";
+import StickyCardMenu from "../components/StickyCardMenu.tsx";
+import userProfile from "../assets/user-profile.svg";
 import lemon from "../assets/lemon.svg";
-import homeIcon from "../assets/home.svg";
-import { faBowlFood } from "@fortawesome/free-solid-svg-icons/faBowlFood";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons/faArrowRight";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
+import sliders from "../assets/sliders.svg";
+import question from "../assets/question.svg";
 
 const Profile = () => {
+  const personalItems = ["Personal details", "My items"];
+  const dietItems = ["Goals", "Nutrition", "Water", "Activity", "Weight", "Diary"];
+  const generalItems = ["Notifications", "Units"];
+  const helpItems = ["Subscription info", "Restore purchases", "Privacy Settings"];
+
 
   return (
     <>
@@ -81,121 +85,29 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className="mt-0">
-          <div className="sticky top-28 z-10">
-            <div className="w-full h-7 bg-backgroundColor" />
-          </div>
-          <div className="bg-white rounded-2xl">
-            <div className="sticky top-32 bg-white z-20 p-4 overflow-hidden rounded-2xl -mt-2 flex flex-row items-center gap-4 ml-2">
-              <img src={lemon} className="h-5" alt="lemon icon" />
-              <h2 className="text-textPrimaryColor text-xl font-bold">Diet</h2>
-            </div>
+        <StickyCardMenu
+          title="Personal"
+          icon={userProfile}
+          items={personalItems}
+        />
 
-            <div className="h-full">
+        <StickyCardMenu
+          title="Diet"
+          icon={lemon}
+          items={dietItems}
+        />
 
-              <div className="flex flex-row justify-between items-center mt-4 mb-8 mx-6">
-                <div className="text-textSecondaryColor">
-                  Goals
-                </div>
-                <FontAwesomeIcon className="text-textSecondaryColor" icon={faChevronRight} />
-              </div>
+        <StickyCardMenu
+          title="General"
+          icon={sliders}
+          items={generalItems}
+        />
 
-              <div className="flex flex-row justify-between items-center my-8 mx-6">
-                <div className="text-textSecondaryColor">
-                  Nutrition
-                </div>
-                <FontAwesomeIcon className="text-textSecondaryColor" icon={faChevronRight} />
-              </div>
-
-              <div className="flex flex-row justify-between items-center my-8 mx-6">
-                <div className="text-textSecondaryColor">
-                  Water
-                </div>
-                <FontAwesomeIcon className="text-textSecondaryColor" icon={faChevronRight} />
-              </div>
-
-              <div className="flex flex-row justify-between items-center my-8 mx-6">
-                <div className="text-textSecondaryColor">
-                  Activity
-                </div>
-                <FontAwesomeIcon className="text-textSecondaryColor" icon={faChevronRight} />
-              </div>
-
-              <div className="flex flex-row justify-between items-center my-8 mx-6">
-                <div className="text-textSecondaryColor">
-                  Weight
-                </div>
-                <FontAwesomeIcon className="text-textSecondaryColor" icon={faChevronRight} />
-              </div>
-
-              <div className="flex flex-row justify-between items-center mt-8 mb-4 mx-6">
-                <div className="text-textSecondaryColor">
-                  Diary
-                </div>
-                <FontAwesomeIcon className="text-textSecondaryColor" icon={faChevronRight} />
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div>
-          <div className="sticky top-28 z-10">
-            <div className="w-full h-5 bg-backgroundColor" />
-          </div>
-          <div className="bg-white rounded-2xl">
-            <div className="sticky top-32 bg-white z-20 p-4 overflow-hidden rounded-2xl -mt-2">
-              <h2 className="text-xl font-semibold">Card Title</h2>
-            </div>
-
-            <div className="relative h-full p-4">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor,
-                dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula
-                massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est
-                eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae,
-                consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tincidunt.
-                Nullam
-                nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede.
-              </p>
-              <p>
-                Sed lectus. Integer euismod lacus luctus magna. Quisque cursus, metus vitae pharetra auctor, sem massa
-                mattis sem, at interdum magna augue eget diam. Vestibulum ante ipsum primis in faucibus orci luctus et
-                ultrices posuere cubilia Curae; Suspendisse sollicitudin velit sed leo. Ut pharetra augue nec augue. Nam
-                elit agna, end augue eget diam.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div className="sticky top-28 z-10">
-            <div className="w-full h-5 bg-backgroundColor" />
-          </div>
-          <div className="bg-white rounded-2xl">
-            <div className="sticky top-32 bg-white z-20 p-4 overflow-hidden rounded-2xl -mt-2">
-              <h2 className="text-xl font-semibold">Card Title</h2>
-            </div>
-
-            <div className="relative h-full p-4">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor,
-                dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula
-                massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est
-                eleifend mi, non fermentum diam nisl sit amet erat. Duis semper. Duis arcu massa, scelerisque vitae,
-                consequat in, pretium a, enim. Pellentesque congue. Ut in risus volutpat libero pharetra tincidunt.
-                Nullam
-                nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede.
-              </p>
-              <p>
-                Sed lectus. Integer euismod lacus luctus magna. Quisque cursus, metus vitae pharetra auctor, sem massa
-                mattis sem, at interdum magna augue eget diam. Vestibulum ante ipsum primis in faucibus orci luctus et
-                ultrices posuere cubilia Curae; Suspendisse sollicitudin velit sed leo. Ut pharetra augue nec augue. Nam
-                elit agna, end augue eget diam.
-              </p>
-            </div>
-          </div>
-        </div>
+        <StickyCardMenu
+          title="Help"
+          icon={question}
+          items={helpItems}
+        />
 
 
         <div className="flex flex-row gap-3 mt-44">
