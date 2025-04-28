@@ -13,7 +13,8 @@ const Macronutrients = () => {
   const targetFatValue = 110;
 
   return (
-    <Card className="w-full h-[180px] border-none bg-gradient-to-br from-primary to-fuchsia-500" shadow="none">
+    // <Card className="w-full h-[180px] border-none bg-gradient-to-br from-primary to-fuchsia-500" shadow="none">
+    <Card className="w-full h-[180px] border-none bg-gradient-to-tr from-purple-500 to-primary" shadow="none">
       <CardHeader className="pb-0">
         <p className="text-white text-lg font-[600]">Macronutrients</p>
       </CardHeader>
