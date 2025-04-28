@@ -51,7 +51,7 @@ const QuoteCard = ()=>{
   }, []);
 
   return (
-    <Card className="w-full h-[130px] border-none bg-gradient-to-tr from-purple-500 to-primary p-4 flex flex-col justify-center items-start" shadow="none">
+    <Card className="w-full h-[130px] border-none bg-gradient-to-tr from-purple-500 to-primary p-4 flex flex-col justify-center items-start shadow-md" shadow="none">
       <div className="flex flex-col justify-center items-start text-white font-[900] gap-1">
         <p className="text-xl font-[800]">{quote[0]}</p>
         <div className="flex flex-col leading-tight">

@@ -37,7 +37,7 @@ const WorkoutSection = () => {
   };
 
   return (
-    <Card className="min-h-[150px] overflow-hidden meal-section" shadow="none">
+    <Card className="min-h-[150px] overflow-hidden meal-section shadow-md" shadow="none">
       <CardHeader className="flex justify-between text-textPrimaryColor">
         <div className="text-lg font-[600] flex items-center gap-3">
           <FontAwesomeIcon color="#50545A" icon={faDumbbell} size="lg" />

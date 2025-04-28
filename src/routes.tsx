@@ -13,7 +13,7 @@ import Profile from "./screens/Profile.tsx";
 function Layout({ children }: PropsWithChildren) {
   const location = useLocation();
 
-  const routesWithHeader = ["/nutrition", "/profile", "/create-food","/add-food"];
+  const routesWithHeader = ["/","/nutrition", "/profile", "/create-food","/add-food"];
   const routesWithSearchHeader = ["/search"];
   const needsPadding = routesWithHeader.includes(location.pathname);
   const needsSearchHeaderPadding = routesWithSearchHeader.includes(location.pathname);

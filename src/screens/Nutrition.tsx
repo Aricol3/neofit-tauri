@@ -1,6 +1,4 @@
-import { Divider } from "@heroui/react";
-import MacroProgress from "../components/MacroProgress.tsx";
-import { MACRO, MEAL } from "../types.ts";
+import { MEAL } from "../types.ts";
 import MealSection from "../components/MealSection.tsx";
 import DayHeader from "../components/DayHeader.tsx";
 import Macronutrients from "../components/Macronutrients.tsx";
