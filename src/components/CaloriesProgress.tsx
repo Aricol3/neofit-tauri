@@ -3,13 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFlag } from "@fortawesome/free-solid-svg-icons/faFlag";
 import { faBowlFood } from "@fortawesome/free-solid-svg-icons/faBowlFood";
 import { capitalizeFirstLetter } from "../utils.ts";
+import { MACRO } from "../types.ts";
 
 const CaloriesRemaining = () => {
   return (
     <CircularProgress
       classNames={{
         svg: "w-40 h-40 drop-shadow-md",
-        indicator: "",
+        indicator: "stroke-white",
         track: "stroke-slate-200/30",
         value: "text-3xl font-semibold text-textPrimaryColor"
       }}
@@ -65,7 +66,8 @@ const Macro = ({ label, value, targetValue }) => {
       showValueLabel={true}
       classNames={{
         base: "max-w-md p-4",
-        indicator: `bg-${label}Color`,
+        // indicator: `bg-${label}Color`,
+        indicator: `bg-white`,
         // track:"bg-slate-200/60",
         label: "tracking-wider text-textPrimaryColor font-semibold mb-0"
       }}
@@ -76,13 +78,13 @@ const Macro = ({ label, value, targetValue }) => {
 
 const CaloriesProgress = () => {
   return (
-    <Card className="w-full h-44 shadow-md" shadow="none">
+    <Card className="w-full h-44 shadow-md bg-gradient-to-tl from-[#FFB457] to-[#FF705B]" shadow="none">
       <CardBody className="flex flex-row gap-4">
         <CaloriesRemaining />
         <div className="w-full flex flex-col justify-between items-center py-2">
-          <Macro label="protein" targetValue={124} value={90} />
-          <Macro label="carbs" targetValue={242} value={167} />
-          <Macro label="fat" targetValue={60} value={55} />
+          <Macro label={MACRO.PROTEIN} targetValue={124} value={90} />
+          <Macro label={MACRO.CARBS} targetValue={242} value={167} />
+          <Macro label={MACRO.FAT} targetValue={60} value={55} />
         </div>
       </CardBody>
     </Card>

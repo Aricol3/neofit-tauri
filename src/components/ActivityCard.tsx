@@ -84,7 +84,7 @@ const ActivityCard = ({ activityId, exercise, sets, isEditable, onExerciseNameCh
             className="p-3 bg-white rounded-lg"
           >
             <Card
-              isPressable
+              isPressable={!isEditable}
               disableAnimation={disableAnimation}
               onPointerDown={!isEditable ? handlePointerDown : undefined}
               onPointerUp={!isEditable ? handlePointerUp : undefined}
