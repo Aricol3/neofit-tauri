@@ -48,7 +48,7 @@ const FoodForm = ({handleInputChange }) => (
       </CardHeader>
       <CardBody className="w-full py-0 px-3 pb-3.5 overflow-hidden text-textPrimaryColor flex gap-3"
                 style={{ fontFamily: "Lexend Deca" }}>
-        <NumberInput
+        <Input
           inputMode="decimal"
           size="lg"
           label="Calories"
