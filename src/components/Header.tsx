@@ -9,16 +9,26 @@ import { useNavigate } from "react-router-dom";
 interface HeaderProps {
   title: string;
   backRoute?: string;
+  onBack?: () => void;
   onAccept?: () => void;
 }
 
-const Header = ({ title, backRoute, onAccept }: HeaderProps) => {
+const Header = ({ title, backRoute, onBack, onAccept }: HeaderProps) => {
   const [isTop, setIsTop] = useState(true);
   const navigate = useNavigate();
 
-  const onBack = () => {
-    backRoute ? navigate(backRoute) : navigate(-1);
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    }
+
+    if (backRoute) {
+      navigate(backRoute);
+    } else {
+      navigate(-1);
+    }
   };
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,15 +48,21 @@ const Header = ({ title, backRoute, onAccept }: HeaderProps) => {
       className={`rounded-b-3xl rounded flex items-center justify-between pl-5 pr-5 pt-14 pb-5 z-40 fixed w-full top-0 transition-shadow ${
         isTop ? "" : "shadow-[0_40px_60px_rgba(0,0,0,0.03)]"
       }`}>
-      <Button className="bg-transparent" isIconOnly onPress={onBack}>
+      <Button className="bg-transparent" isIconOnly onPress={handleBack}>
         <FontAwesomeIcon icon={faArrowLeft} size="xl" />
       </Button>
 
       <h1 className="font-bold text-xl text-textPrimaryColor">{title}</h1>
 
-      <Button className="bg-transparent" isIconOnly onClick={onAccept}>
-        <FontAwesomeIcon icon={faCheck} size="xl" />
-      </Button>
+      {onAccept ? (
+        <Button className="bg-transparent" isIconOnly onPress={onAccept}>
+          <FontAwesomeIcon icon={faCheck} size="xl" />
+        </Button>
+      ) : (
+        <Button className="bg-transparent invisible" isIconOnly disabled>
+          <FontAwesomeIcon icon={faCheck} size="xl" />
+        </Button>
+      )}
     </motion.div>
   )
     ;

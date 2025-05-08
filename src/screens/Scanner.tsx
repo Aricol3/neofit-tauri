@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { fetchFoodByBarcode } from "../api/foodApi.ts";
 import { useDispatch } from "react-redux";
 import { setScannedBarcode, setScannedFood } from "../slices/nutritionSlice.ts";
+import Header from "../components/Header.tsx";
+import { ROUTES } from "../types.ts";
 
 const Scanner = () => {
   const navigate = useNavigate();
@@ -46,10 +48,24 @@ const Scanner = () => {
 
   return (
     <>
-      <Button onClick={async () => {
-        await cancel();
-        navigate("/nutrition");
-      }}>back</Button>
+      <Header title="Scan Barcode" backRoute={ROUTES.NUTRITION} onBack={async () => await cancel()} />
+
+      <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
+        <div className="relative w-48 h-48">
+          <div className="absolute top-0 left-0 w-6 h-0.5 bg-primary rounded" />
+          <div className="absolute top-0 left-0 w-0.5 h-6 bg-primary rounded" />
+
+          <div className="absolute top-0 right-0 w-6 h-0.5 bg-primary rounded" />
+          <div className="absolute top-0 right-0 w-0.5 h-6 bg-primary rounded" />
+
+          <div className="absolute bottom-0 left-0 w-6 h-0.5 bg-primary rounded" />
+          <div className="absolute bottom-0 left-0 w-0.5 h-6 bg-primary rounded" />
+
+          <div className="absolute bottom-0 right-0 w-6 h-0.5 bg-primary rounded" />
+          <div className="absolute bottom-0 right-0 w-0.5 h-6 bg-primary rounded" />
+        </div>
+      </div>
+
     </>
   );
 };
