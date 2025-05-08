@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IRootState } from "../store.ts";
 import { addToast } from "@heroui/react";
+import { parseNumber } from "../utils.ts";
 
 const useFoodForm = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const useFoodForm = () => {
     total_fat: "",
     saturated_fat: "",
     total_carbs: "",
-    sugars: "",
+    sugar: "",
     protein: "",
     sodium: "",
     fiber: ""
@@ -43,21 +44,21 @@ const useFoodForm = () => {
         serving_sizes: [
           {
             nutrition_multiplier: 1,
-            value: parseFloat(sizeValue) || 100,
+            value: parseNumber(sizeValue) || 100,
             unit: sizeUnit || "grams",
             index: 1
           }
         ],
         nutritional_contents: {
-          grams: parseFloat(sizeValue) || 100,
-          energy: { value: parseFloat(formData.calories) || 0, unit: "calories" },
-          fat: parseFloat(formData.total_fat) || 0,
-          saturated_fat: parseFloat(formData.saturated_fat) || 0,
-          carbohydrates: parseFloat(formData.total_carbs) || 0,
-          sugar: parseFloat(formData.sugars) || 0,
-          protein: parseFloat(formData.protein) || 0,
-          sodium: parseFloat(formData.sodium) || 0,
-          fiber: parseFloat(formData.fiber) || 0
+          grams: parseNumber(sizeValue) || 100,
+          energy: { value: parseNumber(formData.calories) || 0, unit: "calories" },
+          fat: parseNumber(formData.total_fat) || 0,
+          saturated_fat: parseNumber(formData.saturated_fat) || 0,
+          carbohydrates: parseNumber(formData.total_carbs) || 0,
+          sugar: parseNumber(formData.sugars) || 0,
+          protein: parseNumber(formData.protein) || 0,
+          sodium: parseNumber(formData.sodium) || 0,
+          fiber: parseNumber(formData.fiber) || 0
         },
         type: "food",
         public: true,

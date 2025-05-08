@@ -30,7 +30,7 @@ export const fetchFoodByBarcode = async (barcode: string) => {
         saturatedFat: data.food.nutritional_contents.saturated_fat || 0,
         totalCarbohydrates: data.food.nutritional_contents.carbohydrates || 0,
         netCarbs: data.food.nutritional_contents.net_carbs || 0,
-        sugars: data.food.nutritional_contents.sugar || 0,
+        sugar: data.food.nutritional_contents.sugar || 0,
         protein: data.food.nutritional_contents.protein || 0,
         sodium: data.food.nutritional_contents.sodium || 0,
         fiber: data.food.nutritional_contents.fiber || 0,

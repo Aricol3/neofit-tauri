@@ -22,6 +22,7 @@ import { addMealEntry } from "../slices/nutritionSlice.ts";
 import FoodMacronutrients from "../components/FoodMacronutrients.tsx";
 import { v4 as uuidv4 } from 'uuid';
 import { MEAL, ROUTES } from "../types.ts";
+import { parseNumber } from "../utils.ts";
 
 const ServingSizeSelector = ({ servingSizes, onSelect }: any) => {
   const [servingSizeSelectedKeys, setServingSizeSelectedKeys] = useState(new Set([""]));
@@ -137,27 +138,40 @@ const AddFood = () => {
       description: scannedFood?.description || "",
       name: scannedFood?.name || "",
       servingSize: selectedServingSize!,
-      numberOfServings,
+      numberOfServings: parseNumber(numberOfServings),
       meal: selectedMeal!,
       calories: calculatedMacros.calories,
       totalCarbohydrates: calculatedMacros.carbs,
       totalFat: calculatedMacros.fat,
-      protein: calculatedMacros.protein
+      protein: calculatedMacros.protein,
+
+      saturatedFat: calculatedMacros.saturatedFat,
+      sugar: calculatedMacros.sugar,
+      fiber: calculatedMacros.fiber,
+      sodium: calculatedMacros.sodium,
     };
-    console.log(mealEntry);
+    console.log("MEAL ENTRY", mealEntry);
     dispatch(addMealEntry({ meal: selectedMeal, entry: mealEntry }));
     navigate(ROUTES.NUTRITION);
   };
 
   const calculatedMacros = useMemo(() => {
     const multiplier = selectedServingSize?.nutrition_multiplier || 1;
-    const servings = parseFloat(numberOfServings) || 1;
+    const servings = parseNumber(numberOfServings) || 1;
+
+    const round = (value: number) => Math.round(value);
+    const format = (value: number) => Number(value.toFixed(1));
 
     return {
-      calories: (scannedFood?.calories || 0) * multiplier * servings,
-      carbs: (scannedFood?.totalCarbohydrates || 0) * multiplier * servings,
-      fat: (scannedFood?.totalFat || 0) * multiplier * servings,
-      protein: (scannedFood?.protein || 0) * multiplier * servings,
+      calories: round((scannedFood?.calories || 0) * multiplier * servings),
+      carbs: format((scannedFood?.totalCarbohydrates || 0) * multiplier * servings),
+      fat: format((scannedFood?.totalFat || 0) * multiplier * servings),
+      protein: format((scannedFood?.protein || 0) * multiplier * servings),
+
+      saturatedFat: format((scannedFood?.saturatedFat || 0) * multiplier * servings),
+      sugar: format((scannedFood?.sugar || 0) * multiplier * servings),
+      fiber: format((scannedFood?.fiber || 0) * multiplier * servings),
+      sodium: format((scannedFood?.sodium || 0) * multiplier * servings),
     };
   }, [scannedFood, selectedServingSize, numberOfServings]);
 
@@ -169,10 +183,10 @@ const AddFood = () => {
           <CardHeader className="flex justify-between">
             <div>
               <div className="text-textPrimaryColor text-lg font-[600]">
-                Chicken Strips American Style
+                {scannedFood?.description || ""}
               </div>
               <div className="text-textPrimaryColor font-[500]">
-                Culinea
+                {scannedFood?.name || ""}
               </div>
             </div>
           </CardHeader>

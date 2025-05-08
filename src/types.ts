@@ -43,7 +43,7 @@ export interface IScannedFood {
   saturatedFat: number;
   totalCarbohydrates: number;
   netCarbs: number;
-  sugars: number;
+  sugar: number;
   protein: number;
   sodium: number;
   fiber: number;
@@ -58,12 +58,17 @@ export interface IMealEntry {
   description: string;
   name: string;
   servingSize: string;
-  numberOfServings: string;
+  numberOfServings: number;
   meal: MEAL;
-  calories: number
+  calories: number;
   totalCarbohydrates: number;
   totalFat: number;
   protein: number;
+
+  saturatedFat: number;
+  sugar:number;
+  fiber: number;
+  sodium: number;
 }
 
 interface IServingSize {
