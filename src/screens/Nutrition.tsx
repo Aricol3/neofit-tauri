@@ -19,8 +19,8 @@ const Nutrition = () => {
         <Water/>
         <MealSection meal={MEAL.BREAKFAST} />
         <MealSection meal={MEAL.LUNCH} />
-        <MealSection meal={MEAL.SNACK} />
         <MealSection meal={MEAL.DINNER} />
+        <MealSection meal={MEAL.SNACK} />
       </div>
     </>
   );

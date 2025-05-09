@@ -1,4 +1,6 @@
-import { Card, CardBody, CardHeader, Input, NumberInput } from "@heroui/react";
+import { Card, CardBody, CardHeader, Input } from "@heroui/react";
+
+// SERVING SIZE VALUE | UNIT
 
 const FoodForm = ({handleInputChange }) => (
   <>

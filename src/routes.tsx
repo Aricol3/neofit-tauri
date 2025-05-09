@@ -12,11 +12,13 @@ import Profile from "./screens/Profile.tsx";
 
 function Layout({ children }: PropsWithChildren) {
   const location = useLocation();
+  console.log("LOCATION", location);
 
-  const routesWithHeader = ["/","/nutrition", "/profile", "/create-food","/add-food"];
+  const routesWithHeader = ["/", "/nutrition", "/profile", "/create-food", "/add-food", "/edit-food"];
   const routesWithSearchHeader = ["/search"];
-  const needsPadding = routesWithHeader.includes(location.pathname);
-  const needsSearchHeaderPadding = routesWithSearchHeader.includes(location.pathname);
+
+  const needsPadding = routesWithHeader.some(route => location.pathname.startsWith(route));
+  const needsSearchHeaderPadding = routesWithSearchHeader.some(route => location.pathname.startsWith(route));
 
   const hideNavbarRoutes = ["/scan"];
 
@@ -37,7 +39,7 @@ export default function MainRoutes() {
         <Route path="/nutrition" element={<Nutrition />} />
         <Route path="/add-food" element={<AddFood />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/edit-food" element={<EditFood />} />
+        <Route path="/edit-food/:entryId" element={<EditFood />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/create-food" element={<CreateFood />} />
       </Routes>

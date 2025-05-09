@@ -1,6 +1,6 @@
 import { IScannedFood } from "../types.ts";
 
-const baseUrl = "http:/192.168.100.110:8080";
+const baseUrl = "http://172.20.10.14:8080";
 
 
 export const fetchFoodByBarcode = async (barcode: string) => {
@@ -19,7 +19,7 @@ export const fetchFoodByBarcode = async (barcode: string) => {
         description: data.food.description,
         servingSizes: data.food.serving_sizes.map((size: any) => ({
           nutritionMultiplier: size.nutrition_multiplier,
-          id: size.id,
+          id: size._id,
           value: size.value,
           unit: size.unit,
           index: size.index

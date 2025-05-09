@@ -3,14 +3,14 @@ import { SwipeActions } from "./SwipeActions/SwipeActions.tsx";
 import { useNavigate } from "react-router-dom";
 
 interface SwiperProps {
-  id?: number;
+  foodId: string;
   title: string;
   subtitle: string;
   calories: number;
   onDelete?: () => void;
 }
 
-const FoodCard = ({ title, subtitle, calories, onDelete }: SwiperProps) => {
+const FoodCard = ({ foodId, title, subtitle, calories, onDelete }: SwiperProps) => {
   const navigate = useNavigate();
 
   return (
@@ -42,7 +42,8 @@ const FoodCard = ({ title, subtitle, calories, onDelete }: SwiperProps) => {
           // shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]
         >
           <div className="flex flex-row w-full items-center justify-between gap-3 mb-1 h-12"
-               onClick={() => navigate("/edit-food")}>
+               onClick={() => navigate(`/edit-food/${foodId}`)}
+          >
             <div className="text-sm space-y-1">
               <p className="font-[500] text-textPrimaryColor">{title}</p>
               <p className="font-[500] text-textSecondaryColor">{subtitle}</p>

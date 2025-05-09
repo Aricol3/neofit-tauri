@@ -135,9 +135,11 @@ const AddFood = () => {
   const handleAccept = () => {
     const mealEntry = {
       id: uuidv4(),
+      baseFood: scannedFood,
       description: scannedFood?.description || "",
       name: scannedFood?.name || "",
-      servingSize: selectedServingSize!,
+      servingSizes: scannedFood?.servingSizes!,
+      servingSize: selectedServingSize,
       numberOfServings: parseNumber(numberOfServings),
       meal: selectedMeal!,
       calories: calculatedMacros.calories,

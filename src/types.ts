@@ -30,13 +30,7 @@ export interface IScannedFood {
   barcode: string;
   name: string;
   description: string;
-  servingSizes: {
-    nutritionMultiplier: number;
-    id: string;
-    value: number;
-    unit: string;
-    index: number;
-  }[];
+  servingSizes: IServingSize[];
   verified: boolean;
   calories: number;
   totalFat: number;
@@ -55,8 +49,11 @@ export interface IScannedFood {
 
 
 export interface IMealEntry {
+  id: string;
+  baseFood: IScannedFood;
   description: string;
   name: string;
+  servingSizes: IServingSize[];
   servingSize: string;
   numberOfServings: number;
   meal: MEAL;
@@ -72,7 +69,8 @@ export interface IMealEntry {
 }
 
 interface IServingSize {
-  nutrition_multiplier: number;
+  id: string;
+  nutritionMultiplier: number;
   value: number;
   unit: string;
   index: number;
