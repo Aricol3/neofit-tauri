@@ -14,11 +14,16 @@ function Layout({ children }: PropsWithChildren) {
   const location = useLocation();
   console.log("LOCATION", location);
 
-  const routesWithHeader = ["/", "/nutrition", "/profile", "/create-food", "/add-food", "/edit-food"];
+  const routesWithHeader = ["/", "/nutrition", "/profile", "/create-food", "/add-food"];
+  const routesWithPrefixHeader = ["/edit-food"];
   const routesWithSearchHeader = ["/search"];
 
-  const needsPadding = routesWithHeader.some(route => location.pathname.startsWith(route));
-  const needsSearchHeaderPadding = routesWithSearchHeader.some(route => location.pathname.startsWith(route));
+  const isInRouteList = (routeList: string[]) =>
+    routeList.includes(location.pathname) ||
+    routeList.some(route => location.pathname.startsWith(route + "/"));
+
+  const needsPadding = isInRouteList(routesWithHeader) || isInRouteList(routesWithPrefixHeader);
+  const needsSearchHeaderPadding = isInRouteList(routesWithSearchHeader);
 
   const hideNavbarRoutes = ["/scan"];
 
