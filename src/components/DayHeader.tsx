@@ -1,43 +1,184 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DayPicker from "./DayPicker.tsx";
+import { format, addDays, isSameDay } from "date-fns";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Virtual } from "swiper/modules";
 
-// In case of larger screens this should be calculated dynamically
-
-const NumberList = () => {
+const generateSlide = (dates, currentDate, index) => {
+  console.log("NEW SLIDE INDEX", index);
   const containerVariants = {
     show: {
       transition: {
         staggerChildren: 0.05,
-        delayChildren: 0.1,
-      },
+        delayChildren: 0.1
+      }
     },
-    hidden: {},
+    hidden: {}
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 10 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.25, ease: "easeOut" } },
+    show: { opacity: 1, y: 0, transition: { duration: 0.25, ease: "easeOut" } }
+  };
+
+  const startDate = format(dates[0], "MMM d");
+  const endDate = format(dates[dates.length - 1], "MMM d");
+  const intervalLabel = `${startDate} – ${endDate}`;
+
+  return (
+    <SwiperSlide key={index} virtualIndex={index}>
+      <div className="flex flex-col space-y-2">
+        <div className="text-center text-sm font-semibold text-textPrimaryColor">
+          {intervalLabel}
+        </div>
+
+        <motion.div
+          className="overflow-x-auto flex justify-start gap-4 items-center pb-2"
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          exit="hidden"
+        >
+          {dates.map((date, i) => {
+            const isToday = isSameDay(date, currentDate);
+            const weekday = format(date, "EEE");
+            return (
+              <motion.div
+                key={i}
+                variants={itemVariants}
+                className="flex flex-col items-center"
+              >
+                <div className="text-xs font-medium text-gray-600">
+                  {weekday}
+                </div>
+
+                <div
+                  className={`w-9 h-9 flex items-center justify-center text-sm font-medium rounded-full ${
+                    isToday ? "bg-primary text-white" : "bg-gray-200 text-black"
+                  }`}
+                  style={{ fontFamily: "Lexend Deca" }}
+                >
+                  {format(date, "d")}
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </div>
+    </SwiperSlide>
+  );
+};
+
+const Calendar = ({ currentDate }) => {
+  const daysPerSlide = 7;
+  const slidesInAdvance = 52;
+  const [swiperRef, setSwiperRef] = useState(null);
+
+  const generateInitialSlideDates = (initialDate, daysPerSlide) => {
+    const prepostDates = Math.floor(daysPerSlide / 2);
+    return Array.from({ length: daysPerSlide }, (_, i) =>
+      addDays(initialDate, i - prepostDates)
+    );
+  };
+
+  const generateNextSlideDates = (dates, daysPerSlide) => {
+    const lastDate = dates[dates.length - 1];
+    return Array.from({ length: daysPerSlide }, (_, i) =>
+      addDays(lastDate, i + 1)
+    );
+  };
+
+  const generatePreviousSlideDates = (dates, daysPerSlide) => {
+    const firstDate = dates[0];
+    return Array.from({ length: daysPerSlide }, (_, i) =>
+      addDays(firstDate, -(daysPerSlide - i))
+    );
+  };
+
+  const [datesBySlide, setDatesBySlide] = useState<Date[][]>([]);
+
+  const generateSlidesInAdvance = (initialDates, daysPerSlide, numberOfSlides) => {
+    const slides = [];
+    let currentDates = initialDates;
+
+    slides.push(currentDates);
+
+    for (let i = 1; i <= Math.floor(numberOfSlides / 2); i++) {
+      currentDates = generatePreviousSlideDates(currentDates, daysPerSlide);
+      slides.unshift(currentDates);
+    }
+
+    currentDates = initialDates;
+    for (let i = 1; i <= Math.floor(numberOfSlides / 2); i++) {
+      currentDates = generateNextSlideDates(currentDates, daysPerSlide);
+      slides.push(currentDates);
+    }
+
+    return slides;
+  };
+
+
+  useEffect(() => {
+    const initialDates = generateInitialSlideDates(currentDate, daysPerSlide);
+
+    const allSlides = generateSlidesInAdvance(initialDates, daysPerSlide, slidesInAdvance);
+
+    setDatesBySlide(allSlides);
+  }, [currentDate]);
+
+  const addNextSlide = () => {
+    const lastSlideDates = datesBySlide[datesBySlide.length - 1];
+    const nextDates = generateNextSlideDates(lastSlideDates, daysPerSlide);
+    setDatesBySlide((prev) => [...prev, nextDates]);
+  };
+
+  const addPreviousSlide = () => {
+    const firstSlideDates = datesBySlide[0];
+    const previousDates = generatePreviousSlideDates(firstSlideDates, daysPerSlide);
+
+    setDatesBySlide((prev) => {
+      setTimeout(() => {
+        swiperRef.slideTo(swiperRef.activeIndex + 1, 0);
+      }, 0);
+
+      return [previousDates, ...prev];
+    });
+
+  };
+
+  const handleSlideChange = (swiper) => {
+    const firstSlideIndex = 0;
+    const lastSlideIndex = datesBySlide.length - 1;
+
+    if (swiper.activeIndex === lastSlideIndex) {
+      addNextSlide();
+    }
+
+    if (swiper.activeIndex === firstSlideIndex) {
+      addPreviousSlide();
+    }
+
   };
 
   return (
-    <motion.div
-      className="flex justify-center gap-4 flex-wrap"
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
-      exit="hidden"
-    >
-      {Array.from({ length: 7 }, (_, i) => (
-        <motion.div
-          key={i}
-          variants={itemVariants}
-          className="bg-gray-200 rounded-full w-9 h-9 flex items-center justify-center text-sm font-medium"
+    <>
+      {datesBySlide.length > 0 && (
+        <Swiper
+          modules={[Virtual]}
+          onSwiper={setSwiperRef}
+          virtual
+          spaceBetween={0}
+          slidesPerView={1}
+          initialSlide={Math.floor(slidesInAdvance)/2}
+          onSlideChange={handleSlideChange}
         >
-          {i + 1}
-        </motion.div>
-      ))}
-    </motion.div>
+          {datesBySlide.map((dates, index) =>
+            generateSlide(dates, currentDate, index)
+          )}
+        </Swiper>
+      )}
+    </>
   );
 };
 
@@ -105,12 +246,11 @@ const DayHeader = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ opacity: { duration: 0.1 }, layout: { duration: 0.1, ease: "easeInOut" } }}
-            className="overflow-hidden px-5 pb-4"
+            className="overflow-hidden px-5 pb-1"
           >
-            <NumberList />
+            <Calendar currentDate={new Date(2025, 4, 15)} />
           </motion.div>
         )}
-
 
 
       </motion.div>
