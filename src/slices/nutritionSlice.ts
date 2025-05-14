@@ -1,24 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IMealEntry, IScannedFood } from "../types.ts";
+import { IRootState } from "../store.ts";
 
 interface INutritionState {
   scannedBarcode: string;
   scannedFood: IScannedFood | null;
   mealEntries: {
-    [meal: string]: IMealEntry[];
+    [date: string]: {
+      [meal: string]: IMealEntry[];
+    };
   };
 }
 
 const initialState: INutritionState = {
   scannedBarcode: "",
   scannedFood: null,
-  mealEntries: {
+  mealEntries: {}
+};
+
+export const selectEntriesForDate = (state: IRootState, date: string) =>
+  state.nutrition.mealEntries[date] || {
     Breakfast: [],
     Snacks: [],
     Lunch: [],
     Dinner: []
-  }
-};
+  };
 
 export const nutritionSlice = createSlice({
   name: "nutrition",
@@ -32,37 +38,53 @@ export const nutritionSlice = createSlice({
     },
     addMealEntry: (
       state,
-      action: PayloadAction<{ meal: string; entry: IMealEntry }>
+      action: PayloadAction<{ meal: string; entry: IMealEntry; date: string }>
     ) => {
-      const { meal, entry } = action.payload;
-      state.mealEntries[meal] = [...(state.mealEntries[meal] || []), entry];
+      const { meal, entry, date } = action.payload;
+
+      if (!state.mealEntries[date]) {
+        state.mealEntries[date] = { Breakfast: [], Lunch: [], Dinner: [], Snacks: [] };
+      }
+
+      state.mealEntries[date][meal] = [
+        ...(state.mealEntries[date][meal] || []),
+        entry
+      ];
     },
     updateMealEntry: (
       state,
-      action: PayloadAction<{ meal: string; entry: IMealEntry }>
+      action: PayloadAction<{ meal: string; entry: IMealEntry; date: string }>
     ) => {
-      const { meal, entry } = action.payload;
+      const { meal, entry, date } = action.payload;
 
-      for (const m in state.mealEntries) {
-        state.mealEntries[m] = state.mealEntries[m].filter((e) => e.id !== entry.id);
+      if (!state.mealEntries[date]) return;
+
+      for (const m in state.mealEntries[date]) {
+        state.mealEntries[date][m] = state.mealEntries[date][m].filter(e => e.id !== entry.id);
       }
 
-      state.mealEntries[meal] = [...(state.mealEntries[meal] || []), entry];
+      state.mealEntries[date][meal] = [
+        ...(state.mealEntries[date][meal] || []),
+        entry
+      ];
     },
     removeMealEntry: (
       state,
-      action: PayloadAction<{ meal: string; entryId: string }>
+      action: PayloadAction<{ meal: string; entryId: string; date: string }>
     ) => {
-      const { meal, entryId } = action.payload;
-      console.log("CEEEE", state.mealEntries[meal]);
-      state.mealEntries[meal] = state.mealEntries[meal].filter(
-        (entry) => entry.id !== entryId
+      const { meal, entryId, date } = action.payload;
+
+      if (!state.mealEntries[date]) return;
+
+      state.mealEntries[date][meal] = state.mealEntries[date][meal].filter(
+        entry => entry.id !== entryId
       );
-    }
+    },
+    resetNutritionState: () => initialState
   }
 });
 
-export const { setScannedBarcode, setScannedFood, addMealEntry, updateMealEntry, removeMealEntry } =
+export const { setScannedBarcode, setScannedFood, addMealEntry, updateMealEntry, removeMealEntry, resetNutritionState } =
   nutritionSlice.actions;
 
 export default nutritionSlice.reducer;

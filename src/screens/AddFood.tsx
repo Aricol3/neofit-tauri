@@ -16,13 +16,13 @@ import { faMugHot } from "@fortawesome/free-solid-svg-icons/faMugHot";
 import { faWineGlass } from "@fortawesome/free-solid-svg-icons/faWineGlass";
 import { faCookieBite } from "@fortawesome/free-solid-svg-icons/faCookieBite";
 import { useDispatch, useSelector } from "react-redux";
-import { IRootState } from "../store.ts";
+import { AppDispatch, IRootState } from "../store.ts";
 import { useNavigate } from "react-router-dom";
-import { addMealEntry } from "../slices/nutritionSlice.ts";
 import FoodMacronutrients from "../components/FoodMacronutrients.tsx";
 import { v4 as uuidv4 } from 'uuid';
 import { MEAL, ROUTES } from "../types.ts";
 import { parseNumber } from "../utils.ts";
+import { addMealEntryWithSelectedDay } from "../slices/thunks.ts";
 
 const ServingSizeSelector = ({ servingSizes, onSelect }: any) => {
   const [servingSizeSelectedKeys, setServingSizeSelectedKeys] = useState(new Set([""]));
@@ -123,7 +123,7 @@ const MealSelector = ({ onSelect }: any) => {
 
 const AddFood = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   const scannedFood = useSelector((state: IRootState) => state.nutrition.scannedFood);
 
@@ -153,7 +153,7 @@ const AddFood = () => {
       sodium: calculatedMacros.sodium,
     };
     console.log("MEAL ENTRY", mealEntry);
-    dispatch(addMealEntry({ meal: selectedMeal, entry: mealEntry }));
+    dispatch(addMealEntryWithSelectedDay({ meal: selectedMeal, entry: mealEntry }));
     navigate(ROUTES.NUTRITION);
   };
 

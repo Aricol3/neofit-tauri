@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { IRootState } from "../store.ts";
-import { addMealEntry, removeMealEntry } from "../slices/nutritionSlice";
+import { AppDispatch, IRootState } from "../store.ts";
+import { resetNutritionState, selectEntriesForDate } from "../slices/nutritionSlice";
 import FoodCard from "./FoodCard.tsx";
 import { AnimatePresence } from "framer-motion-legacy";
 import { Card, CardBody, CardHeader } from "@heroui/react";
@@ -11,22 +11,27 @@ import { faBurger } from "@fortawesome/free-solid-svg-icons/faBurger";
 import { faWineGlass } from "@fortawesome/free-solid-svg-icons/faWineGlass";
 import { faCookieBite } from "@fortawesome/free-solid-svg-icons/faCookieBite";
 import { impactFeedback } from "@tauri-apps/plugin-haptics";
+import { addMealEntryWithSelectedDay, removeMealEntryWithSelectedDay } from "../slices/thunks.ts";
 
 interface MealSectionProps {
   meal: string;
 }
 
 const MealSection = ({ meal }: MealSectionProps) => {
-  const dispatch = useDispatch();
-  const entries = useSelector(
-    (state: IRootState) => state.nutrition?.mealEntries[meal]
+  const dispatch = useDispatch<AppDispatch>();
+  const selectedDay = useSelector((state: IRootState) => state.general.selectedDay);
+
+  const entriesForDay = useSelector((state: IRootState) =>
+    selectEntriesForDate(state, selectedDay)
   );
+
+  const entries = entriesForDay[meal] || [];
 
   console.log("ENTRIES", entries);
 
   const onDelete = useCallback(async (idToDelete: number) => {
     await impactFeedback("medium");
-    dispatch(removeMealEntry({ meal, entryId: idToDelete }));
+    dispatch(removeMealEntryWithSelectedDay({ meal, entryId: idToDelete }));
   }, [dispatch, meal]);
 
 
@@ -37,7 +42,7 @@ const MealSection = ({ meal }: MealSectionProps) => {
       description: "Chicken Strips With Curry",
       calories: 400
     };
-    dispatch(addMealEntry({ meal, entry: newEntry }));
+    dispatch(addMealEntryWithSelectedDay({ meal, entry: newEntry }));
   };
 
   const totalCalories = useMemo(() => {

@@ -13,12 +13,13 @@ import { useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBurger, faMugHot, faWineGlass, faCookieBite } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { IRootState } from "../store.ts";
+import { AppDispatch, IRootState } from "../store.ts";
 import { useNavigate, useParams } from "react-router-dom";
-import { updateMealEntry } from "../slices/nutritionSlice.ts";
+import { selectEntriesForDate } from "../slices/nutritionSlice.ts";
 import FoodMacronutrients from "../components/FoodMacronutrients.tsx";
 import { MEAL, ROUTES } from "../types.ts";
 import { parseNumber } from "../utils.ts";
+import { updateMealEntryWithSelectedDay } from "../slices/thunks.ts";
 
 const ServingSizeSelector = ({ servingSizes, onSelect, defaultValue }: any) => {
   const [servingSizeSelectedKeys, setServingSizeSelectedKeys] = useState(new Set([defaultValue]));
@@ -121,10 +122,13 @@ const EditFood = () => {
   const { entryId } = useParams();
   console.log("entryId", entryId);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
+  const selectedDay = useSelector((state: IRootState) => state.general.selectedDay);
 
-  const mealEntries = useSelector((state: IRootState) => state.nutrition.mealEntries);
-  console.log("meals", mealEntries)
+  const mealEntries = useSelector((state: IRootState) =>
+    selectEntriesForDate(state, selectedDay)
+  );
+
   const entry = useMemo(() => {
     for (const meal in mealEntries) {
       const found = mealEntries[meal].find((e) => e.id === entryId);
@@ -157,7 +161,7 @@ const EditFood = () => {
       baseFood: entry?.baseFood,
     };
 
-    dispatch(updateMealEntry({ meal: selectedMeal!, entry: updatedEntry }));
+    dispatch(updateMealEntryWithSelectedDay({ meal: selectedMeal!, entry: updatedEntry }));
     navigate(ROUTES.NUTRITION);
   };
 
