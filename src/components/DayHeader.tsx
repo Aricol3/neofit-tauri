@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DayPicker from "./DayPicker.tsx";
-import { format, addDays, isSameDay } from "date-fns";
+import { format, addDays, isSameDay, isToday, parseISO } from "date-fns";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Virtual } from "swiper/modules";
+import { setSelectedDay, setToday } from "../slices/generalSlice.ts";
+import { useDispatch, useSelector } from "react-redux";
+import { IRootState } from "../store.ts";
 
-const generateSlide = (dates, currentDate, index) => {
+const generateSlide = (dates, currentDate, index, setIsExpanded) => {
+  const dispatch = useDispatch();
   console.log("NEW SLIDE INDEX", index);
   const containerVariants = {
     show: {
@@ -26,28 +30,47 @@ const generateSlide = (dates, currentDate, index) => {
   const endDate = format(dates[dates.length - 1], "MMM d");
   const intervalLabel = `${startDate} – ${endDate}`;
 
+
   return (
     <SwiperSlide key={index} virtualIndex={index}>
       <div className="flex flex-col space-y-2">
-        <div className="text-center text-sm font-semibold text-textPrimaryColor">
-          {intervalLabel}
+        <div className="relative flex items-center justify-center my-3">
+          <div className="absolute left-0 right-0 text-center text-sm font-semibold text-textPrimaryColor">
+            {intervalLabel}
+          </div>
+
+          <div className="absolute right-0 pr-4">
+            <button
+              className="text-primary font-semibold text-sm"
+              onClick={() => {
+                dispatch(setToday());
+                setIsExpanded(false);
+              }}
+            >
+              Today
+            </button>
+          </div>
         </div>
 
         <motion.div
-          className="overflow-x-auto flex justify-start gap-4 items-center pb-2"
+          className="overflow-x-auto flex justify-center gap-4 items-center pb-2"
           variants={containerVariants}
           initial="hidden"
           animate="show"
           exit="hidden"
         >
           {dates.map((date, i) => {
-            const isToday = isSameDay(date, currentDate);
+            const isSelected = format(date, "yyyy-MM-dd") === currentDate;
             const weekday = format(date, "EEE");
             return (
               <motion.div
                 key={i}
                 variants={itemVariants}
                 className="flex flex-col items-center"
+                onClick={() => {
+                  dispatch(setSelectedDay(format(date, "yyyy-MM-dd")));
+                  setIsExpanded(false);
+                }}
               >
                 <div className="text-xs font-medium text-gray-600">
                   {weekday}
@@ -55,7 +78,7 @@ const generateSlide = (dates, currentDate, index) => {
 
                 <div
                   className={`w-9 h-9 flex items-center justify-center text-sm font-medium rounded-full ${
-                    isToday ? "bg-primary text-white" : "bg-gray-200 text-black"
+                    isSelected ? "bg-primary text-white" : "bg-gray-200 text-black"
                   }`}
                   style={{ fontFamily: "Lexend Deca" }}
                 >
@@ -70,7 +93,7 @@ const generateSlide = (dates, currentDate, index) => {
   );
 };
 
-const Calendar = ({ currentDate }) => {
+const Calendar = ({ currentDate, setIsExpanded }) => {
   const daysPerSlide = 7;
   const slidesInAdvance = 52;
   const [swiperRef, setSwiperRef] = useState(null);
@@ -170,11 +193,11 @@ const Calendar = ({ currentDate }) => {
           virtual
           spaceBetween={0}
           slidesPerView={1}
-          initialSlide={Math.floor(slidesInAdvance)/2}
+          initialSlide={Math.floor(slidesInAdvance) / 2}
           onSlideChange={handleSlideChange}
         >
           {datesBySlide.map((dates, index) =>
-            generateSlide(dates, currentDate, index)
+            generateSlide(dates, currentDate, index, setIsExpanded)
           )}
         </Swiper>
       )}
@@ -184,6 +207,8 @@ const Calendar = ({ currentDate }) => {
 
 
 const DayHeader = () => {
+  const selectedDay = useSelector((state: IRootState) => state.general.selectedDay);
+
   const [isTop, setIsTop] = useState(true);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -218,7 +243,7 @@ const DayHeader = () => {
         >
           <AnimatePresence mode="wait">
             <motion.h1
-              key={isTop ? "Today" : "Tomorrow"}
+              key={isTop ? selectedDay : "stats"}
               variants={headerVariants}
               initial="initial"
               animate="animate"
@@ -226,17 +251,18 @@ const DayHeader = () => {
               className="font-bold text-2xl text-textPrimaryColor"
             >
               {isTop ? (
-                "Today"
+                isToday(parseISO(selectedDay))
+                  ? "Today"
+                  : format(parseISO(selectedDay), "d MMMM")
               ) : (
                 <p>
                   2723{" "}
-                  <span className="text-textSecondaryColor text-sm font-[600]">
-                    / 3623
-                  </span>
+                  <span className="text-textSecondaryColor text-sm font-[600]">/ 3623</span>
                 </p>
               )}
             </motion.h1>
           </AnimatePresence>
+
           <DayPicker />
         </div>
 
@@ -246,9 +272,9 @@ const DayHeader = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ opacity: { duration: 0.1 }, layout: { duration: 0.1, ease: "easeInOut" } }}
-            className="overflow-hidden px-5 pb-1"
+            className="overflow-hidden px-1 pb-1"
           >
-            <Calendar currentDate={new Date(2025, 4, 15)} />
+            <Calendar currentDate={selectedDay} setIsExpanded={setIsExpanded} />
           </motion.div>
         )}
 
