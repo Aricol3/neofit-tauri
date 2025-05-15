@@ -6,7 +6,7 @@ import { Card, CardBody, CardHeader } from "@heroui/react";
 import WaterCup from "./WaterCup.tsx";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, IRootState } from "../store.ts";
-import { selectWaterForDate, setWaterIntake } from "../slices/nutritionSlice.ts";
+import { selectWaterForDate } from "../slices/nutritionSlice.ts";
 import { setWaterIntakeWithSelectedDay } from "../slices/thunks.ts";
 
 const Water = () => {
