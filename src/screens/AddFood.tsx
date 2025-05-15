@@ -140,7 +140,10 @@ const AddFood = () => {
       name: scannedFood?.name || "",
       servingSizes: scannedFood?.servingSizes!,
       servingSize: selectedServingSize,
-      numberOfServings: parseNumber(numberOfServings),
+      numberOfServings: (() => {
+        const n = parseNumber(numberOfServings);
+        return n === 0 ? 1 : n;
+      })(),
       meal: selectedMeal!,
       calories: calculatedMacros.calories,
       totalCarbohydrates: calculatedMacros.carbs,

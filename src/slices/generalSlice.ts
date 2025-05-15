@@ -8,7 +8,7 @@ interface IGeneralState {
 }
 
 const initialState: IGeneralState = {
-  selectedDay: today,
+  selectedDay: today
 };
 
 export const generalSlice = createSlice({
@@ -21,10 +21,11 @@ export const generalSlice = createSlice({
     setToday: (state) => {
       state.selectedDay = today;
     },
+    resetGeneralState: () => initialState
   }
 });
 
-export const { setSelectedDay, setToday} =
+export const { setSelectedDay, setToday, resetGeneralState } =
   generalSlice.actions;
 
 export default generalSlice.reducer;

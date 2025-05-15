@@ -148,7 +148,10 @@ const EditFood = () => {
       ...entry,
       servingSizes: entry?.servingSizes,
       servingSize: selectedServingSize!,
-      numberOfServings: parseNumber(numberOfServings),
+      numberOfServings: (() => {
+        const n = parseNumber(numberOfServings);
+        return n === 0 ? 1 : n;
+      })(),
       meal: selectedMeal!,
       calories: calculatedMacros.calories,
       totalCarbohydrates: calculatedMacros.carbs,
