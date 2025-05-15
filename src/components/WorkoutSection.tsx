@@ -3,23 +3,28 @@ import { Card, CardBody, CardHeader } from "@heroui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDumbbell } from "@fortawesome/free-solid-svg-icons/faDumbbell";
 import ActivityCard from "./ActivityCard.tsx";
-import { SET_TYPE } from "../types.ts";
 import { useDispatch, useSelector } from "react-redux";
-import { IRootState } from "../store.ts";
-import { addActivity, resetActivitiesState, updateActivity } from "../slices/activitySlice.ts";
+import { AppDispatch, IRootState } from "../store.ts";
 import { v4 as uuidv4 } from "uuid";
+import { addActivityWithSelectedDay, updateActivityWithSelectedDay } from "../slices/thunks.ts";
+import { selectActivitiesForDate } from "../slices/activitySlice.ts";
 
 const WorkoutSection = () => {
-  const dispatch = useDispatch();
-  // dispatch(resetActivitiesState())
-  const activities = useSelector((state: IRootState) => state.activity.activities);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const selectedDay = useSelector((state: IRootState) => state.general.selectedDay);
+
+  const activities = useSelector((state: IRootState) =>
+    selectActivitiesForDate(state, selectedDay)
+  );
+
 
   const entireStore = useSelector(state => state);
   console.log("Store:", entireStore);
 
   const addNewActivity = () => {
     dispatch(
-      addActivity({
+      addActivityWithSelectedDay({
         id: uuidv4(),
         exercise: "",
         sets: [],
@@ -29,11 +34,11 @@ const WorkoutSection = () => {
   };
 
   const updateActivityName = (id: string, name: string) => {
-    dispatch(updateActivity({ id, updated: { exercise: name } }));
+    dispatch(updateActivityWithSelectedDay({ id, updated: { exercise: name } }));
   };
 
   const finishEditingTitle = (id: string, name: string) => {
-    dispatch(updateActivity({ id, updated: { exercise: name, isEditing: false } }));
+    dispatch(updateActivityWithSelectedDay({ id, updated: { exercise: name, isEditing: false } }));
   };
 
   return (

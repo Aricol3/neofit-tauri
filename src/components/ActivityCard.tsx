@@ -7,14 +7,16 @@ import {
 import { useState } from "react";
 import BottomSheet from "./BottomSheet.tsx";
 import { SET_TYPE } from "../types.ts";
-import { addSetToActivity, deleteActivity, ISet } from "../slices/activitySlice.ts";
+import { ISet } from "../slices/activitySlice.ts";
 import { useDispatch } from "react-redux";
 import { SwipeActions } from "./SwipeActions/SwipeActions.tsx";
 import { motion } from "framer-motion-legacy";
 import { impactFeedback } from "@tauri-apps/plugin-haptics";
+import { addSetToActivityWithSelectedDay, deleteActivityWithSelectedDay } from "../slices/thunks.ts";
+import { AppDispatch } from "../store.ts";
 
 const ActivityCard = ({ activityId, exercise, sets, isEditable, onExerciseNameChange, onFinishEditing }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   let workingSetNumber = 1;
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,13 +30,13 @@ const ActivityCard = ({ activityId, exercise, sets, isEditable, onExerciseNameCh
   };
 
   const handleConfirm = (setData: ISet) => {
-    dispatch(addSetToActivity({ activityId, newSet: setData }));
+    dispatch(addSetToActivityWithSelectedDay({ activityId, newSet: setData }));
   };
 
   const handleDelete = async () => {
     await impactFeedback("medium");
 
-    dispatch(deleteActivity(activityId));
+    dispatch(deleteActivityWithSelectedDay(activityId));
   };
 
   const [disableAnimation, setDisableAnimation] = useState(false);
@@ -56,7 +58,7 @@ const ActivityCard = ({ activityId, exercise, sets, isEditable, onExerciseNameCh
 
   const handleFinishEditing = (newName: string) => {
     if (newName.trim() === "") {
-      dispatch(deleteActivity(activityId));
+      dispatch(deleteActivityWithSelectedDay(activityId));
     } else {
       onFinishEditing(newName);
     }

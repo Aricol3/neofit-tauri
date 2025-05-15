@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { SET_TYPE } from "../types.ts";
+import { IRootState } from "../store.ts";
 
 export interface ISet {
   type: SET_TYPE;
@@ -15,43 +16,75 @@ export interface IActivity {
 }
 
 interface ActivityState {
-  activities: IActivity[];
+  activities: {
+    [date: string]: IActivity[];
+  };
 }
 
 const initialState: ActivityState = {
-  activities: []
+  activities: {}
 };
+
+export const selectActivitiesForDate = (state: IRootState, date: string) =>
+  state.activity.activities[date] || [];
 
 export const activitySlice = createSlice({
   name: "activities",
   initialState,
   reducers: {
-    addActivity: (state, action: PayloadAction<IActivity>) => {
-      state.activities.push(action.payload);
+    addActivity: (
+      state,
+      action: PayloadAction<{ date: string; activity: IActivity }>
+    ) => {
+      const { date, activity } = action.payload;
+      if (!state.activities[date]) {
+        state.activities[date] = [];
+      }
+      state.activities[date].push(activity);
     },
     updateActivity: (
       state,
-      action: PayloadAction<{ id: string; updated: Partial<IActivity> }>
+      action: PayloadAction<{
+        date: string;
+        id: string;
+        updated: Partial<IActivity>;
+      }>
     ) => {
-      const index = state.activities.findIndex((a) => a.id === action.payload.id);
+      const { date, id, updated } = action.payload;
+      const activities = state.activities[date];
+      if (!activities) return;
+      const index = activities.findIndex((a) => a.id === id);
       if (index !== -1) {
-        state.activities[index] = {
-          ...state.activities[index],
-          ...action.payload.updated
-        };
+        activities[index] = { ...activities[index], ...updated };
       }
+    },
+    deleteActivity: (
+      state,
+      action: PayloadAction<{ date: string; id: string }>
+    ) => {
+      const { date, id } = action.payload;
+      const dayActivities = state.activities[date];
+      if (!dayActivities) return;
+
+      state.activities[date] = dayActivities.filter(
+        (activity) => activity.id !== id
+      );
     },
     addSetToActivity: (
       state,
-      action: PayloadAction<{ activityId: string; newSet: ISet }>
+      action: PayloadAction<{
+        date: string;
+        activityId: string;
+        newSet: ISet;
+      }>
     ) => {
-      const activity = state.activities.find(a => a.id === action.payload.activityId);
+      const { date, activityId, newSet } = action.payload;
+      const activity = state.activities[date]?.find(
+        (a) => a.id === activityId
+      );
       if (activity) {
-        activity.sets.push(action.payload.newSet);
+        activity.sets.push(newSet);
       }
-    },
-    deleteActivity: (state, action: PayloadAction<string>) => {
-      state.activities = state.activities.filter(activity => activity.id !== action.payload);
     },
     resetActivitiesState: () => initialState
   }
