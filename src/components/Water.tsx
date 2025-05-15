@@ -4,16 +4,25 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import { Card, CardBody, CardHeader } from "@heroui/react";
 import WaterCup from "./WaterCup.tsx";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, IRootState } from "../store.ts";
+import { selectWaterForDate, setWaterIntake } from "../slices/nutritionSlice.ts";
+import { setWaterIntakeWithSelectedDay } from "../slices/thunks.ts";
 
 const Water = () => {
-  const [filledCups, setFilledCups] = useState(0);
+  const dispatch = useDispatch<AppDispatch>();
+  const selectedDay = useSelector((state: IRootState) => state.general.selectedDay);
+
+  const filledCups = useSelector((state: IRootState) =>
+    selectWaterForDate(state, selectedDay)
+  );
+
   const totalCups = 12;
   const cupSize = 0.25;
 
   const onWaterClick = (index: number) => {
-    if (index >= filledCups) setFilledCups(index + 1);
-    else setFilledCups(index);
+    const newCount = index >= filledCups ? index + 1 : index;
+    dispatch(setWaterIntakeWithSelectedDay(newCount));
   };
 
   return (

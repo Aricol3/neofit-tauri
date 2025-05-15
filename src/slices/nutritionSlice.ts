@@ -10,21 +10,29 @@ interface INutritionState {
       [meal: string]: IMealEntry[];
     };
   };
+  waterIntake: {
+    [date: string]: number;
+  };
 }
 
 const initialState: INutritionState = {
   scannedBarcode: "",
   scannedFood: null,
-  mealEntries: {}
+  mealEntries: {},
+  waterIntake: {}
 };
 
-export const selectEntriesForDate = (state: IRootState, date: string) =>
+export const selectMealEntriesForDate = (state: IRootState, date: string) =>
   state.nutrition.mealEntries[date] || {
     Breakfast: [],
     Snacks: [],
     Lunch: [],
     Dinner: []
   };
+
+export const selectWaterForDate = (state: IRootState, date: string) =>
+  state.nutrition.waterIntake[date] || 0;
+
 
 export const nutritionSlice = createSlice({
   name: "nutrition",
@@ -80,11 +88,26 @@ export const nutritionSlice = createSlice({
         entry => entry.id !== entryId
       );
     },
+    setWaterIntake: (
+      state,
+      action: PayloadAction<{ date: string; filledCups: number }>
+    ) => {
+      const { date, filledCups } = action.payload;
+      state.waterIntake[date] = filledCups;
+    },
     resetNutritionState: () => initialState
   }
 });
 
-export const { setScannedBarcode, setScannedFood, addMealEntry, updateMealEntry, removeMealEntry, resetNutritionState } =
+export const {
+  setScannedBarcode,
+  setScannedFood,
+  addMealEntry,
+  updateMealEntry,
+  removeMealEntry,
+  setWaterIntake,
+  resetNutritionState
+} =
   nutritionSlice.actions;
 
 export default nutritionSlice.reducer;

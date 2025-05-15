@@ -4,7 +4,7 @@ import { nutritionSlice } from "./nutritionSlice";
 import { IRootState } from "../store.ts";
 import { activitySlice, IActivity, ISet } from "./activitySlice.ts";
 
-const { addMealEntry, updateMealEntry, removeMealEntry } = nutritionSlice.actions;
+const { addMealEntry, updateMealEntry, removeMealEntry, setWaterIntake } = nutritionSlice.actions;
 
 export const addMealEntryWithSelectedDay = createAsyncThunk(
   "nutrition/addMealEntryWithSelectedDate",
@@ -36,6 +36,14 @@ export const removeMealEntryWithSelectedDay = createAsyncThunk(
   ) => {
     const date = (getState() as IRootState).general.selectedDay;
     dispatch(removeMealEntry({ meal, entryId, date }));
+  }
+);
+
+export const setWaterIntakeWithSelectedDay = createAsyncThunk(
+  "nutrition/setWaterIntakeWithSelectedDay",
+  async (filledCups: number, { getState, dispatch }) => {
+    const date = (getState() as IRootState).general.selectedDay;
+    dispatch(setWaterIntake({ date, filledCups }));
   }
 );
 

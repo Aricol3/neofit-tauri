@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, IRootState } from "../store.ts";
-import { resetNutritionState, selectEntriesForDate } from "../slices/nutritionSlice";
+import { resetNutritionState, selectMealEntriesForDate } from "../slices/nutritionSlice";
 import FoodCard from "./FoodCard.tsx";
 import { AnimatePresence } from "framer-motion-legacy";
 import { Card, CardBody, CardHeader } from "@heroui/react";
@@ -22,7 +22,7 @@ const MealSection = ({ meal }: MealSectionProps) => {
   const selectedDay = useSelector((state: IRootState) => state.general.selectedDay);
 
   const entriesForDay = useSelector((state: IRootState) =>
-    selectEntriesForDate(state, selectedDay)
+    selectMealEntriesForDate(state, selectedDay)
   );
 
   const entries = entriesForDay[meal] || [];

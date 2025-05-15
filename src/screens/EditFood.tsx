@@ -15,7 +15,7 @@ import { faBurger, faMugHot, faWineGlass, faCookieBite } from "@fortawesome/free
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, IRootState } from "../store.ts";
 import { useNavigate, useParams } from "react-router-dom";
-import { selectEntriesForDate } from "../slices/nutritionSlice.ts";
+import { selectMealEntriesForDate } from "../slices/nutritionSlice.ts";
 import FoodMacronutrients from "../components/FoodMacronutrients.tsx";
 import { MEAL, ROUTES } from "../types.ts";
 import { parseNumber } from "../utils.ts";
@@ -126,7 +126,7 @@ const EditFood = () => {
   const selectedDay = useSelector((state: IRootState) => state.general.selectedDay);
 
   const mealEntries = useSelector((state: IRootState) =>
-    selectEntriesForDate(state, selectedDay)
+    selectMealEntriesForDate(state, selectedDay)
   );
 
   const entry = useMemo(() => {
