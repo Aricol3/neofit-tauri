@@ -20,7 +20,7 @@ const WorkoutSection = () => {
 
 
   const entireStore = useSelector(state => state);
-  console.log("Store:", entireStore);
+  console.log("Store:", JSON.stringify(entireStore));
 
   const addNewActivity = () => {
     dispatch(

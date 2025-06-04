@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, IRootState } from "../store.ts";
-import { resetNutritionState, selectMealEntriesForDate } from "../slices/nutritionSlice";
+import { selectMealEntriesForDate } from "../slices/nutritionSlice";
 import FoodCard from "./FoodCard.tsx";
 import { AnimatePresence } from "framer-motion-legacy";
 import { Card, CardBody, CardHeader } from "@heroui/react";
@@ -12,6 +12,7 @@ import { faWineGlass } from "@fortawesome/free-solid-svg-icons/faWineGlass";
 import { faCookieBite } from "@fortawesome/free-solid-svg-icons/faCookieBite";
 import { impactFeedback } from "@tauri-apps/plugin-haptics";
 import { addMealEntryWithSelectedDay, removeMealEntryWithSelectedDay } from "../slices/thunks.ts";
+import { getMealIcon } from "../utils.tsx";
 
 interface MealSectionProps {
   meal: string;
@@ -27,7 +28,6 @@ const MealSection = ({ meal }: MealSectionProps) => {
 
   const entries = entriesForDay[meal] || [];
 
-  console.log("ENTRIES", entries);
 
   const onDelete = useCallback(async (idToDelete: number) => {
     await impactFeedback("medium");
@@ -48,16 +48,6 @@ const MealSection = ({ meal }: MealSectionProps) => {
   const totalCalories = useMemo(() => {
     return entries?.reduce((sum, entry) => sum + entry.calories, 0) || 0;
   }, [entries]);
-
-  const getMealIcon = (meal: string) => {
-    const icons: Record<string, ReactNode> = {
-      Breakfast: <FontAwesomeIcon className="mb-1" color="#50545A" icon={faMugHot} size="lg" />,
-      Lunch: <FontAwesomeIcon color="#50545A" icon={faBurger} size="lg" />,
-      Dinner: <FontAwesomeIcon color="#50545A" icon={faWineGlass} size="lg" />,
-      Snack: <FontAwesomeIcon color="#50545A" icon={faCookieBite} size="lg" />
-    };
-    return icons[meal] || "🍽️";
-  };
 
 
   return (

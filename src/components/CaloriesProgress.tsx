@@ -2,7 +2,7 @@ import { Card, CardBody, CardHeader, CircularProgress, Progress } from "@heroui/
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFlag } from "@fortawesome/free-solid-svg-icons/faFlag";
 import { faBowlFood } from "@fortawesome/free-solid-svg-icons/faBowlFood";
-import { capitalizeFirstLetter } from "../utils.ts";
+import { capitalizeFirstLetter } from "../utils.tsx";
 import { MACRO } from "../types.ts";
 
 const CaloriesRemaining = () => {

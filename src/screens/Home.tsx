@@ -9,8 +9,10 @@ import QuoteCard from "../components/QuoteCard.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDumbbell } from "@fortawesome/free-solid-svg-icons/faDumbbell";
 import { faScaleBalanced } from "@fortawesome/free-solid-svg-icons/faScaleBalanced";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
 
   return (
     // <div className="bg-transparent flex flex-col items-center">
@@ -50,7 +52,7 @@ const Home = () => {
               </CardBody>
             </Card>
 
-            <Card className="h-24 w-44 shadow-md" isPressable shadow="none" onPress={() => console.log("item pressed")}>
+            <Card className="h-24 w-44 shadow-md" isPressable shadow="none" onPress={() => navigate('/diet-overview')}>
               <CardBody className="overflow-visible pt-0 flex flex-row justify-between items-center">
                 <div className="text-lg text-textPrimaryColor font-[600]" style={{ fontFamily: "Lexend Deca" }}>
                   Diet <br /> Overview

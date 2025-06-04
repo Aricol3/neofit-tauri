@@ -9,12 +9,13 @@ import React, { PropsWithChildren } from "react";
 import Search from "./screens/Search.tsx";
 import Navbar from "./components/Navbar/Navbar.tsx";
 import Profile from "./screens/Profile.tsx";
+import DietOverview from "./screens/DietOverview.tsx";
 
 function Layout({ children }: PropsWithChildren) {
   const location = useLocation();
   console.log("LOCATION", location);
 
-  const routesWithHeader = ["/", "/nutrition", "/profile", "/create-food", "/add-food"];
+  const routesWithHeader = ["/", "/nutrition", "/profile", "/create-food", "/add-food","/diet-overview"];
   const routesWithPrefixHeader = ["/edit-food"];
   const routesWithSearchHeader = ["/search"];
 
@@ -47,6 +48,7 @@ export default function MainRoutes() {
         <Route path="/edit-food/:entryId" element={<EditFood />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/create-food" element={<CreateFood />} />
+        <Route path="/diet-overview" element={<DietOverview />} />
       </Routes>
     </Layout>
   );

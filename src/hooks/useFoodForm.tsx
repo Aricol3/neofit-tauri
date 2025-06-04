@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IRootState } from "../store.ts";
 import { addToast } from "@heroui/react";
-import { parseNumber } from "../utils.ts";
+import { parseNumber } from "../utils.tsx";
 
 const useFoodForm = () => {
   const navigate = useNavigate();

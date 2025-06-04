@@ -1,5 +1,5 @@
 import { CircularProgress } from "@heroui/react";
-import { capitalizeFirstLetter } from "../utils.ts";
+import { capitalizeFirstLetter } from "../utils.tsx";
 
 interface MacroProgressProps {
   label: string,

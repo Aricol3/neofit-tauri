@@ -18,7 +18,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { selectMealEntriesForDate } from "../slices/nutritionSlice.ts";
 import FoodMacronutrients from "../components/FoodMacronutrients.tsx";
 import { MEAL, ROUTES } from "../types.ts";
-import { parseNumber } from "../utils.ts";
+import { parseNumber } from "../utils.tsx";
 import { updateMealEntryWithSelectedDay } from "../slices/thunks.ts";
 
 const ServingSizeSelector = ({ servingSizes, onSelect, defaultValue }: any) => {
