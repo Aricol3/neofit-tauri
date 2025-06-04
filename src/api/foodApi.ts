@@ -7,7 +7,7 @@ export const fetchFoodByBarcode = async (barcode: string) => {
   try {
     const url = `${baseUrl}/food?barcode=${barcode}`;
     const response = await fetch(url, {
-      method: 'GET',
+      method: "GET"
     });
     const data = await response.json();
 
@@ -68,6 +68,33 @@ export const createFood = async (foodData: any) => {
 
     return response.json();
   } catch (error) {
+    throw error;
+  }
+};
+
+
+export const generateDietOverviewForDay = async (date: string, meals: any, water: any) => {
+  try {
+    const url = `${baseUrl}/food/overview`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        date,
+        meals,
+        water
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to generate diet overview");
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Error in generateDietOverviewForDay:", error);
     throw error;
   }
 };
