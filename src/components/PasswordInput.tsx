@@ -61,7 +61,7 @@ export const EyeFilledIcon = (props) => {
   );
 };
 
-const PasswordInput = ({ value, onChange }: any) => {
+const PasswordInput = ({ label, value, onChange }: any) => {
   const [isVisible, setIsVisible] = React.useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
@@ -82,8 +82,7 @@ const PasswordInput = ({ value, onChange }: any) => {
           )}
         </button>
       }
-      label="Password"
-      // placeholder="Enter your password"
+      label={label}
       type={isVisible ? "text" : "password"}
       value={value}
       onChange={(e) => onChange(e.target.value)}
