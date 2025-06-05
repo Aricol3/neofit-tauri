@@ -1,8 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IMealEntry } from "../types";
 import { nutritionSlice } from "./nutritionSlice";
-import { IRootState } from "../store.ts";
+import { AppDispatch, IRootState } from "../store.ts";
 import { activitySlice, IActivity, ISet } from "./activitySlice.ts";
+import {
+  loginFailure,
+  loginStart,
+  loginSuccess, logout,
+  registerFailure,
+  registerStart,
+  registerSuccess, updateAccessToken
+} from "./authSlice.ts";
+import { login, refreshAccessToken, register } from "../api/authApi.ts";
 
 const { addMealEntry, updateMealEntry, removeMealEntry, setWaterIntake } = nutritionSlice.actions;
 
@@ -92,3 +101,23 @@ export const addSetToActivityWithSelectedDay = createAsyncThunk(
     dispatch(addSetToActivity({ date, activityId, newSet }));
   }
 );
+
+export const performLogin = (email: string, password: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(loginStart());
+    const data = await login(email, password);
+    dispatch(loginSuccess({ user: data.user, accessToken: data.accessToken }));
+  } catch (err: any) {
+    dispatch(loginFailure(err.message || "Login failed"));
+  }
+};
+
+export const performRegister = (email: string, password: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(registerStart());
+    await register(email, password);
+    dispatch(registerSuccess());
+  } catch (err: any) {
+    dispatch(registerFailure(err.message || "Registration failed"));
+  }
+};

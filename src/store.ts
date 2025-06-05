@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import authReducer from "./slices/authSlice.ts";
 import generalReducer from "./slices/generalSlice.ts";
 import nutritionReducer from "./slices/nutritionSlice.ts";
 import activityReducer from "./slices/activitySlice.ts";
 
 const rootReducer = combineReducers({
+  auth: authReducer,
   general: generalReducer,
   nutrition: nutritionReducer,
   activity: activityReducer,

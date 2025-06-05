@@ -4,9 +4,10 @@ import MainRoutes from "./routes.tsx";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setToday } from "./slices/generalSlice.ts";
+import { AppDispatch } from "./store.ts";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(setToday());

@@ -10,6 +10,7 @@ import Search from "./screens/Search.tsx";
 import Navbar from "./components/Navbar/Navbar.tsx";
 import Profile from "./screens/Profile.tsx";
 import DietOverview from "./screens/DietOverview.tsx";
+import Authentication from "./screens/Authentication.tsx";
 
 function Layout({ children }: PropsWithChildren) {
   const location = useLocation();
@@ -48,7 +49,7 @@ export default function MainRoutes() {
         <Route path="/edit-food/:entryId" element={<EditFood />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/create-food" element={<CreateFood />} />
-        <Route path="/diet-overview" element={<DietOverview />} />
+        <Route path="/diet-overview" element={<Authentication />} />
       </Routes>
     </Layout>
   );

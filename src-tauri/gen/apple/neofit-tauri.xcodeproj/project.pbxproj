@@ -322,7 +322,7 @@
 				CODE_SIGN_ENTITLEMENTS = "neofit-tauri_iOS/neofit-tauri_iOS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = B4Y48LYW8B;
+				DEVELOPMENT_TEAM = "B4Y48LYW8B";
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "arm64-sim x86_64";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -356,7 +356,7 @@
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.neofit-tauri.app";
+				PRODUCT_BUNDLE_IDENTIFIER = com.neofit-tauri.app;
 				PRODUCT_NAME = "neofit-tauri";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -377,7 +377,7 @@
 				CODE_SIGN_ENTITLEMENTS = "neofit-tauri_iOS/neofit-tauri_iOS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = B4Y48LYW8B;
+				DEVELOPMENT_TEAM = "B4Y48LYW8B";
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = "arm64-sim x86_64";
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -411,7 +411,7 @@
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.neofit-tauri.app";
+				PRODUCT_BUNDLE_IDENTIFIER = com.neofit-tauri.app;
 				PRODUCT_NAME = "neofit-tauri";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
