@@ -7,6 +7,7 @@ fn greet(name: &str) -> String {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_deep_link::init())
         .plugin(tauri_plugin_barcode_scanner::init())
         .plugin(tauri_plugin_haptics::init())
         .plugin(tauri_plugin_shell::init())

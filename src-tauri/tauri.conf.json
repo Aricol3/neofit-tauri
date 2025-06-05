@@ -30,6 +30,29 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "iOS": {
+      "developmentTeam": "B4Y48LYW8B"
+    }
+  },
+  "plugins": {
+    "features": {
+      "protocol": ["all"]
+    },
+    "window": {},
+    "websocket": {},
+    "shell": {},
+    "globalShortcut": {},
+    "plugins": {
+      "deep-link": {
+        "schema": "neofit",
+        "mobile": [
+          { "host": "neofit.app", "pathPrefix": ["/open"] }
+        ],
+        "desktop": {
+          "schemes": ["neofit"]
+        }
+      }
+    }
   }
 }

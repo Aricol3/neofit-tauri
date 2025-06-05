@@ -3154,6 +3154,13 @@
   dependencies:
     "@tauri-apps/api" "^2.0.0"
 
+"@tauri-apps/plugin-deep-link@~2":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-deep-link/-/plugin-deep-link-2.3.0.tgz#09ce30d817033c3ab88d66d6f071d0095b925d82"
+  integrity sha512-Jsbu3vfUcD1jR+gx1P8wOe5x/WoXw/K4qp0ALaDjOM2vNIflyLowhQhZ8fUxTHNe1+N+mIBrwvb3hXIWRI5iuw==
+  dependencies:
+    "@tauri-apps/api" "^2.0.0"
+
 "@tauri-apps/plugin-haptics@^2.2.0":
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/@tauri-apps/plugin-haptics/-/plugin-haptics-2.2.4.tgz#80b7dd50ca718d0db7edb50c8822c7a040b4bb4d"
