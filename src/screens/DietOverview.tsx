@@ -105,7 +105,7 @@ const DietOverview = () => {
               <div className="flex flex-col gap-3">
                 <div className="flex items-center gap-3">
                   <div className="text-lg font-bold text-textPrimaryColor">
-                    Diet Score
+                    Diet Score:
                   </div>
                   <Chip classNames={{
                     content: "font-bold",
