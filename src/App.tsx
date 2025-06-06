@@ -2,15 +2,20 @@ import "./App.scss";
 import { ToastProvider } from "@heroui/react";
 import MainRoutes from "./routes.tsx";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToday } from "./slices/generalSlice.ts";
-import { AppDispatch } from "./store.ts";
+import { AppDispatch, IRootState } from "./store.ts";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const auth = useSelector((state: IRootState) => state.auth);
 
   useEffect(() => {
     dispatch(setToday());
+    if (!auth.accessToken) navigate("/auth");
   });
 
   return (

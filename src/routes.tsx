@@ -16,7 +16,7 @@ function Layout({ children }: PropsWithChildren) {
   const location = useLocation();
   console.log("LOCATION", location);
 
-  const routesWithHeader = ["/", "/nutrition", "/profile", "/create-food", "/add-food","/diet-overview"];
+  const routesWithHeader = ["/", "/nutrition", "/profile", "/create-food", "/add-food", "/diet-overview"];
   const routesWithPrefixHeader = ["/edit-food"];
   const routesWithSearchHeader = ["/search"];
 
@@ -27,7 +27,7 @@ function Layout({ children }: PropsWithChildren) {
   const needsPadding = isInRouteList(routesWithHeader) || isInRouteList(routesWithPrefixHeader);
   const needsSearchHeaderPadding = isInRouteList(routesWithSearchHeader);
 
-  const hideNavbarRoutes = ["/scan"];
+  const hideNavbarRoutes = ["/auth", "/scan"];
 
   return (
     <div className="pb-28" style={{ paddingTop: needsPadding ? "4rem" : needsSearchHeaderPadding ? "10rem" : "0" }}>
@@ -42,6 +42,7 @@ export default function MainRoutes() {
     <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/auth" element={<Authentication />} />
         <Route path="/scan" element={<Scanner />} />
         <Route path="/nutrition" element={<Nutrition />} />
         <Route path="/add-food" element={<AddFood />} />
@@ -49,7 +50,7 @@ export default function MainRoutes() {
         <Route path="/edit-food/:entryId" element={<EditFood />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/create-food" element={<CreateFood />} />
-        <Route path="/diet-overview" element={<Authentication />} />
+        <Route path="/diet-overview" element={<DietOverview />} />
       </Routes>
     </Layout>
   );

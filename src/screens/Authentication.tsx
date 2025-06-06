@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Card, CardBody, CardHeader, Input, Tab, Tabs } from "@heroui/react";
 import PasswordInput from "../components/PasswordInput";
 import { AppDispatch, IRootState } from "../store.ts";
+import { useNavigate } from "react-router-dom";
 import { performLogin, performRegister } from "../slices/thunks.ts";
 
 const Authentication = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const auth = useSelector((state: IRootState) => state.auth);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,6 +18,12 @@ const Authentication = () => {
   const handleLogin = () => {
     dispatch(performLogin(email, password));
   };
+
+  useEffect(() => {
+    if (auth.accessToken && auth.user) {
+      navigate("/");
+    }
+  }, [auth.accessToken, auth.user]);
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
@@ -36,7 +44,7 @@ const Authentication = () => {
             <Tab key="login" title="Log In">
               <div className="flex flex-col gap-5">
                 <Input label="Email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <PasswordInput value={password} onChange={setPassword} />
+                <PasswordInput label="Password" value={password} onChange={setPassword} />
                 {auth.error && <p className="text-red-500 text-sm">{auth.error}</p>}
                 <Button color="primary" className="text-lg font-bold text-white" onPress={handleLogin} disabled={auth.loading}>
                   {auth.loading ? "Logging in..." : "Log In"}
