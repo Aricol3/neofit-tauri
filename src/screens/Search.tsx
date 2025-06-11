@@ -1,52 +1,67 @@
-import { SVGProps } from "react";
-import { JSX } from "react/jsx-runtime";
-import { Input } from "@heroui/react";
-import HistorySection from "../components/HistorySection.tsx";
+import { useState } from "react";
 import SearchHeader from "../components/SearchHeader.tsx";
-
-export const SearchBarIcon = (props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) => {
-  return (
-    <svg
-      aria-hidden="true"
-      fill="none"
-      focusable="false"
-      height="1em"
-      role="presentation"
-      viewBox="0 0 24 24"
-      width="1em"
-      {...props}
-    >
-      <path
-        d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-      <path
-        d="M22 22L20 20"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-};
+import { useNavigate } from "react-router-dom";
+import HistorySection from "../components/HistorySection.tsx";
+import { Card, CardBody, CardHeader } from "@heroui/react";
+import { setScannedFood } from "../slices/nutritionSlice.ts";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, IRootState } from "../store.ts";
+import { fetchFoodByBarcode } from "../api/foodApi.ts";
 
 const Search = () => {
-  const onDelete = (idToDelete: number) => {
-    setSwipers(currentSwipers =>
-      currentSwipers.filter(swiper => swiper.id !== idToDelete)
-    );
-  };
+  const dispatch = useDispatch<AppDispatch>();
+  const [results, setResults] = useState([]);
+  const navigate = useNavigate();
+
+  const handleItemClick = async (food) => {
+    console.log(food);
+    const selectedFood = await fetchFoodByBarcode(food.barcode);
+    dispatch(setScannedFood(selectedFood));
+    navigate("/add-food");
+  }
+  const foodsss= useSelector((state:IRootState)=>state.nutrition.scannedFood)
+  console.log(foodsss);
 
   return (
     <>
-      <SearchHeader/>
+      <SearchHeader setSearchResults={setResults} />
 
-      <div className="flex flex-col p-3 pt-1.5 gap-3">
-        <HistorySection/>
+      <div className="flex flex-col p-3 pt-1.5 gap-3 justify-center">
+        <Card className="min-h-[150px] overflow-hidden meal-section" shadow="none">
+          <CardHeader className="flex justify-between text-textPrimaryColor">
+            <div className="text-lg font-[600] flex items-center gap-3">
+              Results
+            </div>
+          </CardHeader>
+          <CardBody className="w-full overflow-hidden">
+            {results.length > 0 ? (
+              results.map((food) => (
+                <div
+                  key={food._id}
+                  className="flex flex-row w-full items-center justify-between gap-3 mb-1 h-12 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+                  onClick={()=>handleItemClick(food)}
+                >
+                  <div className="text-sm space-y-1">
+                    <p className="font-[500] text-textPrimaryColor">
+                      {food.brand_name || food.description}
+                    </p>
+                    <p className="font-[500] text-textSecondaryColor">
+                      {food.description || food.brand_name}
+                    </p>
+                  </div>
+                  <div
+                    className="text-sm text-textSecondaryColor"
+                    style={{ fontFamily: "Lexend Deca" }}
+                  >
+                    {food.nutritional_contents?.energy?.value ?? "--"} kcal
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-center text-gray-500">No results found</p>
+            )}
+          </CardBody>
+        </Card>
       </div>
     </>
   );

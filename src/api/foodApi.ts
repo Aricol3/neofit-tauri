@@ -98,3 +98,19 @@ export const generateDietOverviewForDay = async (date: string, meals: any, water
     throw error;
   }
 };
+
+export const searchFoods = async (query: string) => {
+  try {
+    const url = `${baseUrl}/food/search?query=${encodeURIComponent(query)}`;
+    const response = await fetch(url, {
+      method: "GET"
+    });
+    if (!response.ok) throw new Error("Search failed");
+
+    const data = await response.json();
+    return data.foods || [];
+  } catch (error) {
+    console.error("Error searching foods:", error);
+    return [];
+  }
+};
