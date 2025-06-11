@@ -11,6 +11,7 @@ import Navbar from "./components/Navbar/Navbar.tsx";
 import Profile from "./screens/Profile.tsx";
 import DietOverview from "./screens/DietOverview.tsx";
 import Authentication from "./screens/Authentication.tsx";
+import SetUserProfile from "./screens/SetUserProfile.tsx";
 
 function Layout({ children }: PropsWithChildren) {
   const location = useLocation();
@@ -27,7 +28,7 @@ function Layout({ children }: PropsWithChildren) {
   const needsPadding = isInRouteList(routesWithHeader) || isInRouteList(routesWithPrefixHeader);
   const needsSearchHeaderPadding = isInRouteList(routesWithSearchHeader);
 
-  const hideNavbarRoutes = ["/auth", "/scan"];
+  const hideNavbarRoutes = ["/auth", "/set-profile", "/scan"];
 
   return (
     <div className="pb-28" style={{ paddingTop: needsPadding ? "4rem" : needsSearchHeaderPadding ? "10rem" : "0" }}>
@@ -43,6 +44,7 @@ export default function MainRoutes() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Authentication />} />
+        <Route path="/set-profile" element={<SetUserProfile />} />
         <Route path="/scan" element={<Scanner />} />
         <Route path="/nutrition" element={<Nutrition />} />
         <Route path="/add-food" element={<AddFood />} />

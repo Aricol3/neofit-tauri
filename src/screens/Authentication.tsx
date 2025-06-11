@@ -21,7 +21,11 @@ const Authentication = () => {
 
   useEffect(() => {
     if (auth.accessToken && auth.user) {
-      navigate("/");
+      if (auth.user.profileComplete) {
+        navigate("/");
+      } else {
+        navigate("/set-profile");
+      }
     }
   }, [auth.accessToken, auth.user]);
 

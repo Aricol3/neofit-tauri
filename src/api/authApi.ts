@@ -2,7 +2,7 @@ const baseUrl = "http://192.168.100.116:8080";
 
 export interface ILoginResponse {
   accessToken: string;
-  user: { id: string; email: string };
+  user: { id: string; email: string, profileComplete: boolean };
 }
 
 export const register = async (email: string, password: string) => {

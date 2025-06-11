@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setToday } from "./slices/generalSlice.ts";
 import { AppDispatch, IRootState } from "./store.ts";
 import { useNavigate } from "react-router-dom";
+import { resetAuthState } from "./slices/authSlice.ts";
 
 function App() {
   const dispatch = useDispatch<AppDispatch>();
@@ -17,6 +18,9 @@ function App() {
     dispatch(setToday());
     if (!auth.accessToken) navigate("/auth");
   });
+
+  // dispatch(resetAuthState())
+  // console.log("USER", auth);
 
   return (
     <main className="container">
