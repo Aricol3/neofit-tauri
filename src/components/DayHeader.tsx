@@ -256,8 +256,8 @@ const DayHeader = () => {
                   : format(parseISO(selectedDay), "d MMMM")
               ) : (
                 <p>
-                  2723{" "}
-                  <span className="text-textSecondaryColor text-sm font-[600]">/ 3623</span>
+                  2550{" "}
+                  <span className="text-textSecondaryColor text-sm font-[600]">/ 3330</span>
                 </p>
               )}
             </motion.h1>

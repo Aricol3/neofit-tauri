@@ -3,14 +3,14 @@ import NewMacroProgress from "./NewMacroProgress.tsx";
 import { MACRO } from "../types.ts";
 
 const Macronutrients = () => {
-  const proteinValue = 104;
-  const targetProteinValue = 165;
+  const proteinValue = 6;
+  const targetProteinValue = 180;
 
-  const carbsValue = 204;
-  const targetCarbsValue = 412;
+  const carbsValue = 60;
+  const targetCarbsValue = 370;
 
-  const fatValue = 79;
-  const targetFatValue = 110;
+  const fatValue = 30;
+  const targetFatValue = 70;
 
   return (
     // <Card className="w-full h-[180px] border-none bg-gradient-to-br from-primary to-fuchsia-500" shadow="none">

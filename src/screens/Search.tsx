@@ -19,8 +19,6 @@ const Search = () => {
     dispatch(setScannedFood(selectedFood));
     navigate("/add-food");
   }
-  const foodsss= useSelector((state:IRootState)=>state.nutrition.scannedFood)
-  console.log(foodsss);
 
   return (
     <>
