@@ -1,6 +1,6 @@
 import { IScannedFood } from "../types.ts";
 
-const baseUrl = "http://192.168.100.116:8080";
+const baseUrl = "http://172.20.10.2:8080";
 
 
 export const fetchFoodByBarcode = async (barcode: string) => {
@@ -73,7 +73,7 @@ export const createFood = async (foodData: any) => {
 };
 
 
-export const generateDietOverviewForDay = async (date: string, meals: any, water: any) => {
+export const generateDietOverviewForDay = async (date: string, meals: any, water: any, profile:any) => {
   try {
     const url = `${baseUrl}/food/overview`;
     const response = await fetch(url, {
@@ -84,7 +84,8 @@ export const generateDietOverviewForDay = async (date: string, meals: any, water
       body: JSON.stringify({
         date,
         meals,
-        water
+        water,
+        profile
       })
     });
 

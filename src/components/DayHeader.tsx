@@ -7,10 +7,11 @@ import { Virtual } from "swiper/modules";
 import { setSelectedDay, setToday } from "../slices/generalSlice.ts";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState } from "../store.ts";
+import { selectTotalNutritionForSelectedDay } from "../slices/thunks.ts";
 
 const generateSlide = (dates, currentDate, index, setIsExpanded) => {
   const dispatch = useDispatch();
-  console.log("NEW SLIDE INDEX", index);
+
   const containerVariants = {
     show: {
       transition: {
@@ -208,6 +209,8 @@ const Calendar = ({ currentDate, setIsExpanded }) => {
 
 const DayHeader = () => {
   const selectedDay = useSelector((state: IRootState) => state.general.selectedDay);
+  const nutritionTotals = useSelector(selectTotalNutritionForSelectedDay);
+  const userProfile = useSelector((state: IRootState) => state.userProfile.profile);
 
   const [isTop, setIsTop] = useState(true);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -256,8 +259,8 @@ const DayHeader = () => {
                   : format(parseISO(selectedDay), "d MMMM")
               ) : (
                 <p>
-                  2550{" "}
-                  <span className="text-textSecondaryColor text-sm font-[600]">/ 3330</span>
+                  {nutritionTotals.calories}{" "}
+                  <span className="text-textSecondaryColor text-sm font-[600]">/ {userProfile?.caloriesNeeded}</span>
                 </p>
               )}
             </motion.h1>

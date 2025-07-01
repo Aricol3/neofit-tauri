@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 
 const DietOverview = () => {
   const selectedDay = useSelector((state: IRootState) => state.general.selectedDay);
+  const userProfile = useSelector((state: IRootState) => state.userProfile.profile);
+
   const dayText = isToday(parseISO(selectedDay))
     ? "Today"
     : format(parseISO(selectedDay), "d MMMM");
@@ -37,7 +39,7 @@ const DietOverview = () => {
     setIsLoading(true);
     setDietOverview(null);
     try {
-      const result = await generateDietOverviewForDay(selectedDay, entriesForDay, water);
+      const result = await generateDietOverviewForDay(selectedDay, entriesForDay, water, userProfile);
       console.log(result);
       setDietOverview(result);
     } catch (error) {

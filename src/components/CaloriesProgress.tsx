@@ -1,11 +1,22 @@
-import { Card, CardBody, CardHeader, CircularProgress, Progress } from "@heroui/react";
+import { Card, CardBody, CircularProgress, Progress } from "@heroui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFlag } from "@fortawesome/free-solid-svg-icons/faFlag";
 import { faBowlFood } from "@fortawesome/free-solid-svg-icons/faBowlFood";
 import { capitalizeFirstLetter } from "../utils.tsx";
 import { MACRO } from "../types.ts";
+import { useSelector } from "react-redux";
+import { selectTotalNutritionForSelectedDay } from "../slices/thunks.ts";
+import { IRootState } from "../store.ts";
 
-const CaloriesRemaining = () => {
+interface CaloriesRemainingProps {
+  calories: number;
+  targetCalories: number;
+}
+
+const CaloriesRemaining = ({ calories, targetCalories }: CaloriesRemainingProps) => {
+  const caloriesRemaining = targetCalories - calories;
+  const percentage = targetCalories === 0 ? 0 : Math.floor((calories / targetCalories) * 100);
+
   return (
     <CircularProgress
       classNames={{
@@ -18,12 +29,12 @@ const CaloriesRemaining = () => {
       valueLabel={
         <div
           style={{ display: "flex", flexDirection: "column", lineHeight: "1" }}>
-          <span style={{ textAlign: "center", fontSize: "36px", fontFamily: "Lexend Deca" }}>1863</span>
+          <span style={{ textAlign: "center", fontSize: "36px", fontFamily: "Lexend Deca" }}>{caloriesRemaining}</span>
           <span style={{ textAlign: "center", fontSize: "14px" }}>remaining</span>
         </div>
       }
       strokeWidth={3}
-      value={70}
+      value={percentage}
       className=""
     />
   );
@@ -77,14 +88,28 @@ const Macro = ({ label, value, targetValue }) => {
 };
 
 const CaloriesProgress = () => {
+  const nutritionTotals = useSelector(selectTotalNutritionForSelectedDay);
+  const userProfile = useSelector((state: IRootState) => state.userProfile.profile);
+
+  const targetCalories = userProfile.caloriesNeeded;
+
+  const proteinValue = nutritionTotals.protein;
+  const targetProteinValue = userProfile.macros.protein;
+
+  const carbsValue = nutritionTotals.totalCarbohydrates;
+  const targetCarbsValue = userProfile.macros.carbs;
+
+  const fatValue = nutritionTotals.totalFat;
+  const targetFatValue = userProfile.macros.fat;
+
   return (
     <Card className="w-full h-44 shadow-md bg-gradient-to-tl from-[#FFB457] to-[#FF705B]" shadow="none">
       <CardBody className="flex flex-row gap-4">
-        <CaloriesRemaining />
+        <CaloriesRemaining calories={nutritionTotals.calories} targetCalories={targetCalories} />
         <div className="w-full flex flex-col justify-between items-center py-2">
-          <Macro label={MACRO.PROTEIN} targetValue={124} value={90} />
-          <Macro label={MACRO.CARBS} targetValue={242} value={167} />
-          <Macro label={MACRO.FAT} targetValue={60} value={55} />
+          <Macro label={MACRO.PROTEIN} targetValue={targetProteinValue} value={proteinValue} />
+          <Macro label={MACRO.CARBS} targetValue={targetCarbsValue} value={carbsValue} />
+          <Macro label={MACRO.FAT} targetValue={targetFatValue} value={fatValue} />
         </div>
       </CardBody>
     </Card>

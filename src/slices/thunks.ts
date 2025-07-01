@@ -6,12 +6,14 @@ import { activitySlice, IActivity, ISet } from "./activitySlice.ts";
 import {
   loginFailure,
   loginStart,
-  loginSuccess, logout,
+  loginSuccess,
   registerFailure,
   registerStart,
-  registerSuccess, updateAccessToken
+  registerSuccess,
 } from "./authSlice.ts";
-import { login, refreshAccessToken, register } from "../api/authApi.ts";
+import { login, register } from "../api/authApi.ts";
+import { getUserProfile, setUserProfile } from "../api/userApi.ts";
+import { setProfile } from "./userProfileSlice.ts";
 
 const { addMealEntry, updateMealEntry, removeMealEntry, setWaterIntake } = nutritionSlice.actions;
 
@@ -107,6 +109,10 @@ export const performLogin = (email: string, password: string) => async (dispatch
     dispatch(loginStart());
     const data = await login(email, password);
     dispatch(loginSuccess({ user: data.user, accessToken: data.accessToken }));
+
+    const userProfile = await getUserProfile(data.accessToken!);
+    dispatch(setProfile(userProfile.profile));
+
   } catch (err: any) {
     dispatch(loginFailure(err.message || "Login failed"));
   }
@@ -120,4 +126,30 @@ export const performRegister = (email: string, password: string) => async (dispa
   } catch (err: any) {
     dispatch(registerFailure(err.message || "Registration failed"));
   }
+};
+
+export const selectTotalNutritionForSelectedDay = (state: IRootState) => {
+  const date = state.general.selectedDay;
+  const meals = state.nutrition.mealEntries[date];
+
+  const totals = {
+    calories: 0,
+    protein: 0,
+    totalCarbohydrates: 0,
+    totalFat: 0,
+  };
+
+  if (!meals) return totals;
+
+  for (const mealName in meals) {
+    for (const entry of meals[mealName]) {
+
+      totals.calories += entry.calories;
+      totals.protein += entry.protein;
+      totals.totalCarbohydrates += entry.totalCarbohydrates;
+      totals.totalFat += entry.totalFat;
+    }
+  }
+
+  return totals;
 };

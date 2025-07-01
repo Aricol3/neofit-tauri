@@ -11,9 +11,10 @@ import {
   Input
 } from "@heroui/react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { IRootState } from "../store.ts";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, IRootState } from "../store.ts";
 import { setUserProfile } from "../api/userApi.ts";
+import { setProfile } from "../slices/userProfileSlice.ts";
 
 const GenderSelector = ({ onSelect }: { onSelect: (value: string) => void }) => {
   const [selectedKeys, setSelectedKeys] = useState(new Set([""]));
@@ -135,6 +136,7 @@ const GoalSelector = ({ onSelect }: { onSelect: (value: string) => void }) => {
 };
 
 const SetUserProfile = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const accessToken = useSelector((state: IRootState) => state.auth.accessToken);
 
@@ -161,7 +163,7 @@ const SetUserProfile = () => {
   const handleSubmit = async () => {
 
     try {
-      await setUserProfile({
+      const userProfile = await setUserProfile({
         gender,
         age: Number(age),
         height: Number(height),
@@ -169,6 +171,8 @@ const SetUserProfile = () => {
         activityLevel,
         goal
       },accessToken!);
+
+      dispatch(setProfile(userProfile.profile));
 
       navigate("/");
     } catch (err: any) {

@@ -1,16 +1,22 @@
 import { Card, CardBody, CardHeader } from "@heroui/react";
 import NewMacroProgress from "./NewMacroProgress.tsx";
 import { MACRO } from "../types.ts";
+import { useSelector } from "react-redux";
+import { selectTotalNutritionForSelectedDay } from "../slices/thunks.ts";
+import { IRootState } from "../store.ts";
 
 const Macronutrients = () => {
-  const proteinValue = 6;
-  const targetProteinValue = 180;
+  const nutritionTotals = useSelector(selectTotalNutritionForSelectedDay);
+  const userProfile = useSelector((state: IRootState) => state.userProfile.profile);
 
-  const carbsValue = 60;
-  const targetCarbsValue = 370;
+  const proteinValue = nutritionTotals.protein;
+  const targetProteinValue = userProfile.macros.protein;
 
-  const fatValue = 30;
-  const targetFatValue = 70;
+  const carbsValue = nutritionTotals.totalCarbohydrates;
+  const targetCarbsValue = userProfile.macros.carbs;
+
+  const fatValue = nutritionTotals.totalFat;
+  const targetFatValue = userProfile.macros.fat;
 
   return (
     // <Card className="w-full h-[180px] border-none bg-gradient-to-br from-primary to-fuchsia-500" shadow="none">
