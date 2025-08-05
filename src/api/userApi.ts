@@ -1,7 +1,4 @@
-import { useSelector } from "react-redux";
-import { IRootState } from "../store.ts";
-
-const baseUrl = "http://172.20.10.2:8080";
+const baseUrl = "http://192.168.100.132:8080";
 
 export interface IUserProfile {
   gender: string;
