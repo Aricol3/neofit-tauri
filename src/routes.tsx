@@ -28,7 +28,7 @@ function Layout({ children }: PropsWithChildren) {
   const needsPadding = isInRouteList(routesWithHeader) || isInRouteList(routesWithPrefixHeader);
   const needsSearchHeaderPadding = isInRouteList(routesWithSearchHeader);
 
-  const hideNavbarRoutes = ["/auth", "/set-profile", "/scan"];
+  const hideNavbarRoutes = ["/auth", "/set-profile", "/scan", "/create-food"];
 
   return (
     <div className="pb-28" style={{ paddingTop: needsPadding ? "4rem" : needsSearchHeaderPadding ? "10rem" : "0" }}>

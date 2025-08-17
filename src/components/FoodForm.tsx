@@ -1,8 +1,6 @@
 import { Card, CardBody, CardHeader, Input } from "@heroui/react";
 
-// SERVING SIZE VALUE | UNIT
-
-const FoodForm = ({handleInputChange }) => (
+const FoodForm = ({ handleInputChange }) => (
   <>
     <Card className="min-h-[150px] overflow-hidden meal-section" shadow="none">
       <CardHeader>
@@ -14,29 +12,34 @@ const FoodForm = ({handleInputChange }) => (
                 style={{ fontFamily: "Lexend Deca" }}>
         <Input
           size="lg"
-          label={
-            <div className="flex flex-row items-center gap-1">Brand Name <p className="text-sm">(optional)</p></div>
-          }
+          label="Brand Name"
           name="brand_name"
+          placeholder="ex. Hochland"
           onChange={handleInputChange}
         />
         <Input
+          isRequired
           size="lg"
           label="Description"
           name="description"
+          placeholder="ex. Cottage Cheese"
           onChange={handleInputChange}
         />
         <Input
+          isRequired
           size="lg"
           label="Serving Size"
           name="serving_size"
+          placeholder="ex. 100g"
           onChange={handleInputChange}
         />
         <Input
+          isRequired
           inputMode="decimal"
           size="lg"
           label="Servings per container"
           name="servings_per_container"
+          placeholder="1"
           onChange={handleInputChange}
         />
       </CardBody>
@@ -51,6 +54,7 @@ const FoodForm = ({handleInputChange }) => (
       <CardBody className="w-full py-0 px-3 pb-3.5 overflow-hidden text-textPrimaryColor flex gap-3"
                 style={{ fontFamily: "Lexend Deca" }}>
         <Input
+          isRequired
           inputMode="decimal"
           size="lg"
           label="Calories"
@@ -74,15 +78,78 @@ const FoodForm = ({handleInputChange }) => (
         <Input
           inputMode="decimal"
           size="lg"
-          label="Total carbohydrates (g)"
-          name="total_carbs"
+          label="Polyunsaturated fat (g)"
+          name="polyunsaturated_fat"
           onChange={handleInputChange}
         />
         <Input
           inputMode="decimal"
           size="lg"
-          label="Sugars (g)"
-          name="sugars"
+          label="Monounsaturated fat (g)"
+          name="monounsaturated_fat"
+          onChange={handleInputChange}
+        />
+        <Input
+          inputMode="decimal"
+          size="lg"
+          label="Trans fat (g)"
+          name="trans_fat"
+          onChange={handleInputChange}
+        />
+        <Input
+          inputMode="decimal"
+          size="lg"
+          label="Cholesterol (mg)"
+          name="cholesterol"
+          onChange={handleInputChange}
+        />
+        <Input
+          inputMode="decimal"
+          size="lg"
+          label="Sodium (mg)"
+          name="sodium"
+          onChange={handleInputChange}
+        />
+        <Input
+          inputMode="decimal"
+          size="lg"
+          label="Potassium (mg)"
+          name="potassium"
+          onChange={handleInputChange}
+        />
+        <Input
+          inputMode="decimal"
+          size="lg"
+          label="Total Carbohydrates (g)"
+          name="total_carbohydrates"
+          onChange={handleInputChange}
+        />
+        <Input
+          inputMode="decimal"
+          size="lg"
+          label="Fiber (g)"
+          name="fiber"
+          onChange={handleInputChange}
+        />
+        <Input
+          inputMode="decimal"
+          size="lg"
+          label="Sugar (g)"
+          name="sugar"
+          onChange={handleInputChange}
+        />
+        <Input
+          inputMode="decimal"
+          size="lg"
+          label="Added Sugars (g)"
+          name="added_sugars"
+          onChange={handleInputChange}
+        />
+        <Input
+          inputMode="decimal"
+          size="lg"
+          label="Sugar Alcohols (g)"
+          name="sugar_alcohols"
           onChange={handleInputChange}
         />
         <Input
@@ -95,15 +162,36 @@ const FoodForm = ({handleInputChange }) => (
         <Input
           inputMode="decimal"
           size="lg"
-          label="Sodium (g)"
-          name="sodium"
+          label="Vitamin A (IU)"
+          name="vitamin_a"
           onChange={handleInputChange}
         />
         <Input
           inputMode="decimal"
           size="lg"
-          label="Fiber (g)"
-          name="fiber"
+          label="Vitamin C (mg)"
+          name="vitamin_c"
+          onChange={handleInputChange}
+        />
+        <Input
+          inputMode="decimal"
+          size="lg"
+          label="Vitamin D (IU)"
+          name="vitamin_d"
+          onChange={handleInputChange}
+        />
+        <Input
+          inputMode="decimal"
+          size="lg"
+          label="Calcium (mg)"
+          name="calcium"
+          onChange={handleInputChange}
+        />
+        <Input
+          inputMode="decimal"
+          size="lg"
+          label="Iron (mg)"
+          name="iron"
           onChange={handleInputChange}
         />
       </CardBody>

@@ -1,4 +1,4 @@
-const baseUrl = "http://192.168.100.132:8080";
+const baseUrl = "http://192.168.100.134:8080";
 
 export interface ILoginResponse {
   accessToken: string;
