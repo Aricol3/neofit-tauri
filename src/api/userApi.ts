@@ -1,4 +1,4 @@
-const baseUrl = "http://192.168.100.134:8080";
+const baseUrl = "http://192.168.100.137:8080";
 
 export interface IUserProfile {
   gender: string;

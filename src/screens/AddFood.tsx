@@ -9,7 +9,9 @@ import {
   Input
 } from "@heroui/react";
 import Header from "../components/Header.tsx";
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
+import type { Key } from "react";
+import type { Selection } from "@react-types/shared";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBurger } from "@fortawesome/free-solid-svg-icons/faBurger";
 import { faMugHot } from "@fortawesome/free-solid-svg-icons/faMugHot";
@@ -19,13 +21,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, IRootState } from "../store.ts";
 import { useNavigate } from "react-router-dom";
 import FoodMacronutrients from "../components/FoodMacronutrients.tsx";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { MEAL, ROUTES } from "../types.ts";
-import { parseNumber } from "../utils.tsx";
+import { formatNumber, isEnergy, parseNumber, round } from "../utils.tsx";
 import { addMealEntryWithSelectedDay } from "../slices/thunks.ts";
+import { IEnergy, INutritionalContents, IServingSize } from "../types/foodTypes.ts";
+import { format } from "date-fns";
 
-const ServingSizeSelector = ({ servingSizes, onSelect }: any) => {
-  const [servingSizeSelectedKeys, setServingSizeSelectedKeys] = useState(new Set([""]));
+type ServingSizeSelectorProps = {
+  servingSizes: IServingSize[];
+  onSelect: (s: IServingSize) => void;
+};
+
+const ServingSizeSelector: React.FC<ServingSizeSelectorProps> = ({ servingSizes, onSelect }) => {
+  const [servingSizeSelectedKeys, setServingSizeSelectedKeys] = useState<Set<Key>>(new Set());
 
   const selectedServingSize = useMemo(
     () => Array.from(servingSizeSelectedKeys).join(", ").replace(/_/g, ""),
@@ -36,23 +45,31 @@ const ServingSizeSelector = ({ servingSizes, onSelect }: any) => {
     <Dropdown placement="bottom-start">
       <DropdownTrigger>
         <div>
-          <Input className="select-none pointer-events-none"
-                 size="lg" label="Serving size" value={selectedServingSize} />
+          <Input
+            className="select-none pointer-events-none"
+            size="lg"
+            label="Serving size"
+            value={selectedServingSize}
+            readOnly
+          />
         </div>
       </DropdownTrigger>
       <DropdownMenu
-        aria-label="Single selection example"
+        aria-label="Serving size"
         variant="flat"
         disallowEmptySelection
         selectionMode="single"
         selectedKeys={servingSizeSelectedKeys}
-        onSelectionChange={(key) => {
-          const selectedItem = servingSizes.find((item) => `${item.value} ${item.unit}` === key.currentKey);
+        onSelectionChange={(keys: Selection) => {
+          if (keys === "all") return;
+          const key = Array.from(keys)[0]?.toString() ?? "";
+          const selectedItem = servingSizes.find((item) => `${item.value} ${item.unit}` === key);
           if (selectedItem) {
             onSelect(selectedItem);
-            setServingSizeSelectedKeys(key);
+            setServingSizeSelectedKeys(new Set([key]));
           }
-        }}>
+        }}
+      >
         {servingSizes.map((servingSize) => {
           const key = `${servingSize.value} ${servingSize.unit}`;
           return (
@@ -66,8 +83,12 @@ const ServingSizeSelector = ({ servingSizes, onSelect }: any) => {
   );
 };
 
-const MealSelector = ({ onSelect }: any) => {
-  const [mealSelectedKeys, setMealSelectedKeys] = useState(new Set([""]));
+type MealSelectorProps = {
+  onSelect: (meal: MEAL) => void;
+};
+
+const MealSelector: React.FC<MealSelectorProps> = ({ onSelect }) => {
+  const [mealSelectedKeys, setMealSelectedKeys] = useState<Set<Key>>(new Set());
 
   const selectedMeal = useMemo(
     () => Array.from(mealSelectedKeys).join(", ").replace(/_/g, ""),
@@ -78,19 +99,26 @@ const MealSelector = ({ onSelect }: any) => {
     <Dropdown placement="bottom-start">
       <DropdownTrigger>
         <div>
-          <Input className="select-none pointer-events-none"
-                 size="lg" label="Meal" value={selectedMeal} />
+          <Input
+            className="select-none pointer-events-none"
+            size="lg"
+            label="Meal"
+            value={selectedMeal}
+            readOnly
+          />
         </div>
       </DropdownTrigger>
       <DropdownMenu
-        aria-label="Single selection example"
+        aria-label="Meal"
         variant="flat"
         disallowEmptySelection
         selectionMode="single"
         selectedKeys={mealSelectedKeys}
-        onSelectionChange={(key) => {
-          onSelect(key.currentKey);
-          setMealSelectedKeys(key);
+        onSelectionChange={(keys: Selection) => {
+          if (keys === "all") return;
+          const key = (Array.from(keys)[0]?.toString() ?? "") as MEAL;
+          onSelect(key);
+          setMealSelectedKeys(new Set([key]));
         }}
       >
         <DropdownItem key="Breakfast" color="primary">
@@ -102,7 +130,8 @@ const MealSelector = ({ onSelect }: any) => {
         <DropdownItem key="Lunch" color="primary">
           <div className="flex flex-row text-center items-center gap-2">
             <FontAwesomeIcon color="#50545A" icon={faBurger} />
-            <p className="text-lg">Lunch</p></div>
+            <p className="text-lg">Lunch</p>
+          </div>
         </DropdownItem>
         <DropdownItem key="Dinner" color="primary">
           <div className="flex flex-row text-center items-center gap-2">
@@ -121,63 +150,60 @@ const MealSelector = ({ onSelect }: any) => {
   );
 };
 
-const AddFood = () => {
+const AddFood: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
 
   const scannedFood = useSelector((state: IRootState) => state.nutrition.scannedFood);
 
-  const [selectedServingSize, setSelectedServingSize] = useState();
-  const [numberOfServings, setNumberOfServings] = useState("");
-
-  const [selectedMeal, setSelectedMeal] = useState<MEAL>();
+  const [selectedServingSize, setSelectedServingSize] = useState<IServingSize | null>(null);
+  const [numberOfServings, setNumberOfServings] = useState<string>("");
+  const [selectedMeal, setSelectedMeal] = useState<MEAL | undefined>(undefined);
 
   const handleAccept = () => {
+    if (!scannedFood || !selectedMeal) return;
+
     const mealEntry = {
       id: uuidv4(),
       baseFood: scannedFood,
-      description: scannedFood?.description || "",
-      name: scannedFood?.name || "",
-      servingSizes: scannedFood?.servingSizes!,
-      servingSize: selectedServingSize,
+      servingSize: selectedServingSize ?? undefined,
       numberOfServings: (() => {
         const n = parseNumber(numberOfServings);
         return n === 0 ? 1 : n;
       })(),
-      meal: selectedMeal!,
-      calories: calculatedMacros.calories,
-      totalCarbohydrates: calculatedMacros.carbs,
-      totalFat: calculatedMacros.fat,
-      protein: calculatedMacros.protein,
-
-      saturatedFat: calculatedMacros.saturatedFat,
-      sugar: calculatedMacros.sugar,
-      fiber: calculatedMacros.fiber,
-      sodium: calculatedMacros.sodium,
+      meal: selectedMeal
     };
-    console.log("MEAL ENTRY", mealEntry);
+
     dispatch(addMealEntryWithSelectedDay({ meal: selectedMeal, entry: mealEntry }));
     navigate(ROUTES.NUTRITION);
   };
 
-  const calculatedMacros = useMemo(() => {
-    const multiplier = selectedServingSize?.nutrition_multiplier || 1;
+  const calculatedMacros = useMemo<INutritionalContents | null>(() => {
+    if (!scannedFood || !scannedFood.nutritionalContents) return null;
+
+    const multiplier = selectedServingSize?.nutritionMultiplier ?? 1;
     const servings = parseNumber(numberOfServings) || 1;
 
-    const round = (value: number) => Math.round(value);
-    const format = (value: number) => Number(value.toFixed(1));
+    const factor = multiplier * servings;
 
-    return {
-      calories: round((scannedFood?.calories || 0) * multiplier * servings),
-      carbs: format((scannedFood?.totalCarbohydrates || 0) * multiplier * servings),
-      fat: format((scannedFood?.totalFat || 0) * multiplier * servings),
-      protein: format((scannedFood?.protein || 0) * multiplier * servings),
+    const macros = Object.entries(scannedFood.nutritionalContents) as [
+      keyof INutritionalContents,
+      INutritionalContents[keyof INutritionalContents]
+    ][];
 
-      saturatedFat: format((scannedFood?.saturatedFat || 0) * multiplier * servings),
-      sugar: format((scannedFood?.sugar || 0) * multiplier * servings),
-      fiber: format((scannedFood?.fiber || 0) * multiplier * servings),
-      sodium: format((scannedFood?.sodium || 0) * multiplier * servings),
-    };
+    const scaled = Object.fromEntries(
+      macros.map(([macro, val]) => {
+        if (typeof val === "number") {
+          return [macro, formatNumber(val * factor)];
+        }
+        if (isEnergy(val)) {
+          return [macro, { ...val, value: round(val.value * factor) }];
+        }
+        return [macro, val];
+      })
+    ) as INutritionalContents;
+
+    return scaled;
   }, [scannedFood, selectedServingSize, numberOfServings]);
 
   return (
@@ -191,14 +217,18 @@ const AddFood = () => {
                 {scannedFood?.description || ""}
               </div>
               <div className="text-textPrimaryColor font-[500]">
-                {scannedFood?.name || ""}
+                {scannedFood?.brandName || ""}
               </div>
             </div>
           </CardHeader>
-          <CardBody className="w-full py-0 px-3 pb-3.5 overflow-hidden text-textPrimaryColor flex gap-3"
-                    style={{ fontFamily: "Lexend Deca" }}>
-
-            <ServingSizeSelector servingSizes={scannedFood?.servingSizes} onSelect={setSelectedServingSize} />
+          <CardBody
+            className="w-full py-0 px-3 pb-3.5 overflow-hidden text-textPrimaryColor flex gap-3"
+            style={{ fontFamily: "Lexend Deca" }}
+          >
+            <ServingSizeSelector
+              servingSizes={scannedFood?.servingSizes ?? []}
+              onSelect={setSelectedServingSize}
+            />
 
             <Input
               inputMode="decimal"
@@ -213,10 +243,10 @@ const AddFood = () => {
         </Card>
 
         <FoodMacronutrients
-          calories={calculatedMacros.calories}
-          carbs={calculatedMacros.carbs}
-          fat={calculatedMacros.fat}
-          protein={calculatedMacros.protein}
+          calories={calculatedMacros?.energy?.value ?? 0}
+          carbs={calculatedMacros?.carbohydrates ?? 0}
+          fat={calculatedMacros?.fat ?? 0}
+          protein={calculatedMacros?.protein ?? 0}
         />
       </div>
     </>

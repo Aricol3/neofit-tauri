@@ -1,6 +1,5 @@
 import { cancel, Format, scan } from "@tauri-apps/plugin-barcode-scanner";
 import { useEffect } from "react";
-import { Button } from "@heroui/react";
 import { useNavigate } from "react-router-dom";
 import { fetchFoodByBarcode } from "../api/foodApi.ts";
 import { useDispatch } from "react-redux";
@@ -14,7 +13,6 @@ const Scanner = () => {
 
   useEffect(() => {
     document.documentElement.style.backgroundColor = "transparent";
-
     return () => {
       document.documentElement.style.backgroundColor = "#f5f9fa";
     };
@@ -26,16 +24,21 @@ const Scanner = () => {
         windowed: true,
         formats: [Format.EAN8, Format.EAN13]
       });
-      console.log("Barcode scanned:", result.content);
-      const food = await fetchFoodByBarcode(result.content);
+
+      const barcode = result.content;
+
+      const food = await fetchFoodByBarcode(barcode);
+
+      console.log("SCANNED FOOD", food);
+
       if (!food) {
-        console.warn("Food item not found");
-        dispatch(setScannedBarcode(result.content));
+        dispatch(setScannedBarcode(barcode));
         navigate("/create-food");
         return;
       }
-      console.log("Food:", food);
+
       dispatch(setScannedFood(food));
+      console.log("BA TE SETEZI???",);
       navigate("/add-food");
     } catch (error) {
       console.error("Failed to scan barcode:", error);

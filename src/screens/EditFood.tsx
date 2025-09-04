@@ -9,7 +9,7 @@ import {
   Input
 } from "@heroui/react";
 import Header from "../components/Header.tsx";
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBurger, faMugHot, faWineGlass, faCookieBite } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,8 +18,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { selectMealEntriesForDate } from "../slices/nutritionSlice.ts";
 import FoodMacronutrients from "../components/FoodMacronutrients.tsx";
 import { MEAL, ROUTES } from "../types.ts";
-import { parseNumber } from "../utils.tsx";
+import { formatNumber, isEnergy, parseNumber, round } from "../utils.tsx";
 import { updateMealEntryWithSelectedDay } from "../slices/thunks.ts";
+import { IMealEntry, INutritionalContents } from "../types/foodTypes.ts";
 
 const ServingSizeSelector = ({ servingSizes, onSelect, defaultValue }: any) => {
   const [servingSizeSelectedKeys, setServingSizeSelectedKeys] = useState(new Set([defaultValue]));
@@ -129,7 +130,7 @@ const EditFood = () => {
     selectMealEntriesForDate(state, selectedDay)
   );
 
-  const entry = useMemo(() => {
+  const entry: IMealEntry = useMemo(() => {
     for (const meal in mealEntries) {
       const found = mealEntries[meal].find((e) => e.id === entryId);
       if (found) return { ...found, meal: meal as MEAL };
@@ -146,22 +147,12 @@ const EditFood = () => {
   const handleAccept = () => {
     const updatedEntry = {
       ...entry,
-      servingSizes: entry?.servingSizes,
       servingSize: selectedServingSize!,
       numberOfServings: (() => {
         const n = parseNumber(numberOfServings);
         return n === 0 ? 1 : n;
       })(),
-      meal: selectedMeal!,
-      calories: calculatedMacros.calories,
-      totalCarbohydrates: calculatedMacros.carbs,
-      totalFat: calculatedMacros.fat,
-      protein: calculatedMacros.protein,
-      saturatedFat: calculatedMacros.saturatedFat,
-      sugar: calculatedMacros.sugar,
-      fiber: calculatedMacros.fiber,
-      sodium: calculatedMacros.sodium,
-      baseFood: entry?.baseFood,
+      meal: selectedMeal!
     };
 
     dispatch(updateMealEntryWithSelectedDay({ meal: selectedMeal!, entry: updatedEntry }));
@@ -169,23 +160,32 @@ const EditFood = () => {
   };
 
   const calculatedMacros = useMemo(() => {
-    const baseFood = entry?.baseFood;
-    const multiplier = selectedServingSize?.nutrition_multiplier || 1;
+    if (!entry || !entry.baseFood.nutritionalContents) return null;
+
+    const baseFood = entry.baseFood;
+    const multiplier = selectedServingSize?.nutritionMultiplier ?? 1;
     const servings = parseNumber(numberOfServings) || 1;
 
-    const round = (value: number) => Math.round(value);
-    const format = (value: number) => Number(value.toFixed(1));
+    const factor = multiplier * servings;
 
-    return {
-      calories: round((baseFood?.calories || 0) * multiplier * servings),
-      carbs: format((baseFood?.totalCarbohydrates || 0) * multiplier * servings),
-      fat: format((baseFood?.totalFat || 0) * multiplier * servings),
-      protein: format((baseFood?.protein || 0) * multiplier * servings),
-      saturatedFat: format((baseFood?.saturatedFat || 0) * multiplier * servings),
-      sugar: format((baseFood?.sugar || 0) * multiplier * servings),
-      fiber: format((baseFood?.fiber || 0) * multiplier * servings),
-      sodium: format((baseFood?.sodium || 0) * multiplier * servings),
-    };
+    const macros = Object.entries(baseFood.nutritionalContents) as [
+      keyof INutritionalContents,
+      INutritionalContents[keyof INutritionalContents]
+    ][];
+
+    const scaled = Object.fromEntries(
+      macros.map(([macro, val]) => {
+        if (typeof val === "number") {
+          return [macro, formatNumber(val * factor)];
+        }
+        if (isEnergy(val)) {
+          return [macro, { ...val, value: round(val.value * factor) }];
+        }
+        return [macro, val];
+      })
+    ) as INutritionalContents;
+
+    return scaled;
   }, [entry?.baseFood, selectedServingSize, numberOfServings]);
 
   return (
@@ -196,10 +196,10 @@ const EditFood = () => {
           <CardHeader className="flex justify-between">
             <div>
               <div className="text-textPrimaryColor text-lg font-[600]">
-                {entry.description}
+                {entry.baseFood.description}
               </div>
               <div className="text-textPrimaryColor font-[500]">
-                {entry.name}
+                {entry.baseFood.brandName}
               </div>
             </div>
           </CardHeader>
@@ -207,7 +207,7 @@ const EditFood = () => {
                     style={{ fontFamily: "Lexend Deca" }}>
 
             <ServingSizeSelector
-              servingSizes={entry?.servingSizes}
+              servingSizes={entry.baseFood.servingSizes}
               onSelect={setSelectedServingSize}
               defaultValue={`${entry.servingSize.value} ${entry.servingSize.unit}`}
             />
@@ -226,10 +226,10 @@ const EditFood = () => {
         </Card>
 
         <FoodMacronutrients
-          calories={calculatedMacros.calories}
-          carbs={calculatedMacros.carbs}
-          fat={calculatedMacros.fat}
-          protein={calculatedMacros.protein}
+          calories={calculatedMacros?.energy?.value ?? 0}
+          carbs={calculatedMacros?.carbohydrates ?? 0}
+          fat={calculatedMacros?.fat ?? 0}
+          protein={calculatedMacros?.protein ?? 0}
         />
       </div>
     </>

@@ -1,4 +1,6 @@
-const baseUrl = "http://192.168.100.134:8080";
+import store from "../store.ts";
+
+const baseUrl = "http://192.168.100.137:8080";
 
 export interface ILoginResponse {
   accessToken: string;
@@ -35,3 +37,18 @@ export const login = async (email: string, password: string): Promise<ILoginResp
   return response.json();
 };
 
+export const authFetch = async (url: string, options: RequestInit = {}) => {
+  const state = store.getState();
+  const token = state.auth.accessToken;
+
+  const headers = new Headers(options.headers);
+
+  if (token) {
+    headers.set("Authorization", `Bearer ${token}`);
+  }
+
+  return fetch(url, {
+    ...options,
+    headers,
+  });
+};

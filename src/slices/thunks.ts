@@ -14,6 +14,7 @@ import {
 import { login, register } from "../api/authApi.ts";
 import { getUserProfile, setUserProfile } from "../api/userApi.ts";
 import { setProfile } from "./userProfileSlice.ts";
+import { calculateEntryScaledMacros } from "../utils.tsx";
 
 const { addMealEntry, updateMealEntry, removeMealEntry, setWaterIntake } = nutritionSlice.actions;
 
@@ -143,11 +144,12 @@ export const selectTotalNutritionForSelectedDay = (state: IRootState) => {
 
   for (const mealName in meals) {
     for (const entry of meals[mealName]) {
+      const scaledMacros = calculateEntryScaledMacros(entry);
 
-      totals.calories += entry.calories;
-      totals.protein += entry.protein;
-      totals.totalCarbohydrates += entry.totalCarbohydrates;
-      totals.totalFat += entry.totalFat;
+      totals.calories += scaledMacros.energy.value;
+      totals.protein += scaledMacros.protein;
+      totals.totalCarbohydrates += scaledMacros.carbohydrates;
+      totals.totalFat += scaledMacros.fat;
     }
   }
 

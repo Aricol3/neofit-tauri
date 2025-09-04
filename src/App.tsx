@@ -11,7 +11,6 @@ import { resetAuthState } from "./slices/authSlice.ts";
 function App() {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-
   const auth = useSelector((state: IRootState) => state.auth);
 
   useEffect(() => {

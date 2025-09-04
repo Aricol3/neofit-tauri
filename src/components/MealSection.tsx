@@ -6,8 +6,9 @@ import { AnimatePresence } from "framer-motion-legacy";
 import { Card, CardBody, CardHeader } from "@heroui/react";
 import { useCallback, useMemo } from "react";
 import { impactFeedback } from "@tauri-apps/plugin-haptics";
-import { addMealEntryWithSelectedDay, removeMealEntryWithSelectedDay } from "../slices/thunks.ts";
-import { getMealIcon } from "../utils.tsx";
+import { removeMealEntryWithSelectedDay } from "../slices/thunks.ts";
+import { formatNumber, getMealIcon, round } from "../utils.tsx";
+import { IMealEntry } from "../types/foodTypes.ts";
 
 interface MealSectionProps {
   meal: string;
@@ -21,27 +22,27 @@ const MealSection = ({ meal }: MealSectionProps) => {
     selectMealEntriesForDate(state, selectedDay)
   );
 
-  const entries = entriesForDay[meal] || [];
+  const entries:IMealEntry[] = entriesForDay[meal] || [];
 
 
-  const onDelete = useCallback(async (idToDelete: number) => {
+  const onDelete = useCallback(async (idToDelete: string) => {
     await impactFeedback("medium");
     dispatch(removeMealEntryWithSelectedDay({ meal, entryId: idToDelete }));
   }, [dispatch, meal]);
 
 
   const handleAddFood = () => {
-    const newEntry = {
-      id: Date.now(),
-      name: "6 serving • 240 g",
-      description: "Chicken Strips With Curry",
-      calories: 400
-    };
-    dispatch(addMealEntryWithSelectedDay({ meal, entry: newEntry }));
+    // const newEntry = {
+    //   id: Date.now(),
+    //   name: "6 serving • 240 g",
+    //   description: "Chicken Strips With Curry",
+    //   calories: 400
+    // };
+    // dispatch(addMealEntryWithSelectedDay({ meal, entry: newEntry }));
   };
 
   const totalCalories = useMemo(() => {
-    return entries?.reduce((sum, entry) => sum + entry.calories, 0) || 0;
+    return entries?.reduce((sum, entry) => sum + round(entry.baseFood.nutritionalContents.energy.value * entry.servingSize.nutritionMultiplier * entry.numberOfServings), 0) || 0;
   }, [entries]);
 
 
@@ -61,9 +62,9 @@ const MealSection = ({ meal }: MealSectionProps) => {
               <FoodCard
                 key={entry.id}
                 foodId={entry.id}
-                title={entry.description}
-                subtitle={`${entry.name} • ${entry.servingSize?.value * entry.numberOfServings} g`}
-                calories={entry.calories}
+                title={entry.baseFood.description}
+                subtitle={`${entry.baseFood.brandName} • ${formatNumber(entry.servingSize.value * entry.numberOfServings)} ${entry.servingSize?.unit}`}
+                calories={round(entry.baseFood.nutritionalContents.energy.value * entry.servingSize.nutritionMultiplier * entry.numberOfServings)}
                 onDelete={() => onDelete(entry.id)}
               />
             ))

@@ -1,50 +1,38 @@
-import { IScannedFood } from "../types.ts";
+import { authFetch } from "./authApi.ts";
+import { IFoodDataAPI } from "../types/foodTypes.ts";
 
-const baseUrl = "http://192.168.100.134:8080";
+const baseUrl = "http://192.168.100.137:8080";
 
 
 export const fetchFoodByBarcode = async (barcode: string) => {
   try {
     const url = `${baseUrl}/food?barcode=${barcode}`;
-    const response = await fetch(url, {
+    const response = await authFetch(url, {
       method: "GET"
     });
     const data = await response.json();
+    const food = data.foodItem;
+    console.log("response",food);
 
     if (response.ok) {
-      const scannedFood: IScannedFood = {
-        _id: data.food._id,
-        barcode: data.food.barcode,
-        name: data.food.brand_name,
-        description: data.food.description,
-        servingSizes: data.food.serving_sizes.map((size: any) => ({
+      const scannedFood: IFoodDataAPI = {
+        description: food.description,
+        brandName: food.brand_name,
+        servingSizes: food.serving_sizes.map((size: any) => ({
           nutritionMultiplier: size.nutrition_multiplier,
-          id: size._id,
           value: size.value,
           unit: size.unit,
-          index: size.index
+          index: size.index,
+          id: size._id
         })),
-        verified: data.food.verified,
-        calories: data.food.nutritional_contents.energy?.value || 0,
-        totalFat: data.food.nutritional_contents.fat || 0,
-        saturatedFat: data.food.nutritional_contents.saturated_fat || 0,
-        totalCarbohydrates: data.food.nutritional_contents.carbohydrates || 0,
-        netCarbs: data.food.nutritional_contents.net_carbs || 0,
-        sugar: data.food.nutritional_contents.sugar || 0,
-        protein: data.food.nutritional_contents.protein || 0,
-        sodium: data.food.nutritional_contents.sodium || 0,
-        fiber: data.food.nutritional_contents.fiber || 0,
-        public: data.food.public,
-        deleted: data.food.deleted,
-        countryCode: data.food.country_code,
-        version: data.food.version
+        nutritionalContents: food.nutritional_contents,
       };
 
       console.log("SCANNED FOOD", scannedFood);
 
       return scannedFood;
     } else {
-      console.error("Failed to fetch food:", data.error);
+      console.error("Failed to fetch food:", food.error);
     }
   } catch (error) {
     console.error("Error fetching food by barcode:", error);
@@ -54,7 +42,7 @@ export const fetchFoodByBarcode = async (barcode: string) => {
 export const createFood = async (foodData: any) => {
   try {
     const url = `${baseUrl}/food`;
-    const response = await fetch(url, {
+    const response = await authFetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -73,7 +61,7 @@ export const createFood = async (foodData: any) => {
 };
 
 
-export const generateDietOverviewForDay = async (date: string, meals: any, water: any, profile:any) => {
+export const generateDietOverviewForDay = async (date: string, meals: any, water: any, profile: any) => {
   try {
     const url = `${baseUrl}/food/overview`;
     const response = await fetch(url, {
@@ -114,4 +102,25 @@ export const searchFoods = async (query: string) => {
     console.error("Error searching foods:", error);
     return [];
   }
+};
+
+export const createFoodLog = async (
+  token: string,
+  payload: {
+    food_id: string;
+    serving_size_id: string;
+    amount: number;
+    meal_type: string;
+    date: string;
+    notes?: string;
+    custom_meal?: boolean;
+  }
+) => {
+  const res = await fetch("/api/food-logs", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) throw new Error("Failed to create food log");
+  return res.json();
 };

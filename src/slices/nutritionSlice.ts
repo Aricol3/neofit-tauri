@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IMealEntry, IScannedFood } from "../types.ts";
+import { IMealEntry } from "../types.ts";
 import { IRootState } from "../store.ts";
+import { IFoodDataAPI } from "../types/foodTypes.ts";
 
 const DEFAULT_CUP_SIZE_ML = 250;
 
 interface INutritionState {
   scannedBarcode: string;
-  scannedFood: IScannedFood | null;
+  scannedFood: IFoodDataAPI | null;
   mealEntries: {
     [date: string]: {
       [meal: string]: IMealEntry[];
@@ -45,7 +46,7 @@ export const nutritionSlice = createSlice({
     setScannedBarcode: (state, action: PayloadAction<string>) => {
       state.scannedBarcode = action.payload;
     },
-    setScannedFood: (state, action: PayloadAction<IScannedFood>) => {
+    setScannedFood: (state, action: PayloadAction<IFoodDataAPI>) => {
       state.scannedFood = action.payload;
     },
     addMealEntry: (

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { IRootState } from "../store.ts";
 import { addToast } from "@heroui/react";
+import { parseNumber } from "../utils.tsx";
 
 const useFoodForm = () => {
   const navigate = useNavigate();
@@ -61,7 +62,7 @@ const useFoodForm = () => {
       serving_sizes,
       nutritional_contents: {
         energy: {
-          value: Number(form.calories),
+          value: parseNumber(form.calories),
           unit: "kcal"
         },
         protein: toNumOrUndefined(form.protein),
