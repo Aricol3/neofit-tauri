@@ -1,3 +1,4 @@
+import { PropsWithChildren } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Home from "./screens/Home.tsx";
 import Scanner from "./screens/Scanner.tsx";
@@ -5,7 +6,6 @@ import Nutrition from "./screens/Nutrition.tsx";
 import AddFood from "./screens/AddFood.tsx";
 import EditFood from "./screens/EditFood.tsx";
 import CreateFood from "./screens/CreateFood.tsx";
-import React, { PropsWithChildren } from "react";
 import Search from "./screens/Search.tsx";
 import Navbar from "./components/Navbar/Navbar.tsx";
 import Profile from "./screens/Profile.tsx";

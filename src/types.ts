@@ -23,4 +23,5 @@ export enum SET_TYPE {
 
 export enum ROUTES {
   NUTRITION = "/nutrition",
+  HOME = "/",
 }

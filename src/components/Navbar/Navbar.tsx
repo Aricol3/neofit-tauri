@@ -1,6 +1,5 @@
 import "./Navbar.scss";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import HomeIcon from "../Icons/HomeIcon.tsx";
 import NutritionIcon from "../Icons/NutritionIcon.tsx";
 import ScanIcon from "../Icons/ScanIcon.tsx";
@@ -9,44 +8,50 @@ import ProfileIcon from "../Icons/ProfileIcon.tsx";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("/");
+  const { pathname } = useLocation();
 
-  const handleNavigation = (path:string) => {
-    setActiveTab(path);
-    navigate(path);
+  const isActive = (base: string) => {
+    if (base === "/") return pathname === "/";
+    return pathname === base || pathname.startsWith(base + "/");
   };
+
+  const handleNavigation = (path: string) => navigate(path);
 
   return (
     <div className="navbar">
       <div
-        className={`nav-item ${activeTab === "/" ? "active" : ""}`}
+        className={`nav-item ${isActive("/") ? "active" : ""}`}
         onClick={() => handleNavigation("/")}
       >
-        <HomeIcon isActive={activeTab === "/"} />
+        <HomeIcon isActive={isActive("/")} />
         <p>Home</p>
       </div>
+
       <div
-        className={`nav-item ${activeTab === "/nutrition" ? "active" : ""}`}
+        className={`nav-item ${isActive("/nutrition") ? "active" : ""}`}
         onClick={() => handleNavigation("/nutrition")}
       >
-        <NutritionIcon isActive={activeTab === "/nutrition"} />
+        <NutritionIcon isActive={isActive("/nutrition")} />
         <p>Nutrition</p>
       </div>
+
       <div className="nav-item scan-button" onClick={() => handleNavigation("/scan")}>
         <ScanIcon />
       </div>
+
       <div
-        className={`nav-item ${activeTab === "/search" ? "active" : ""}`}
+        className={`nav-item ${isActive("/search") ? "active" : ""}`}
         onClick={() => handleNavigation("/search")}
       >
-        <SearchIcon isActive={activeTab === "/search"} />
+        <SearchIcon isActive={isActive("/search")} />
         <p>Search</p>
       </div>
+
       <div
-        className={`nav-item ${activeTab === "/profile" ? "active" : ""}`}
+        className={`nav-item ${isActive("/profile") ? "active" : ""}`}
         onClick={() => handleNavigation("/profile")}
       >
-        <ProfileIcon isActive={activeTab === "/profile"} />
+        <ProfileIcon isActive={isActive("/profile")} />
         <p>Profile</p>
       </div>
     </div>
