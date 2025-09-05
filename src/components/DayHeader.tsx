@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DayPicker from "./DayPicker.tsx";
-import { format, addDays, isSameDay, isToday, parseISO } from "date-fns";
+import { format, addDays, isToday, parseISO } from "date-fns";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Virtual } from "swiper/modules";
 import { setSelectedDay, setToday } from "../slices/generalSlice.ts";

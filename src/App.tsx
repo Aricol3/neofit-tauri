@@ -16,7 +16,7 @@ function App() {
   useEffect(() => {
     dispatch(setToday());
     if (!auth.accessToken) navigate("/auth");
-  });
+  },[]);
 
   // dispatch(resetAuthState())
   // console.log("USER", auth);
